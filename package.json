@@ -1,0 +1,35 @@
+{
+  "name": "boken2-rpg",
+  "version": "1.0.0",
+  "description": "An RPG engine where you can travel around, interact with NPCs, and create worlds with words.",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "npm run-script clean && npm run-script populate-dist && webpack --progress --profile --colors --mode=production && ...",
+    "serve": "npm run-script clean && npm run-script populate-dist && webpack --progress --profile --colors --mode=development && http-server -c-1 -p 8082 ./dist",
+    "populate-dist": "copyfiles -E index.html dist/",
+    "clean": "rimraf ./dist"
+  },
+  "author": "Daniel Oakley <daniel@danieloaks.net>",
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "babel-loader": "^8.1.0",
+    "copyfiles": "^2.3.0",
+    "http-server": "^0.12.3",
+    "rimraf": "^3.0.2",
+    "vue-loader": "^15.9.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src",
+      "index.html"
+    ],
+    "ext": "js,vue,html",
+    "exec": "npm run serve"
+  }
+}
