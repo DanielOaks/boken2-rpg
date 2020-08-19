@@ -4,7 +4,7 @@
   "description": "An RPG engine where you can travel around, interact with NPCs, and create worlds with words.",
   "main": "src/index.js",
   "scripts": {
-    "build": "npm run-script clean && npm run-script populate-dist && webpack --progress --profile --colors --mode=production && ...",
+    "build": "npm run-script clean && npm run-script populate-dist && webpack --progress --profile --colors --mode=production && echo app built, look in the ./dist folder",
     "serve": "npm run-script clean && npm run-script populate-dist && webpack --progress --profile --colors --mode=development && http-server -c-1 -p 8082 ./dist",
     "populate-dist": "copyfiles -E index.html dist/",
     "clean": "rimraf ./dist"
