@@ -1,6 +1,9 @@
 <template>
   <div id="stateSwitcher">
     State Switcher
+    <img src="./assets/buttons/game.svg"/>
+    <img src="./assets/buttons/game-editor.svg"/>
+    <img src="./assets/buttons/state-editor.svg"/>
   </div>
 </template>
 
