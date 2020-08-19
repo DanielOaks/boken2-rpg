@@ -21,6 +21,7 @@
     "copyfiles": "^2.3.0",
     "css-loader": "^4.2.1",
     "http-server": "^0.12.3",
+    "mini-css-extract-plugin": "^0.10.0",
     "node-sass": "^4.14.1",
     "rimraf": "^3.0.2",
     "sass-loader": "^9.0.3",
@@ -32,7 +33,8 @@
   "nodemonConfig": {
     "watch": [
       "src",
-      "index.html"
+      "index.html",
+      "webpack.config.babel.js"
     ],
     "ext": "js,vue,html",
     "exec": "npm run serve"

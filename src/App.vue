@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <state-switcher ref="stateSwitcher"></state-switcher>
-    <state-editor ref="stateEditor"></state-editor>
-    <game-editor ref="gameEditor"></game-editor>
-    <game ref="game"></game>
+    <state-switcher ref="stateSwitcher" />
+    <state-editor ref="stateEditor" />
+    <game-editor ref="gameEditor" />
+    <game ref="game" />
   </div>
 </template>
 
