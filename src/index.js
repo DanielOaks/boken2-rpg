@@ -4,13 +4,15 @@ import App from './App.vue'
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  template: '<App/>',
+  template: '<app ref="app" />',
   components: {
     App,
   },
   data: {
   },
   mounted: function() {
-    // start the app up properly
+    const app = this.$refs.app;
+  
+    app.$refs.game.show()
   },
 });

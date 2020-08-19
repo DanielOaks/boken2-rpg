@@ -1,5 +1,5 @@
 <template>
-  <div id="stateEditor">
+  <div id="stateEditor" class="app-page">
     <br><br><br><br><br><br><br><br>State Editor!
   </div>
 </template>
@@ -7,6 +7,14 @@
 <script>
 export default {
   name: 'StateEditor',
+  methods: {
+    show: function () {
+      for (const p of document.getElementsByClassName('app-page')) {
+        p.classList.add('hidden');
+      }
+      this.$el.classList.remove('hidden');
+    },
+  },
 }
 </script>
 
@@ -17,6 +25,10 @@ export default {
   height: 100%;
   left: 0;
   top: 0;
-  background: #fa3;
+  background: #3af;
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 </style>
