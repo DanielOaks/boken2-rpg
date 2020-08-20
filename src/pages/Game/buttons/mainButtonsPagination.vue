@@ -1,31 +1,31 @@
 <template>
-  <a class="mainButtonsPagination">
-    <img :src="'/assets/buttons/mainButtonsPagination-' + dir + '.svg'" @click="move()" @mouseover="hover()" @mouseleave="hoverLeave()"/>
+  <a class="mainContentPaginationButton">
+    <img :src="'/assets/buttons/mainContentPagination-' + dir + '.svg'" @click="move()" @mouseover="hover()" @mouseleave="hoverLeave()"/>
   </a>
 </template>
 
 <script>
 export default {
-  name: 'mainButtonsPaginationButton',
+  name: 'MainContentPaginationButton',
   props: {
     dir: String,
   },
   methods: {
     move: function () {
-      console.log('TODO: move mainButtons in direction', this.$props.dir);
+      console.log('TODO: move mainContent in direction', this.$props.dir);
     },
     hover: function () {
-      console.log('TODO: show mainButtonsPagination hover text');
+      console.log('TODO: show mainContentPaginationButton hover text');
     },
     hoverLeave: function () {
-      console.log('TODO: cancel mainButtonsPagination hover text');
+      console.log('TODO: cancel mainContentPaginationButton hover text');
     },
   },
 }
 </script>
 
 <style lang="scss">
-.mainButtonsPagination {
+.mainContentPaginationButton {
     display: block;
     background: var(--main-btn-bg-color);
     color: var(--main-btn-text-color);
@@ -33,6 +33,7 @@ export default {
     width: calc(50% - .25em);
     text-align: center;
     height: 2em;
+    opacity: .4; // to match main buttons
     img {
         height: 100%;
         width: 100%;

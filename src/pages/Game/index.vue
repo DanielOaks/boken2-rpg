@@ -13,8 +13,8 @@
       </div>
     </div>
     <div id="middlePane">
-      <div id="mainContent"/>
-      <div id="mainButtons"/>
+      <mainContent/>
+      <mainButtonsPane/>
     </div>
     <div id="rightPane">
       <div class="topPane">
@@ -51,6 +51,8 @@ import gameMap from './gameMap.vue'
 import displayBar from './displayBar.vue'
 import progressionBar from './progressionBar.vue'
 import sidebarHeader from './sidebarHeader.vue'
+import mainContent from './mainContent.vue'
+import mainButtonsPane from './mainButtonsPane.vue'
 import mainContentPaginationButton from './buttons/mainContentPagination.vue'
 import mainButtonsPaginationButton from './buttons/mainButtonsPagination.vue'
 
@@ -62,6 +64,8 @@ export default {
     displayBar,
     progressionBar,
     sidebarHeader,
+    mainContent,
+    mainButtonsPane,
     mainContentPaginationButton,
     mainButtonsPaginationButton,
   },

@@ -33,6 +33,7 @@ export default {
     width: calc(50% - .25em);
     text-align: center;
     height: 2em;
+    opacity: .4; // to match main buttons
     img {
         height: 100%;
         width: 100%;

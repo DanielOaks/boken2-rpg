@@ -1,0 +1,33 @@
+<template>
+  <div id="mainContent">
+    <h1>Welcome to Boken2-RPG</h1>
+    <p>Welcome to the Boken2-RPG Engine example game. Hope this is interesting!</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'MainContent',
+}
+</script>
+
+<style lang="scss">
+#mainContent {
+  height: 100%;
+  flex: auto;
+  padding: 1em 1.7em;
+  overflow-y: auto;
+  line-height: 1.15;
+  font-size: 1.1em;
+  color: rgba(255, 255, 255, 0.95);
+  // other browsers, please define ways to not make scrollbars look too garbage.
+  &::-webkit-scrollbar {
+    width: 1em;
+    background: var(--sidebar-btn-bg-color);
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 1em;
+    background: var(--main-bg-color);
+  }
+}
+</style>

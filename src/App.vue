@@ -34,25 +34,23 @@ export default {
   --main-bg-color: #559e94;
 
   --main-btn-text-color: #fff;
-  --main-btn-bg-color: #38867c;
-  --main-btn-bg-color-active: #24645c;
-  --main-btn-wasd-bg-color: #925444;
-  --main-btn-wasd-bg-color-active: #85240b;
+  --main-btn-bg-color: #24645c;
+  --main-btn-wasd-bg-color: #85240b;
 
   --sidebar-text-color: #fff;
-  --sidebar-bg-color: var(--main-btn-bg-color-active);
+  --sidebar-bg-color: var(--main-btn-bg-color);
   --sidebar-btn-text-color: #acc9c5;
-  --sidebar-btn-bg-color: var(--main-btn-bg-color);
+  --sidebar-btn-bg-color: #41877e;
   --sidebar-location-text-color: #fff;
   --sidebar-location-bg-color: #1c544d;
   --sidebar-bar-text-color: var(--sidebar-location-text-color);
   --sidebar-bar-bg-color: var(--sidebar-location-bg-color);
   --sidebar-bar-bg-color-fill: #1b8064;
-  --sidebar-hr-color: var(--main-btn-bg-color);
+  --sidebar-hr-color: var(--sidebar-btn-bg-color);
 
   --map-bg-color: var(--main-bg-color);
   --map-tile-text-color: var(--main-btn-text-color);
-  --map-tile-bg-color: var(--main-btn-bg-color);
+  --map-tile-bg-color: var(--sidebar-btn-bg-color);
   --map-tile-bg-color-error: #974733;
 }
 
