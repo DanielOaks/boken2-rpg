@@ -16,5 +16,6 @@ export default {
   flex: auto;
   background: var(--map-bg-color);
   border-radius: .4em;
+  margin: .5em 0;
 }
 </style>

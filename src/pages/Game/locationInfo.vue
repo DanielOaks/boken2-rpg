@@ -23,7 +23,6 @@ export default {
   flex: auto;
   display: flex;
   flex-direction: column;
-  margin-bottom: .5em;
 
   > div {
     color: var(--sidebar-location-text-color);

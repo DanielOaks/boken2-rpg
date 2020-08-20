@@ -25,6 +25,9 @@ export default {
 </script>
 
 <style lang="scss">
+// CSS resets
+@import '~ress/ress.css';
+
 // default theme
 :root {
   --main-text-color: #fff;
@@ -41,10 +44,10 @@ export default {
   --sidebar-btn-text-color: #acc9c5;
   --sidebar-btn-bg-color: var(--main-btn-bg-color);
   --sidebar-location-text-color: #fff;
-  --sidebar-location-bg-color: #103833;
+  --sidebar-location-bg-color: #1c544d;
   --sidebar-bar-text-color: var(--sidebar-location-text-color);
   --sidebar-bar-bg-color: var(--sidebar-location-bg-color);
-  --sidebar-bar-bg-color-fill: #167a6f;
+  --sidebar-bar-bg-color-fill: #1b8064;
   --sidebar-hr-color: var(--main-btn-bg-color);
 
   --map-bg-color: var(--main-bg-color);
@@ -58,5 +61,6 @@ export default {
 
 #app {
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  line-height: 1.5;
 }
 </style>

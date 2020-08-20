@@ -1,6 +1,6 @@
 {
   "name": "boken2-rpg",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "An RPG engine where you can travel around, interact with NPCs, and create worlds with words.",
   "main": "src/index.js",
   "scripts": {
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@openfonts/open-sans_all": "^1.44.1",
+    "ress": "^3.0.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
