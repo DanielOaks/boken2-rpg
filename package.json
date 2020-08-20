@@ -12,14 +12,15 @@
   "author": "Daniel Oakley <daniel@danieloaks.net>",
   "license": "ISC",
   "dependencies": {
+    "@openfonts/open-sans_all": "^1.44.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
-    "babel": "^6.23.0",
     "babel-loader": "^8.1.0",
     "copyfiles": "^2.3.0",
     "css-loader": "^4.2.1",
+    "file-loader": "^6.0.0",
     "http-server": "^0.12.3",
     "mini-css-extract-plugin": "^0.10.0",
     "node-sass": "^4.14.1",
@@ -34,7 +35,8 @@
     "watch": [
       "src",
       "index.html",
-      "webpack.config.babel.js"
+      "webpack.config.babel.js",
+      "assets"
     ],
     "ext": "js,vue,html",
     "exec": "npm run serve"

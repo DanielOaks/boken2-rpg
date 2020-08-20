@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+require('@openfonts/open-sans_all')
 
 /* eslint-disable no-new */
 new Vue({

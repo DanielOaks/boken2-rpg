@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Game from './pages/Game.vue'
+import Game from './pages/Game/index.vue'
 import GameEditor from './pages/GameEditor.vue'
 import StateEditor from './pages/StateEditor.vue'
 import StateSwitcher from './pages/StateSwitcher.vue'
@@ -28,7 +28,7 @@ export default {
 // default theme
 :root {
   --main-text-color: #fff;
-  --main-bg-color: #4ea79b;
+  --main-bg-color: #559e94;
 
   --main-btn-text-color: #fff;
   --main-btn-bg-color: #38867c;
@@ -37,19 +37,26 @@ export default {
   --main-btn-wasd-bg-color-active: #85240b;
 
   --sidebar-text-color: #fff;
-  --sidebar-bg-color: #24645c;
+  --sidebar-bg-color: var(--main-btn-bg-color-active);
   --sidebar-btn-text-color: #acc9c5;
-  --sidebar-btn-bg-color: #38867c;
+  --sidebar-btn-bg-color: var(--main-btn-bg-color);
   --sidebar-location-text-color: #fff;
   --sidebar-location-bg-color: #103833;
-  --sidebar-bar-text-color: #fff;
-  --sidebar-bar-bg-color: #103833;
+  --sidebar-bar-text-color: var(--sidebar-location-text-color);
+  --sidebar-bar-bg-color: var(--sidebar-location-bg-color);
   --sidebar-bar-bg-color-fill: #167a6f;
-  --sidebar-hr-color: #38867c;
+  --sidebar-hr-color: var(--main-btn-bg-color);
 
-  --map-bg-color: #4ea79b;
-  --map-tile-text-color: #fff;
-  --map-tile-bg-color: #38867c;
+  --map-bg-color: var(--main-bg-color);
+  --map-tile-text-color: var(--main-btn-text-color);
+  --map-tile-bg-color: var(--main-btn-bg-color);
   --map-tile-bg-color-error: #974733;
+}
+
+// fonts
+@import "~@openfonts/open-sans_all/index.css";
+
+#app {
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 </style>
