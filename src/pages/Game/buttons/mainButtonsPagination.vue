@@ -1,31 +1,31 @@
 <template>
-  <a class="mainContentPaginationButton">
-    <img :src="'/assets/buttons/mainContentPagination-' + dir + '.svg'" @click="move()" @mouseover="hover()" @mouseleave="hoverLeave()"/>
+  <a class="mainButtonsPaginationButton">
+    <img :src="'/assets/buttons/mainButtonsPagination-' + dir + '.svg'" @click="move()" @mouseover="hover()" @mouseleave="hoverLeave()"/>
   </a>
 </template>
 
 <script>
 export default {
-  name: 'MainContentPaginationButton',
+  name: 'mainButtonsPaginationButton',
   props: {
     dir: String,
   },
   methods: {
     move: function () {
-      console.log('TODO: move mainContent in direction', this.$props.dir);
+      console.log('TODO: move mainButtons in direction', this.$props.dir);
     },
     hover: function () {
-      console.log('TODO: show mainContentPaginationButton hover text');
+      console.log('TODO: show mainButtonsPaginationButton hover text');
     },
     hoverLeave: function () {
-      console.log('TODO: cancel mainContentPaginationButton hover text');
+      console.log('TODO: cancel mainButtonsPaginationButton hover text');
     },
   },
 }
 </script>
 
 <style lang="scss">
-.mainContentPaginationButton {
+.mainButtonsPaginationButton {
     display: block;
     background: var(--main-btn-bg-color);
     color: var(--main-btn-text-color);
