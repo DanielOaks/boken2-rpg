@@ -29,5 +29,12 @@ export default {
     width: 1em;
     background: var(--main-bg-color);
   }
+  
+  h1, h2, h3 {
+    margin-bottom: 0.3em;
+  }
+  h1 {
+    font-size: 1.7em;
+  }
 }
 </style>
