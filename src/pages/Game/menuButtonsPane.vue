@@ -2,7 +2,7 @@
   <div class="menuButtonsPane">
     <menuButton btn="menu"/>
     <menuButton btn="saveload"/>
-    <menuButton btn="imnotsure"/>
+    <menuButton btn="quicksave"/>
     <menuButton btn="profile" big/>
     <menuButton btn="messages"/>
     <menuButton btn="perks"/>
