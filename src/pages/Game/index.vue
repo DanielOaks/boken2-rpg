@@ -6,6 +6,7 @@
         <gameMap/>
         <displayBar name="Time" value="08:02"/>
         <displayBar name="Day" value="5"/>
+        <menuButtonsPane/>
       </div>
       <div class="sideButtonsPane">
         <mainContentPaginationButton dir="prev"/>
@@ -48,6 +49,7 @@
 <script>
 import locationInfo from './locationInfo.vue'
 import gameMap from './gameMap.vue'
+import menuButtonsPane from './menuButtonsPane.vue'
 import displayBar from './displayBar.vue'
 import progressionBar from './progressionBar.vue'
 import sidebarHeader from './sidebarHeader.vue'
@@ -61,6 +63,7 @@ export default {
   components: {
     locationInfo,
     gameMap,
+    menuButtonsPane,
     displayBar,
     progressionBar,
     sidebarHeader,
