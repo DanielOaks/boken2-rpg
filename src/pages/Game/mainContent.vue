@@ -1,6 +1,6 @@
 <template>
   <div id="mainContent">
-    <h1>Welcome to Boken2-RPG</h1>
+    <h1>Boken2-RPG</h1>
     <p>Welcome to the Boken2-RPG Engine example game. Hope this is interesting!</p>
   </div>
 </template>

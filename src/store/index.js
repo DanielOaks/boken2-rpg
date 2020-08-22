@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const emptyGameData = {
+  name: '',
   stats: {},
   attributes: {},
   xpToLevel: {},
@@ -64,6 +65,9 @@ export default new Vuex.Store({
 
   getters: {
     // misc getters
+    gameName: (state) => {
+      return state.gameData.name;
+    },
     gameHoverHint: (state) => {
       return state.gameHoverHint;
     },

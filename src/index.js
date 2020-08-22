@@ -6,6 +6,16 @@ require('@openfonts/open-sans_all')
 
 import exampleData from './store/exampleData'
 
+// page name == game name
+store.watch(
+  function (state) {
+    return state.gameData.name;
+  },
+  function () {
+    document.title = store.getters.gameName;
+  }
+);
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

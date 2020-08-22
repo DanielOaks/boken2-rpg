@@ -3,6 +3,7 @@
 
 export default {
   gameData: {
+    name: 'Boken2 Example Game',
     stats: {
       armour: {
         fullName: 'Armour',
