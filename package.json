@@ -15,6 +15,7 @@
     "@openfonts/open-sans_all": "^1.44.1",
     "ress": "^3.0.0",
     "vue": "^2.6.11",
+    "vue-i18n": "^8.21.0",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
