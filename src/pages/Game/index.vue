@@ -15,6 +15,7 @@
     </div>
     <div id="middlePane">
       <mainContent/>
+      <hoverHint/>
       <mainButtonsPane/>
     </div>
     <div id="rightPane">
@@ -54,6 +55,7 @@ import displayBar from './displayBar.vue'
 import progressionBar from './progressionBar.vue'
 import sidebarHeader from './sidebarHeader.vue'
 import mainContent from './mainContent.vue'
+import hoverHint from './hoverHint.vue'
 import mainButtonsPane from './mainButtonsPane.vue'
 import mainContentPaginationButton from './buttons/mainContentPagination.vue'
 import mainButtonsPaginationButton from './buttons/mainButtonsPagination.vue'
@@ -68,6 +70,7 @@ export default {
     progressionBar,
     sidebarHeader,
     mainContent,
+    hoverHint,
     mainButtonsPane,
     mainContentPaginationButton,
     mainButtonsPaginationButton,

@@ -15,10 +15,10 @@ export default {
       console.log('TODO: move mainContent in direction', this.$props.dir);
     },
     hover: function () {
-      console.log('TODO: show mainContentPaginationButton hover text');
+      this.$store.commit('showGameHoverHint', {name: 'show MainContentPaginationButton hover text: ' + this.$props.dir, description: 'This does something!!'});
     },
     hoverLeave: function () {
-      console.log('TODO: cancel mainContentPaginationButton hover text');
+      this.$store.commit('hideGameHoverHint');
     },
   },
 }

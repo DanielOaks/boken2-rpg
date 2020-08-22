@@ -1,5 +1,5 @@
 <template>
-  <div class="mainButton" v-bind:class="{wasd: wasd}">
+  <div class="mainButton" v-bind:class="{wasd: wasd}" @click="clicked()" @mouseover="hover()" @mouseleave="hoverLeave()">
     <span class="word"/>
     <span class="key"><div v-text="btn"/></span>
   </div>
@@ -11,6 +11,17 @@ export default {
   props: {
     btn: String,
     wasd: Boolean,
+  },
+  methods: {
+    clicked: function () {
+      console.log('TODO: mainButton clicked', this.$props.btn);
+    },
+    hover: function () {
+      this.$store.commit('showGameHoverHint', {name: this.$props.btn, description: 'This does something!!'});
+    },
+    hoverLeave: function () {
+      this.$store.commit('hideGameHoverHint');
+    },
   },
 }
 </script>
