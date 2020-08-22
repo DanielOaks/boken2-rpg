@@ -32,8 +32,8 @@
           :max="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"
           :value="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"/>
         <sidebarHeader name="Advancement" extraMargin/>
-        <displayBar margin name="Level" value="0"/>
-        <progressionBar name="XP" :value="467" :max="1000"/>
+        <displayBar margin name="Level" :value="$store.getters.gameStatePlayerLevel.level.toString()"/>
+        <progressionBar name="XP" :value="$store.getters.gameStatePlayerLevel.xp" :max="$store.getters.gameStatePlayerLevel.xpToLevel"/>
         <displayBar margin :name="$store.getters.gameDataCurrencyName" :value="formatBigNumber($store.getters.gameStatePlayerCurrency)"/>
         <sidebarHeader name="Status Effects" extraMargin/>
       </div>

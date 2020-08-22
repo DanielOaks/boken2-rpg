@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const emptyGameData = {
   stats: {},
   attributes: {},
-  advancement: {},
+  xpToLevel: {},
 }
 
 const emptyGameState = {
@@ -14,6 +14,10 @@ const emptyGameState = {
     name: {},
     stats: {},
     attributes: {},
+    advancement: {
+      level: 0,
+      xp: 0,
+    },
   },
 }
 
@@ -88,5 +92,13 @@ export default new Vuex.Store({
     gameStatePlayerCurrency: (state) => {
       return state.gameState.player.currency;
     },
+    gameStatePlayerLevel: (state) => {
+      const level = state.gameState.player.advancement.level;
+      return {
+        level: level,
+        xp: state.gameState.player.advancement.xp,
+        xpToLevel: state.gameData.xpToLevel[level],
+      };
+    }
   },
 });
