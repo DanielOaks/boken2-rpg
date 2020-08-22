@@ -216,4 +216,5 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/git,windows,macos,linux,visualstudiocode,jekyll,node
 
 # our stuff
+.vscode/
 dist/
