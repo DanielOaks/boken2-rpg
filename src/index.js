@@ -18,12 +18,11 @@ new Vue({
   data: {
   },
   mounted: function() {
-    const app = this.$refs.app;
-
-    console.log('Loading example game data', exampleData);
+    console.log('Loading example game info', exampleData);
     store.commit('loadExampleGameData', exampleData.gameData);
     store.commit('loadExampleGameState', exampleData.gameState);
 
+    const app = this.$refs.app;
     app.$refs.game.show()
   },
 });

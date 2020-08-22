@@ -3,15 +3,18 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const defaultGameData = {
+const emptyGameData = {
+  stats: {},
   attributes: {},
+  advancement: {},
 }
 
-const defaultGameState = {
+const emptyGameState = {
   player: {
-    name: '',
+    name: {},
+    stats: {},
     attributes: {},
-  }
+  },
 }
 
 export default new Vuex.Store({
@@ -24,14 +27,15 @@ export default new Vuex.Store({
     },
 
     // static game data
-    gameData: defaultGameData,
+    gameData: emptyGameData,
 
     // transitive game state (player name, quest info, etc)
     // this is what the save-game contains
-    gameState: defaultGameState,
+    gameState: emptyGameState,
   },
 
   mutations: {
+    // misc mutations
     showGameHoverHint (state, pl) {
       state.gameHoverHint.hidden = false;
       state.gameHoverHint.name = pl.name;
@@ -41,17 +45,45 @@ export default new Vuex.Store({
       state.gameHoverHint.hidden = true;
     },
   
+    // example mutations
     loadExampleGameData (state, pl) {
       state.gameData = pl;
     },
     loadExampleGameState (state, pl) {
       state.gameState = pl;
     },
+
+    // game data mutations
+
+    // game state mutations
   },
 
   getters: {
+    // misc getters
     gameHoverHint: (state) => {
       return state.gameHoverHint;
+    },
+
+    // game data getters
+    gameDataStats: (state) => {
+      return state.gameData.stats;
+    },
+    gameDataAttributes: (state) => {
+      return state.gameData.attributes;
+    },
+    gameDataCurrencyName: (state) => {
+      return state.gameData.currencyName;
+    },
+
+    // game state getters
+    gameStatePlayerName: (state) => {
+      return state.gameState.player.name;
+    },
+    gameStatePlayerStats: (state) => {
+      return state.gameState.player.stats;
+    },
+    gameStatePlayerAttributes: (state) => {
+      return state.gameState.player.attributes;
     },
   },
 });

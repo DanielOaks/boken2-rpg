@@ -20,23 +20,21 @@
     </div>
     <div id="rightPane">
       <div class="topPane">
-        <h2 class="characterName">
-          Alice
-        </h2>
+        <h2 class="characterName" v-text="$store.getters.gameStatePlayerName.mainName"/>
         <sidebarHeader name="Stats"/>
-        <progressionBar name="Armour" value="0" max="100"/>
-        <progressionBar name="HP" value="0" max="100"/>
-        <progressionBar name="Energy" value="0" max="100"/>
+        <progressionBar v-for="(info, key) in $store.getters.gameDataStats" :key="key"
+          :name="info.uiName || info.fullName"
+          :max="$store.getters.gameStatePlayerStats[key].default"
+          :value="$store.getters.gameStatePlayerStats[key].current"/>
         <sidebarHeader name="Attributes" extraMargin/>
-        <progressionBar name="STR" value="0" max="100"/>
-        <progressionBar name="DEX" value="0" max="100"/>
-        <progressionBar name="INT" value="0" max="100"/>
-        <progressionBar name="CHA" value="0" max="100"/>
-        <progressionBar name="LUCK" value="0" max="100"/>
+        <progressionBar v-for="(info, key) in $store.getters.gameDataAttributes" :key="key"
+          :name="info.uiName || info.fullName"
+          :max="0"
+          :value="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"/>
         <sidebarHeader name="Advancement" extraMargin/>
         <displayBar margin name="Level" value="0"/>
-        <progressionBar name="XP" value="0" max="1000"/>
-        <displayBar margin name="Coins" value="0"/>
+        <progressionBar name="XP" :value="0" :max="1000"/>
+        <displayBar margin :name="$store.getters.gameDataCurrencyName" value="0"/>
         <sidebarHeader name="Status Effects" extraMargin/>
       </div>
       <div class="sideButtonsPane">

@@ -37,14 +37,14 @@ export default {
         uiName: 'LUCK',
       },
     },
-    advancement: {
-      currencyName: 'Coins',
-    },
+    currencyName: 'Coins',
   },
 
   gameState: {
     player: {
-      name: 'Alice',
+      name: {
+        mainName: 'Alice',
+      },
       stats: {
         armour: {
           default: 130,
