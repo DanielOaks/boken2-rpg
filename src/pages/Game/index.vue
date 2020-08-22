@@ -29,11 +29,11 @@
         <sidebarHeader name="Attributes" extraMargin/>
         <progressionBar v-for="(info, key) in $store.getters.gameDataAttributes" :key="key"
           :name="info.uiName || info.fullName"
-          :max="0"
+          :max="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"
           :value="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"/>
         <sidebarHeader name="Advancement" extraMargin/>
         <displayBar margin name="Level" value="0"/>
-        <progressionBar name="XP" :value="0" :max="1000"/>
+        <progressionBar name="XP" :value="467" :max="1000"/>
         <displayBar margin :name="$store.getters.gameDataCurrencyName" value="0"/>
         <sidebarHeader name="Status Effects" extraMargin/>
       </div>

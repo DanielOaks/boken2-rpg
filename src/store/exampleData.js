@@ -48,7 +48,7 @@ export default {
       stats: {
         armour: {
           default: 130,
-          current: 100,
+          current: 106,
         },
         health: {
           default: 100,
