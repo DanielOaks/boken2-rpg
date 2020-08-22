@@ -3,6 +3,17 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+const defaultGameData = {
+  attributes: {},
+}
+
+const defaultGameState = {
+  player: {
+    name: '',
+    attributes: {},
+  }
+}
+
 export default new Vuex.Store({
   state: {
     // hint that shows when you hover over buttons
@@ -13,31 +24,13 @@ export default new Vuex.Store({
     },
 
     // static game data
-    gameData: {
-      attributes: {
-        // for example:
-        //  str: {
-        //    fullName: 'Strength',
-        //    uiName: 'STR',
-        //  }
-      }
-    },
+    gameData: defaultGameData,
 
     // transitive game state (player name, quest info, etc)
     // this is what the save-game contains
-    gameState: {
-      player: {
-        name: '',
-        attributes: {
-          // for example:
-          //  str: {
-          //    base: 12,
-          //    mod: -3,
-          //  }
-        }
-      }
-    }
+    gameState: defaultGameState,
   },
+
   mutations: {
     showGameHoverHint (state, pl) {
       state.gameHoverHint.hidden = false;
@@ -47,7 +40,15 @@ export default new Vuex.Store({
     hideGameHoverHint (state) {
       state.gameHoverHint.hidden = true;
     },
+  
+    loadExampleGameData (state, pl) {
+      state.gameData = pl;
+    },
+    loadExampleGameState (state, pl) {
+      state.gameState = pl;
+    },
   },
+
   getters: {
     gameHoverHint: (state) => {
       return state.gameHoverHint;
