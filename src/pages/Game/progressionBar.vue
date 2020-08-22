@@ -1,5 +1,5 @@
 <template>
-  <div class="progressionBar" :style="'background-position-x: ' + (100-(value/max)*100).toString() + '%;'">
+  <div class="progressionBar" :style="'background-position-x: ' + (100-Math.min(1,value/max)*100).toString() + '%;'">
     <span class="name" v-text="name"/>
     <span class="value" v-text="value"/>
   </div>
