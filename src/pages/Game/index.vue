@@ -34,7 +34,7 @@
         <sidebarHeader name="Advancement" extraMargin/>
         <displayBar margin name="Level" value="0"/>
         <progressionBar name="XP" :value="467" :max="1000"/>
-        <displayBar margin :name="$store.getters.gameDataCurrencyName" value="0"/>
+        <displayBar margin :name="$store.getters.gameDataCurrencyName" :value="formatBigNumber($store.getters.gameStatePlayerCurrency)"/>
         <sidebarHeader name="Status Effects" extraMargin/>
       </div>
       <div class="sideButtonsPane">
@@ -79,6 +79,23 @@ export default {
         p.classList.add('hidden');
       }
       this.$el.classList.remove('hidden');
+    },
+
+    // utility function...
+    // feels icky putting it here, but I tried splitting it out and into a
+    //  separate js file and webpack seemed to foil me? to revisit later.
+    formatBigNumber: function (num, min) {
+      // this can happen if the dataStore returns a bad value
+      if (num === undefined) {
+        return 'NaN';
+      }
+      if (min && num < min) {
+        return num.toString();
+      }
+      if (1000 < num) {
+        return (num/1000).toFixed(1) + 'K';
+      }
+      return num.toString();
     },
   },
 }

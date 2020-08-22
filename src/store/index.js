@@ -85,5 +85,8 @@ export default new Vuex.Store({
     gameStatePlayerAttributes: (state) => {
       return state.gameState.player.attributes;
     },
+    gameStatePlayerCurrency: (state) => {
+      return state.gameState.player.currency;
+    },
   },
 });

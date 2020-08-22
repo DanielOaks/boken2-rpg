@@ -81,6 +81,7 @@ export default {
           mod: -1,
         },
       },
+      currency: 24700,
     },
   },
 }
