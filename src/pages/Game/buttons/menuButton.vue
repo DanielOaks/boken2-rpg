@@ -16,10 +16,10 @@ export default {
       console.log('TODO: menuButton clicked', this.$props.btn);
     },
     hover: function () {
-      console.log('TODO: show menuButton hover text');
+      this.$store.commit('showGameHoverHint', {name: this.$t(`menuButton-${this.$props.btn}-name`), description: this.$t(`menuButton-${this.$props.btn}-description`)});
     },
     hoverLeave: function () {
-      console.log('TODO: cancel menuButton hover text');
+      this.$store.commit('hideGameHoverHint');
     },
   },
 }

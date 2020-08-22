@@ -41,7 +41,7 @@
       "webpack.config.babel.js",
       "assets"
     ],
-    "ext": "js,vue,html",
+    "ext": "js,vue,html,json",
     "exec": "npm run serve"
   }
 }
