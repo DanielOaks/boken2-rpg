@@ -4,11 +4,13 @@
     <game-editor ref="gameEditor" />
     <state-editor ref="stateEditor" />
     <state-switcher ref="stateSwitcher" />
+    <homepage ref="homepage" />
   </div>
 </template>
 
 <script>
 import Game from './pages/Game/index.vue'
+import Homepage from './pages/Homepage.vue'
 import GameEditor from './pages/GameEditor.vue'
 import StateEditor from './pages/StateEditor.vue'
 import StateSwitcher from './pages/StateSwitcher.vue'
@@ -17,6 +19,7 @@ export default {
   name: 'App',
   components: {
     Game,
+    Homepage,
     GameEditor,
     StateEditor,
     StateSwitcher,
@@ -30,6 +33,9 @@ export default {
 
 // default theme
 :root {
+  --homepage-gameselect-bg-color: #96c3bd;
+  --homepage-gameselect-text-color: #444;
+
   --main-text-color: #fff;
   --main-bg-color: #559e94;
 

@@ -24,6 +24,8 @@ const emptyGameState = {
 
 export default new Vuex.Store({
   state: {
+    mainMenuActive: true,
+
     // hint that shows when you hover over buttons
     gameHoverHint: {
       hidden: true,
@@ -41,6 +43,12 @@ export default new Vuex.Store({
 
   mutations: {
     // misc mutations
+    showMainMenu (state) {
+      state.mainMenuActive = true;
+    },
+    hideMainMenu (state) {
+      state.mainMenuActive = false;
+    },
     showGameHoverHint (state, pl) {
       state.gameHoverHint.hidden = false;
       state.gameHoverHint.name = pl.name;
@@ -65,6 +73,9 @@ export default new Vuex.Store({
 
   getters: {
     // misc getters
+    mainMenuActive: (state) => {
+      return state.mainMenuActive;
+    },
     gameName: (state) => {
       return state.gameData.name;
     },
