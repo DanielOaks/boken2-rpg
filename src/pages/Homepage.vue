@@ -67,9 +67,10 @@ export default {
   }
   .btn {
     padding: .5em .7em;
-    background: var(--sidebar-btn-bg-color);
-    color: var(--sidebar-btn-text-color);
+    background: var(--main-btn-bg-color);
+    color: var(--main-btn-text-color);
     border-radius: .5em;
+    cursor: pointer;
     + .btn {
       margin-left: 1em;
     }
