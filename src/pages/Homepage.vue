@@ -110,6 +110,7 @@ export default {
   }
   .startButtons {
     margin-top: 1em;
+    margin-bottom: 5vh;
   }
   a {
     font-size: .9em;
