@@ -12,8 +12,9 @@
       <div style="position: relative;">
         <div class="caret"/>
       </div>
-      <div class="btn">+<!-- to replace with real add icon --></div>
-      <div class="btn">-<!-- to replace with real bin icon --></div>
+      <div class="btn">+<!-- to replace with real add icon: add new game --></div>
+      <div class="btn">e<!-- to replace with real add icon: edit this game --></div>
+      <div class="btn">-<!-- to replace with real bin icon: delete this game --></div>
     </div>
 
     <div class="startButtons">
@@ -103,7 +104,7 @@ export default {
       border-radius: 0;
       background: var(--homepage-gameselect-bg-color);
       color: var(--homepage-gameselect-text-color);
-      + .btn {
+      &:last-of-type {
         border-radius: 0 .5em .5em 0;
       }
     }
