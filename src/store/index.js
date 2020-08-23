@@ -67,6 +67,14 @@ export default new Vuex.Store({
     },
 
     // game data mutations
+    gameDataChangeNames (state, pl) {
+      if (pl.gameName) {
+        state.gameData.name = pl.gameName;
+      }
+      if (pl.currencyName) {
+        state.gameData.currencyName = pl.currencyName;
+      }
+    }
 
     // game state mutations
   },
@@ -76,14 +84,14 @@ export default new Vuex.Store({
     mainMenuActive: (state) => {
       return state.mainMenuActive;
     },
-    gameName: (state) => {
-      return state.gameData.name;
-    },
     gameHoverHint: (state) => {
       return state.gameHoverHint;
     },
 
     // game data getters
+    gameDataGameName: (state) => {
+      return state.gameData.name;
+    },
     gameDataStats: (state) => {
       return state.gameData.stats;
     },

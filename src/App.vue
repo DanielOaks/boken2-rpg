@@ -11,7 +11,7 @@
 <script>
 import Game from './pages/Game/index.vue'
 import Homepage from './pages/Homepage.vue'
-import GameEditor from './pages/GameEditor.vue'
+import GameEditor from './pages/GameEditor/index.vue'
 import StateEditor from './pages/StateEditor.vue'
 import StateSwitcher from './pages/StateSwitcher.vue'
 
@@ -58,6 +58,13 @@ export default {
   --map-tile-text-color: var(--main-btn-text-color);
   --map-tile-bg-color: var(--sidebar-btn-bg-color);
   --map-tile-bg-color-error: #974733;
+
+  --editor-text-color: #151515;
+  --editor-bg-2-color: #f9f4e7;
+  --editor-bg-color: #fbfaf8;
+  --editor-bar-text-color: #fff;
+  --editor-bar-bg-color: #1b1914;
+  --editor-bar-tab-bg-color: #423f38;
 }
 
 // fonts

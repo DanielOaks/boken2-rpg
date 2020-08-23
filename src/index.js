@@ -12,7 +12,7 @@ store.watch(
     return state.gameData.name;
   },
   function () {
-    document.title = store.getters.gameName;
+    document.title = store.getters.gameDataGameName;
   }
 );
 
