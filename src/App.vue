@@ -62,6 +62,8 @@ export default {
   --editor-text-color: #151515;
   --editor-bg-2-color: #f9f4e7;
   --editor-bg-color: #fbfaf8;
+  --editor-shadow-color: #e2d7d4;
+  --editor-header-shadow-color: #e2d7d4;
   --editor-bar-text-color: #fff;
   --editor-bar-bg-color: #1b1914;
   --editor-bar-tab-bg-color: #423f38;

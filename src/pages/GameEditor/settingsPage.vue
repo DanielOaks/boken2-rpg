@@ -50,12 +50,12 @@ export default {
     text-align: left;
     border-radius: 1em;
     padding: .8em 1.3em 1.2em;
-    box-shadow: 0 1px #e2d7d4;
+    box-shadow: 0 1px var(--editor-shadow-color);
   }
   h1 {
     margin-top: 3em;
     margin-bottom: .5em;
-    text-shadow: 0 1px #e2d7d4;
+    text-shadow: 0 1px var(--editor-header-shadow-color);
   }
   label {
     display: block;
