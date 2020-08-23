@@ -38,7 +38,6 @@ export default {
   left: 0;
   top: 0;
   background: var(--editor-bg-2-color);
-  text-align: center;
   &.hidden {
     opacity: 0;
     pointer-events: none;
@@ -53,7 +52,7 @@ export default {
     background: var(--editor-bar-bg-color);
     display: flex;
     > .tab {
-      padding: .4em .7em;
+      padding: .3em .7em;
       color: var(--editor-bar-text-color);
       margin: 0 0 .1em .15em;
       background: var(--editor-bar-tab-bg-color);

@@ -5,7 +5,7 @@
       <label for="gameName">Game Name</label>
       <input id="gameName" v-model="gameName" placeholder="Game Name" size=35>
       <label for="currencyName">Currency Name</label>
-      <input id="gameName" v-model="currencyName" placeholder="Currency Name" size=15>
+      <input id="currencyName" v-model="currencyName" placeholder="Currency Name" size=15>
     </div>
   </div>
 </template>
@@ -40,26 +40,29 @@ export default {
 
 <style lang="scss">
 .gameEditorPage.settings {
+  text-align: center;
   .settingsMenu {
     background: var(--editor-bg-color);
     color: var(--editor-text-color);
-    text-align: center;
     width: 50em;
+    max-width: calc(100% - 2em);
     margin: 0 auto;
     text-align: left;
     border-radius: 1em;
-    padding: .8em 1.3em;
+    padding: .8em 1.3em 1.2em;
+    box-shadow: 0 1px #e2d7d4;
   }
   h1 {
     margin-top: 3em;
     margin-bottom: .5em;
+    text-shadow: 0 1px #e2d7d4;
   }
   label {
     display: block;
     font-size: 1.15em;
     font-weight: 600;
     &:not(:first-of-type) {
-      margin-top: 1.3em;
+      margin-top: .7em;
     }
   }
   input {
