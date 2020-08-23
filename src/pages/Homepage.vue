@@ -1,7 +1,7 @@
 <template>
   <div id="homepage" class="app-page" :class="{hidden2: !$store.getters.mainMenuActive}"><div>
     <h1>Boken2-RPG</h1>
-    <p class="tagline">tavel around, interact with NPCs, and create worlds with words</p>
+    <p class="tagline" v-text="$t('engine.tagline')"/>
     <a href="https://github.com/DanielOaks/boken2-rpg/">GitHub Repo</a>
 
     <div class="newGameCreation">
@@ -18,9 +18,9 @@
     </div>
 
     <div class="startButtons">
-      <div class="btn" @click="loadSavegame()">New Game</div>
-      <div class="btn" @click="loadSavegame()">Load Game</div>
-      <div class="btn" @click="loadSavegame()">Resume</div>
+      <div class="btn" @click="loadSavegame()" v-text="$t('homepage.newgame')"/>
+      <div class="btn" @click="loadSavegame()" v-text="$t('homepage.loadgame')"/>
+      <div class="btn" @click="loadSavegame()" v-text="$t('homepage.resume')"/>
     </div>
   </div></div>
 </template>

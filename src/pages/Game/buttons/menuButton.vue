@@ -17,7 +17,7 @@ export default {
       this.$store.commit('showMainMenu');
     },
     hover: function () {
-      this.$store.commit('showGameHoverHint', {name: this.$t(`menuButton-${this.$props.btn}-name`), description: this.$t(`menuButton-${this.$props.btn}-description`)});
+      this.$store.commit('showGameHoverHint', {name: this.$t(`menuButton.${this.$props.btn}.name`), description: this.$t(`menuButton.${this.$props.btn}.description`)});
     },
     hoverLeave: function () {
       this.$store.commit('hideGameHoverHint');

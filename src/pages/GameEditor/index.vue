@@ -2,11 +2,11 @@
   <div id="gameEditor" class="app-page">
     <settingsPage/>
     <div class="tabs">
-      <div class="tab active">Game Info</div>
-      <div class="tab">Characters</div>
-      <div class="tab">Locations</div>
-      <div class="tab">Quests</div>
-      <div class="tab">Perks</div>
+      <div class="tab active" v-text="$t('gameEditor.tab.gameinfo')"/>
+      <div class="tab" v-text="$t('gameEditor.tab.characters')"/>
+      <div class="tab" v-text="$t('gameEditor.tab.locations')"/>
+      <div class="tab" v-text="$t('gameEditor.tab.quests')"/>
+      <div class="tab" v-text="$t('gameEditor.tab.perks')"/>
     </div>
   </div>
 </template>

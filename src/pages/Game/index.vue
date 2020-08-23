@@ -4,8 +4,8 @@
       <div class="topPane">
         <locationInfo placeName="Market" regionName="Troto"/>
         <gameMap/>
-        <displayBar name="Time" value="08:02"/>
-        <displayBar name="Day" value="5"/>
+        <displayBar :name="$t('terms.time')" value="08:02"/>
+        <displayBar :name="$t('terms.day')" value="5"/>
         <menuButtonsPane/>
       </div>
       <div class="sideButtonsPane">
@@ -21,21 +21,21 @@
     <div id="rightPane">
       <div class="topPane">
         <h2 class="characterName" v-text="$store.getters.gameStatePlayerName.mainName"/>
-        <sidebarHeader name="Stats"/>
+        <sidebarHeader :name="$t('terms.stats')"/>
         <progressionBar v-for="(info, key) in $store.getters.gameDataStats" :key="key"
           :name="info.uiName || info.fullName"
           :max="$store.getters.gameStatePlayerStats[key].default"
           :value="$store.getters.gameStatePlayerStats[key].current"/>
-        <sidebarHeader name="Attributes" extraMargin/>
+        <sidebarHeader :name="$t('terms.attributes')" extraMargin/>
         <progressionBar v-for="(info, key) in $store.getters.gameDataAttributes" :key="key"
           :name="info.uiName || info.fullName"
           :max="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"
           :value="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"/>
-        <sidebarHeader name="Advancement" extraMargin/>
-        <displayBar margin name="Level" :value="$store.getters.gameStatePlayerLevel.level.toString()"/>
-        <progressionBar name="XP" :value="$store.getters.gameStatePlayerLevel.xp" :max="$store.getters.gameStatePlayerLevel.xpToLevel"/>
+        <sidebarHeader :name="$t('terms.advancement')" extraMargin/>
+        <displayBar margin :name="$t('terms.level')" :value="$store.getters.gameStatePlayerLevel.level.toString()"/>
+        <progressionBar :name="$t('terms.xp')" :value="$store.getters.gameStatePlayerLevel.xp" :max="$store.getters.gameStatePlayerLevel.xpToLevel"/>
         <displayBar margin :name="$store.getters.gameDataCurrencyName" :value="formatBigNumber($store.getters.gameStatePlayerCurrency)"/>
-        <sidebarHeader name="Status Effects" extraMargin/>
+        <sidebarHeader :name="$t('terms.statusEffects')" extraMargin/>
       </div>
       <div class="sideButtonsPane">
         <mainButtonsPaginationButton dir="prev"/>

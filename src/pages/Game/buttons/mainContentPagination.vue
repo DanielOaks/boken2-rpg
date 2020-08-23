@@ -15,7 +15,7 @@ export default {
       console.log('TODO: move mainContent in direction', this.$props.dir);
     },
     hover: function () {
-      this.$store.commit('showGameHoverHint', {name: this.$t(`mainContentPagination-${this.$props.dir}-name`), description: this.$t(`mainContentPagination-${this.$props.dir}-description`)});
+      this.$store.commit('showGameHoverHint', {name: this.$t(`mainContentPagination.${this.$props.dir}.name`), description: this.$t(`mainContentPagination.${this.$props.dir}.description`)});
     },
     hoverLeave: function () {
       this.$store.commit('hideGameHoverHint');

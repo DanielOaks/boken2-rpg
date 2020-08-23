@@ -2,9 +2,9 @@
   <div class="gameEditorPage settings">
     <h1>Game Settings</h1>
     <div class="settingsMenu">
-      <label for="gameName">Game Name</label>
+      <label for="gameName" v-text="$t('gameEditor.settings.gameName')"/>
       <input id="gameName" v-model="gameName" placeholder="Game Name" size=35>
-      <label for="currencyName">Currency Name</label>
+      <label for="currencyName" v-text="$t('gameEditor.settings.currencyName')"/>
       <input id="currencyName" v-model="currencyName" placeholder="Currency Name" size=15>
     </div>
   </div>
