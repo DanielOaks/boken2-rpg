@@ -7,7 +7,8 @@
     "build": "npm run-script clean && npm run-script populate-dist && webpack --progress --profile --colors --mode=production && echo app built, look in the ./dist folder",
     "serve": "npm run-script clean && npm run-script populate-dist && webpack --progress --profile --colors --mode=development && http-server -c-1 -p 8082 ./dist",
     "populate-dist": "copyfiles -E index.html dist/ && copyfiles -Eu 0 assets/**/* dist/",
-    "clean": "rimraf ./dist"
+    "clean": "rimraf ./dist",
+    "test": "mocha -r esm"
   },
   "author": "Daniel Oakley <daniel@danieloaks.net>",
   "license": "ISC",
@@ -24,9 +25,11 @@
     "babel-loader": "^8.1.0",
     "copyfiles": "^2.3.0",
     "css-loader": "^4.2.1",
+    "esm": "^3.2.25",
     "file-loader": "^6.0.0",
     "http-server": "^0.12.3",
     "mini-css-extract-plugin": "^0.10.0",
+    "mocha": "^8.1.1",
     "node-sass": "^4.14.1",
     "rimraf": "^3.0.2",
     "sass-loader": "^9.0.3",
