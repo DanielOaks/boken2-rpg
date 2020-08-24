@@ -7,6 +7,7 @@
       <label for="currencyName" v-text="$t('gameEditor.settings.currencyName')"/>
       <input id="currencyName" v-model="currencyName" placeholder="Currency Name" size="15"/>
       <label for="statsList" v-text="$t('terms.stats')"/>
+      <p v-text="$t('gameEditor.settings.statsDescription')"/>
       <div id="statsList">
         <span>ID</span>
         <span>UI Name</span>
@@ -109,7 +110,7 @@ export default {
       grid-template-columns: auto auto auto auto;
       column-gap: .4em;
       row-gap: .5em;
-      margin-left: 1em;
+      margin: .5em 0 0 1em;
       input {
         margin-left: 0;
       }

@@ -1,9 +1,11 @@
 {
     "engine.tagline": "tavel around, interact with NPCs, and create worlds with words",
+    "gameEditor.settings.add": "add",
+    "gameEditor.settings.attributesDescription": "Attributes get selected by the player when they start a new game",
     "gameEditor.settings.currencyName": "Currency Name",
     "gameEditor.settings.delete": "delete",
-    "gameEditor.settings.add": "add",
     "gameEditor.settings.gameName": "Game Name",
+    "gameEditor.settings.statsDescription": "Stats get calculated from the player's level, attributes, items, and perks",
     "gameEditor.tab.characters": "Characters",
     "gameEditor.tab.gameinfo": "Game Info",
     "gameEditor.tab.locations": "Locations",
