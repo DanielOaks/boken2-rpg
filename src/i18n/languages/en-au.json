@@ -1,6 +1,8 @@
 {
     "engine.tagline": "tavel around, interact with NPCs, and create worlds with words",
     "gameEditor.settings.currencyName": "Currency Name",
+    "gameEditor.settings.delete": "delete",
+    "gameEditor.settings.add": "add",
     "gameEditor.settings.gameName": "Game Name",
     "gameEditor.tab.characters": "Characters",
     "gameEditor.tab.gameinfo": "Game Info",

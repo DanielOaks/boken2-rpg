@@ -74,7 +74,31 @@ export default new Vuex.Store({
       if (pl.currencyName) {
         state.gameData.currencyName = pl.currencyName;
       }
-    }
+    },
+    gameDataChangeStat (state, pl) {
+      if (pl.uiName !== undefined) {
+        Vue.set(state.gameData.stats[pl.id], 'uiName', pl.uiName);
+      }
+      if (pl.fullName !== undefined) {
+        Vue.set(state.gameData.stats[pl.id], 'fullName', pl.fullName);
+      }
+    },
+    gameDataDeleteStat (state, pl) {
+      Vue.delete(state.gameData.stats, pl);
+    },
+    gameDataCreateStat (state, pl) {
+      Vue.set(state.gameData.stats, pl.id, {});
+      if (pl.uiName) {
+        state.gameData.stats[pl.id].uiName = pl.uiName;
+      }
+      if (pl.fullName) {
+        state.gameData.stats[pl.id].fullName = pl.fullName;
+      }
+      // will only show in iterface if it exists
+      if (!state.gameState.player.stats[pl.id]) {
+        Vue.set(state.gameState.player.stats, pl.id, {});
+      }
+    },
 
     // game state mutations
   },

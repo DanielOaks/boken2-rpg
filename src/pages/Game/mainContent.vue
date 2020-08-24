@@ -1,7 +1,7 @@
 <template>
   <div id="mainContent">
-    <h1>Boken2-RPG</h1>
-    <p>Welcome to the Boken2-RPG Engine example game. Hope this is interesting!</p>
+    <h1 v-text="$store.getters.gameDataGameName"/>
+    <p>Welcome to the Boken2-RPG example game. This exists to test the engine's UI. Hope this is interesting!</p>
   </div>
 </template>
 

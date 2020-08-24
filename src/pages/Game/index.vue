@@ -27,7 +27,7 @@
           :max="$store.getters.gameStatePlayerStats[key].default"
           :value="$store.getters.gameStatePlayerStats[key].current"/>
         <sidebarHeader :name="$t('terms.attributes')" extraMargin/>
-        <progressionBar v-for="(info, key) in $store.getters.gameDataAttributes" :key="key"
+        <progressionBar v-for="(info, key) in $store.getters.gameDataAttributes" :key="key+'-'+info.uiName+'-'+info.fullName"
           :name="info.uiName || info.fullName"
           :max="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"
           :value="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"/>
