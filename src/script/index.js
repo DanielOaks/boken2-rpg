@@ -25,11 +25,11 @@ A.sequenceOf([plainTextMatch,
 }));
 
 
-export const printParser = A.between (A.str('{{')) (A.str('}}')) (A.everyCharUntil(A.str('}}')))
+const printParser = A.between (A.str('{{')) (A.str('}}')) (A.everyCharUntil(A.str('}}')))
 .map(x => ({
     type: 'print',
     value: x,
 }));
 
 // map slices off the endOfInput
-export const scriptParser = A.sequenceOf([A.many1(A.choice([printParser, textParser])), A.endOfInput]).map(x => (x[0]));
+export const parser = A.sequenceOf([A.many1(A.choice([printParser, textParser])), A.endOfInput]).map(x => (x[0]));

@@ -1,6 +1,6 @@
-# Boken2-RPG Parser
+# Boken2-RPG Script Parser
 
-This parses Boken2-RPG scripts, what our pages are written in. It's inspired by [Liquid](https://shopify.github.io/liquid/) to some extent.
+This parses/executes Boken2-RPG scripts, what our pages are written in. It's inspired by [Liquid](https://shopify.github.io/liquid/) to some extent.
 
 ## Language Overview
 
