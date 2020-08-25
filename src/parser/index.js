@@ -8,6 +8,8 @@ const escapedMatch = A.choice([A.str('\\\\'), A.str('\\{')])
 
 const plainTextMatch = A.everyCharUntil(A.choice([A.anyOfString('\\{'), A.endOfInput]));
 
+// the .join('')'s are safe here because textParser will never contain any other kind of
+//  content.
 const textParser =
 A.sequenceOf([plainTextMatch,
     A.many(
@@ -22,4 +24,12 @@ A.sequenceOf([plainTextMatch,
     value: x.join(''),
 }));
 
-export const scriptParser = A.sequenceOf([textParser, A.endOfInput]);
+
+export const printParser = A.between (A.str('{{')) (A.str('}}')) (A.everyCharUntil(A.str('}}')))
+.map(x => ({
+    type: 'print',
+    value: x,
+}));
+
+// map slices off the endOfInput
+export const scriptParser = A.sequenceOf([A.many1(A.choice([printParser, textParser])), A.endOfInput]).map(x => (x[0]));
