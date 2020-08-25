@@ -1,5 +1,14 @@
 const A = require('arcsecond');
 
+
+const variableParser = A.sequenceOf([A.optionalWhitespace, A.letter, A.many(A.choice([A.letter, A.digit, A.char('.')])).map(x => (x.join(''))), A.optionalWhitespace]).map(x => (x.join('').trim()))
+.map(x => ({
+    type: 'variable',
+    value: x,
+}));
+export const formulaParser = variableParser;
+
+
 const commentMatch = A.between (A.str('{#')) (A.str('#}')) (A.everyCharUntil(A.str('#}')))
 .map(x => (''));
 
@@ -25,7 +34,7 @@ A.sequenceOf([plainTextMatch,
 }));
 
 
-const printParser = A.between (A.str('{{')) (A.str('}}')) (A.everyCharUntil(A.str('}}')))
+const printParser = A.between (A.str('{{')) (A.str('}}')) (formulaParser)
 .map(x => ({
     type: 'print',
     value: x,
