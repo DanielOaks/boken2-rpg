@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import {createApp} from 'vue';
 import App from './App.vue'
 import store from './store'
 import i18n from './i18n'
@@ -17,15 +17,11 @@ store.watch(
 );
 
 /* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  store,
+const app = createApp({
   i18n,
   template: '<app ref="app" />',
   components: {
     App,
-  },
-  data: {
   },
   mounted: function() {
     console.log('Loading example game info', exampleData);
@@ -36,3 +32,6 @@ new Vue({
     app.$refs.game.show()
   },
 });
+app.use(i18n);
+app.use(store);
+app.mount('#app');

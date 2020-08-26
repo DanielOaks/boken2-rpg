@@ -1,7 +1,7 @@
 <template>
   <div id="homepage" class="app-page" :class="{hidden2: !$store.getters.mainMenuActive}"><div>
     <h1>Boken2-RPG</h1>
-    <p class="tagline" v-text="$t('engine.tagline')"/>
+    <p class="tagline" v-text="t('engine.tagline')"/>
     <a href="https://github.com/DanielOaks/boken2-rpg/">GitHub Repo</a>
 
     <div class="newGameCreation">
@@ -18,17 +18,20 @@
     </div>
 
     <div class="startButtons">
-      <div class="btn" @click="loadSavegame()" v-text="$t('homepage.newgame')"/>
-      <div class="btn" @click="loadSavegame()" v-text="$t('homepage.loadgame')"/>
-      <div class="btn" @click="loadSavegame()" v-text="$t('homepage.resume')"/>
+      <div class="btn" @click="loadSavegame()" v-text="t('homepage.newgame')"/>
+      <div class="btn" @click="loadSavegame()" v-text="t('homepage.loadgame')"/>
+      <div class="btn" @click="loadSavegame()" v-text="t('homepage.resume')"/>
     </div>
   </div></div>
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'Homepage',
-  components: {
+  setup() {
+    return useI18n();
   },
   methods: {
     loadSavegame: function () {

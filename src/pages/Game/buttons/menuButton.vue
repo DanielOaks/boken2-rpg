@@ -5,8 +5,13 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'MenuButton',
+  setup() {
+    return useI18n();
+  },
   props: {
     btn: String,
     big: Boolean,
@@ -17,7 +22,7 @@ export default {
       this.$store.commit('showMainMenu');
     },
     hover: function () {
-      this.$store.commit('showGameHoverHint', {name: this.$t(`menuButton.${this.$props.btn}.name`), description: this.$t(`menuButton.${this.$props.btn}.description`)});
+      this.$store.commit('showGameHoverHint', {name: this.t(`menuButton.${this.$props.btn}.name`), description: this.t(`menuButton.${this.$props.btn}.description`)});
     },
     hoverLeave: function () {
       this.$store.commit('hideGameHoverHint');

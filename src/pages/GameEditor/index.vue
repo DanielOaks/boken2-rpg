@@ -2,22 +2,26 @@
   <div id="gameEditor" class="app-page">
     <settingsPage/>
     <div class="tabs">
-      <div class="tab active" v-text="$t('gameEditor.tab.gameinfo')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.characters')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.locations')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.quests')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.perks')"/>
+      <div class="tab active" v-text="t('gameEditor.tab.gameinfo')"/>
+      <div class="tab" v-text="t('gameEditor.tab.characters')"/>
+      <div class="tab" v-text="t('gameEditor.tab.locations')"/>
+      <div class="tab" v-text="t('gameEditor.tab.quests')"/>
+      <div class="tab" v-text="t('gameEditor.tab.perks')"/>
     </div>
   </div>
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
 import settingsPage from './settingsPage.vue'
 
 export default {
   name: 'GameEditor',
   components: {
     settingsPage,
+  },
+  setup() {
+    return useI18n();
   },
   methods: {
     show: function () {

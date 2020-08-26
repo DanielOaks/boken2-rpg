@@ -1,5 +1,6 @@
+const webpack = require('webpack');
 const path = require('path');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -10,9 +11,15 @@ module.exports = {
   },
   resolve: {
       alias: {
-          vue: 'vue/dist/vue.js'
+          vue: 'vue/dist/vue.esm-bundler.js'
       },
   },
+  plugins:[
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: true,
+    }),
+  ],
   module: {
     rules: [
       {

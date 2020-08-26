@@ -2,36 +2,41 @@
   <div class="gameEditorPage settings">
     <h1>Game Settings</h1>
     <div class="settingsMenu">
-      <label for="gameName" v-text="$t('gameEditor.settings.gameName')"/>
+      <label for="gameName" v-text="t('gameEditor.settings.gameName')"/>
       <input id="gameName" v-model="gameName" placeholder="Game Name" size="35"/>
-      <label for="currencyName" v-text="$t('gameEditor.settings.currencyName')"/>
+      <label for="currencyName" v-text="t('gameEditor.settings.currencyName')"/>
       <input id="currencyName" v-model="currencyName" placeholder="Currency Name" size="15"/>
-      <label for="statsList" v-text="$t('terms.stats')"/>
-      <p v-text="$t('gameEditor.settings.statsDescription')"/>
+      <label for="statsList" v-text="t('terms.stats')"/>
+      <p v-text="t('gameEditor.settings.statsDescription')"/>
       <div id="statsList">
         <span>ID</span>
         <span>UI Name</span>
         <span>Full Name</span>
         <span/>
         <!-- we should replace this with display: contents later... -->
-        <template v-for="(info, key) in $store.getters.gameDataStats">
-          <span :key="'k_'+key" v-text="key"/>
-          <input :key="'u_'+key" :data-id="key" data-field="uiName" :value="info.uiName" size="10" @input="updateGameStat"/>
-          <input :key="'f_'+key" :data-id="key" data-field="fullName" :value="info.fullName" size="20" @input="updateGameStat"/>
-          <div :key="'d_'+key" :data-id="key" class="btn" v-text="$t('gameEditor.settings.delete')" @click="deleteGameStat"/>
+        <template v-for="(info, key) in $store.getters.gameDataStats" :key="key">
+          <span v-text="key"/>
+          <input :data-id="key" data-field="uiName" :value="info.uiName" size="10" @input="updateGameStat"/>
+          <input :data-id="key" data-field="fullName" :value="info.fullName" size="20" @input="updateGameStat"/>
+          <div :data-id="key" class="btn" v-text="t('gameEditor.settings.delete')" @click="deleteGameStat"/>
         </template>
         <input id="newStatKey" ref="newGameStatKey" size="10"/>
         <input id="newStatUiName" ref="newGameStatUiName" size="10"/>
         <input id="newStatFullName" ref="newGameStatFullName" size="20"/>
-        <div class="btn" v-text="$t('gameEditor.settings.add')" @click="createGameStat"/>
+        <div class="btn" v-text="t('gameEditor.settings.add')" @click="createGameStat"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'SettingsPage',
+  setup() {
+    return useI18n();
+  },
   methods: {
     updateGameStat (e) {
       const field = e.target.getAttribute('data-field');

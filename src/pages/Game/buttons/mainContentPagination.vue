@@ -5,8 +5,13 @@
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n';
+
 export default {
   name: 'MainContentPaginationButton',
+  setup() {
+    return useI18n();
+  },
   props: {
     dir: String,
   },
@@ -15,7 +20,7 @@ export default {
       console.log('TODO: move mainContent in direction', this.$props.dir);
     },
     hover: function () {
-      this.$store.commit('showGameHoverHint', {name: this.$t(`mainContentPagination.${this.$props.dir}.name`), description: this.$t(`mainContentPagination.${this.$props.dir}.description`)});
+      this.$store.commit('showGameHoverHint', {name: this.t(`mainContentPagination.${this.$props.dir}.name`), description: this.t(`mainContentPagination.${this.$props.dir}.description`)});
     },
     hoverLeave: function () {
       this.$store.commit('hideGameHoverHint');
