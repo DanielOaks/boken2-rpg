@@ -1,3 +1,13 @@
+// here is where we actually parse scripts.
+// currently supported:
+//
+// [x] plain text
+// [x] comments
+// [x] printing variables
+// [ ] general formulas, e.g. {{ player.attribute.strength }}
+// [ ] conditionals, i.e. if
+// [ ] raw blocks
+// [ ] loops
 const A = require('arcsecond');
 
 
@@ -42,3 +52,43 @@ const printParser = A.between (A.str('{{')) (A.str('}}')) (formulaParser)
 
 // map slices off the endOfInput
 export const parser = A.sequenceOf([A.many1(A.choice([printParser, textParser])), A.endOfInput]).map(x => (x[0]));
+
+
+// here is where we take a parsed script and create the final string
+// 
+// variables are given like { "player.name": "Alice", "player.name.nickname": "Ally" }
+function runElement(element, variables) {
+  switch (element.type) {
+    case 'plainText':
+      return element.value;
+    case 'print':
+      return runElement(element.value, variables);
+    case 'variable':
+      if (variables.hasOwnProperty(element.value.toLowerCase())) {
+        return variables[element.value.toLowerCase()];
+      } else {
+        return '[no variable named '+element.value+' found]';
+      }
+    default:
+      return '[element type '+element.type+' not supported]';
+  }
+}
+
+export function run(script, variables) {
+  if (variables === undefined) {
+    variables = {};
+  }
+
+  var rootElement = script;
+  if (!rootElement.type && rootElement.result) {
+    rootElement = rootElement.result;
+  }
+
+  // recursively work out elements! \o/
+  var output = [];
+  rootElement.forEach(element => {
+    output.push(runElement(element, variables));
+  });
+
+  return output.join('');
+}
