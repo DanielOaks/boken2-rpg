@@ -7,12 +7,14 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.join(path.resolve(__dirname), 'dist'),
+    sourceMapFilename: '[file].map',
   },
   resolve: {
       alias: {
           vue: 'vue/dist/vue.js'
       },
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
