@@ -4,10 +4,11 @@
   </a>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n';
 
-export default {
+export default defineComponent({
   name: 'mainButtonsPaginationButton',
   setup() {
     return useI18n();
@@ -26,7 +27,7 @@ export default {
       this.$store.commit('hideGameHoverHint');
     },
   },
-}
+});
 </script>
 
 <style lang="scss">

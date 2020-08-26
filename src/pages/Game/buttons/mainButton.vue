@@ -5,8 +5,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'MainButton',
   props: {
     btn: String,
@@ -23,7 +25,7 @@ export default {
       this.$store.commit('hideGameHoverHint');
     },
   },
-}
+});
 </script>
 
 <style lang="scss">

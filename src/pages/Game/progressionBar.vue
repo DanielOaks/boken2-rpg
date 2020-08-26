@@ -5,15 +5,17 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'ProgressionBar',
   props: {
     name: String,
     value: Number,
     max: Number,
   },
-}
+});
 </script>
 
 <style lang="scss">

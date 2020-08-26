@@ -5,15 +5,17 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'DisplayBar',
   props: {
     margin: Boolean,
     name: String,
     value: String,
   },
-}
+});
 </script>
 
 <style lang="scss">

@@ -5,10 +5,12 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'MainContent',
-}
+});
 </script>
 
 <style lang="scss">

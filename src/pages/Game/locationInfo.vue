@@ -8,14 +8,16 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'LocationInfo',
   props: {
     placeName: String,
     regionName: String,
   },
-}
+});
 </script>
 
 <style lang="scss">

@@ -18,15 +18,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import mainButton from './buttons/mainButton.vue'
 
-export default {
+export default defineComponent({
   name: 'MainButtonsPane',
   components: {
     mainButton,
   },
-}
+});
 </script>
 
 <style lang="scss">

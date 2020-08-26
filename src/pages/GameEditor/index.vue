@@ -11,11 +11,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n';
 import settingsPage from './settingsPage.vue'
 
-export default {
+export default defineComponent({
   name: 'GameEditor',
   components: {
     settingsPage,
@@ -31,7 +32,7 @@ export default {
       this.$el.classList.remove('hidden');
     },
   },
-}
+});
 </script>
 
 <style lang="scss">

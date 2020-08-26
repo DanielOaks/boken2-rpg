@@ -5,6 +5,7 @@ const emptyGameData = {
   stats: {},
   attributes: {},
   xpToLevel: {},
+  currencyName: '',
 }
 
 const emptyGameState = {
@@ -16,27 +17,43 @@ const emptyGameState = {
       level: 0,
       xp: 0,
     },
+    currency: 0,
   },
 }
 
-export default createStore({
-  state: {
-    mainMenuActive: true,
+export type State = {
+  mainMenuActive: boolean,
 
-    // hint that shows when you hover over buttons
-    gameHoverHint: {
-      hidden: true,
-      name: '',
-      description: '',
-    },
-
-    // static game data
-    gameData: emptyGameData,
-
-    // transitive game state (player name, quest info, etc)
-    // this is what the save-game contains
-    gameState: emptyGameState,
+  gameHoverHint: {
+    hidden: boolean,
+    name: string,
+    description: string,
   },
+
+  gameData: typeof emptyGameData,
+  gameState: typeof emptyGameState,
+}
+
+const state: State = {
+  mainMenuActive: true,
+
+  // hint that shows when you hover over buttons
+  gameHoverHint: {
+    hidden: true,
+    name: '',
+    description: '',
+  },
+
+  // static game data
+  gameData: emptyGameData,
+
+  // transitive game state (player name, quest info, etc)
+  // this is what the save-game contains
+  gameState: emptyGameState,
+}
+
+export const store = createStore({
+  state: state,
 
   mutations: {
     // misc mutations

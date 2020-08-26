@@ -2,7 +2,7 @@
   <div class="gameEditorPage settings">
     <h1>Game Settings</h1>
     <div class="settingsMenu">
-      <label for="gameName" v-text="t('gameEditor.settings.gameName')"/>
+      <label for="gameName" v-text="i18n.t('gameEditor.settings.gameName')"/>
       <input id="gameName" v-model="gameName" placeholder="Game Name" size="35"/>
       <label for="currencyName" v-text="t('gameEditor.settings.currencyName')"/>
       <input id="currencyName" v-model="currencyName" placeholder="Currency Name" size="15"/>
@@ -29,13 +29,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n';
 
-export default {
+export default defineComponent({
   name: 'SettingsPage',
   setup() {
-    return useI18n();
+    const i18n = useI18n();
+    const store = useStore();
+    return {
+      store,
+      i18n,
+    };
   },
   methods: {
     updateGameStat (e) {
@@ -94,7 +101,7 @@ export default {
       },
     },
   },
-}
+});
 </script>
 
 <style lang="scss">

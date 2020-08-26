@@ -8,14 +8,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Game from './pages/Game/index.vue'
 import Homepage from './pages/Homepage.vue'
 import GameEditor from './pages/GameEditor/index.vue'
 import StateEditor from './pages/StateEditor.vue'
 import StateSwitcher from './pages/StateSwitcher.vue'
 
-export default {
+export default defineComponent({
   name: 'App',
   components: {
     Game,
@@ -24,7 +25,7 @@ export default {
     StateEditor,
     StateSwitcher,
   },
-}
+});
 </script>
 
 <style lang="scss">

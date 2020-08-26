@@ -10,15 +10,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import menuButton from './buttons/menuButton.vue'
 
-export default {
+export default defineComponent({
   name: 'MenuButtonsPane',
   components: {
     menuButton,
   },
-}
+});
 </script>
 
 <style lang="scss">

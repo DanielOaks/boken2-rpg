@@ -4,16 +4,17 @@ const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/main.ts',
   output: {
     filename: 'main.js',
     path: path.join(path.resolve(__dirname), 'dist'),
     sourceMapFilename: '[file].map',
   },
   resolve: {
-      alias: {
-          vue: 'vue/dist/vue.esm-bundler.js'
-      },
+    extensions: ['.ts', '.js', '.vue', '.json'],
+    alias: {
+      vue: 'vue/dist/vue.esm-bundler.js'
+    },
   },
   devtool: 'source-map',
   plugins:[
@@ -26,7 +27,14 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+      },
+      {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        },
       },
       {
         test: /\.css$/,

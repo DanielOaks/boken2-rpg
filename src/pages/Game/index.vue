@@ -45,7 +45,8 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n';
 import locationInfo from './locationInfo.vue'
 import gameMap from './gameMap.vue'
@@ -59,7 +60,7 @@ import mainButtonsPane from './mainButtonsPane.vue'
 import mainContentPaginationButton from './buttons/mainContentPagination.vue'
 import mainButtonsPaginationButton from './buttons/mainButtonsPagination.vue'
 
-export default {
+export default defineComponent({
   name: 'Game',
   setup() {
     return useI18n();
@@ -102,7 +103,7 @@ export default {
       return num.toString();
     },
   },
-}
+});
 </script>
 
 <style lang="scss" scoped>

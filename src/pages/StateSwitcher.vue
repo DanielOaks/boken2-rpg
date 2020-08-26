@@ -6,8 +6,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'StateSwitcher',
   methods: {
     showGame: function () {
@@ -20,7 +22,7 @@ export default {
       this.$parent.$refs.stateEditor.show();
     },
   },
-}
+});
 </script>
 
 <style lang="scss" scoped>
