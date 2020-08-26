@@ -1,5 +1,5 @@
 var assert = require('assert');
-const S = require('../src/script/index.ts');
+const S = require('../src/script/index.js');
 
 describe('Script Parsing', function () {
   describe('plainText', function () {
