@@ -143,7 +143,7 @@ describe('Script Running', function () {
     });
 
     it('should parse a script with both plain text and print tags', function () {
-      const script = `Hey there {{player.name}}, how are you today? {{ npc.boss.name}}{{ situation }}`;
+      const script = `{# welcome script #}Hey there {{player.name}}, how are you today? {{ npc.boss.name}}{{ situation }}`;
       vars = {
         'player.name': 'Alice',
         'npc.boss.name': 'Jeremy',
