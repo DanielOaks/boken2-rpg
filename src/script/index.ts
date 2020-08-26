@@ -57,7 +57,7 @@ export const parser = A.sequenceOf([A.many1(A.choice([printParser, textParser]))
 // here is where we take a parsed script and create the final string
 // 
 // variables are given like { "player.name": "Alice", "player.name.nickname": "Ally" }
-function runElement(element, variables) {
+function runElement(element: { type: string; value: any; }, variables: {}) {
   switch (element.type) {
     case 'plainText':
       return element.value;
@@ -74,7 +74,7 @@ function runElement(element, variables) {
   }
 }
 
-export function run(script, variables) {
+export function run(script: any, variables: {}) {
   if (variables === undefined) {
     variables = {};
   }
