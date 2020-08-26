@@ -8,12 +8,14 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.join(path.resolve(__dirname), 'dist'),
+    sourceMapFilename: '[file].map',
   },
   resolve: {
       alias: {
           vue: 'vue/dist/vue.esm-bundler.js'
       },
   },
+  devtool: 'source-map',
   plugins:[
     new webpack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
