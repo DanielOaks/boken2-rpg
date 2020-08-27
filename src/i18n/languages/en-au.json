@@ -8,6 +8,7 @@
     "gameEditor.settings.statsDescription": "Stats get calculated from the player's level, attributes, items, and perks",
     "gameEditor.tab.characters": "Characters",
     "gameEditor.tab.gameinfo": "Game Info",
+    "gameEditor.tab.items": "Items",
     "gameEditor.tab.perks": "Perks",
     "gameEditor.tab.quests": "Quests",
     "gameEditor.tab.regions": "Regions",

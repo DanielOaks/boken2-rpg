@@ -7,6 +7,7 @@
       <div class="tab" v-text="$t('gameEditor.tab.characters')"/>
       <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="regions" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.quests')"/>
+      <div class="tab" v-text="$t('gameEditor.tab.items')"/>
       <div class="tab" v-text="$t('gameEditor.tab.perks')"/>
     </div>
   </div>
