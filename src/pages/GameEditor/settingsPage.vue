@@ -1,29 +1,31 @@
 <template>
   <div class="gameEditorPage settings">
-    <h1>Game Settings</h1>
-    <div class="settingsMenu">
-      <label for="gameName" v-text="$t('gameEditor.settings.gameName')"/>
-      <input id="gameName" v-model="gameName" placeholder="Game Name" size="35"/>
-      <label for="currencyName" v-text="$t('gameEditor.settings.currencyName')"/>
-      <input id="currencyName" v-model="currencyName" placeholder="Currency Name" size="15"/>
-      <label for="statsList" v-text="$t('terms.stats')"/>
-      <p v-text="$t('gameEditor.settings.statsDescription')"/>
-      <div id="statsList">
-        <span>ID</span>
-        <span>UI Name</span>
-        <span>Full Name</span>
-        <span/>
-        <!-- we should replace this with display: contents later... -->
-        <template v-for="(info, key) in $store.getters.gameDataStats">
-          <span :key="'k_'+key" v-text="key"/>
-          <input :key="'u_'+key" :data-id="key" data-field="uiName" :value="info.uiName" size="10" @input="updateGameStat"/>
-          <input :key="'f_'+key" :data-id="key" data-field="fullName" :value="info.fullName" size="20" @input="updateGameStat"/>
-          <div :key="'d_'+key" :data-id="key" class="btn" v-text="$t('gameEditor.settings.delete')" @click="deleteGameStat"/>
-        </template>
-        <input id="newStatKey" ref="newGameStatKey" size="10"/>
-        <input id="newStatUiName" ref="newGameStatUiName" size="10"/>
-        <input id="newStatFullName" ref="newGameStatFullName" size="20"/>
-        <div class="btn" v-text="$t('gameEditor.settings.add')" @click="createGameStat"/>
+    <div class="contained">
+      <h1>Game Settings</h1>
+      <div class="settingsMenu">
+        <label for="gameName" v-text="$t('gameEditor.settings.gameName')"/>
+        <input id="gameName" v-model="gameName" placeholder="Game Name" size="35"/>
+        <label for="currencyName" v-text="$t('gameEditor.settings.currencyName')"/>
+        <input id="currencyName" v-model="currencyName" placeholder="Currency Name" size="15"/>
+        <label for="statsList" v-text="$t('terms.stats')"/>
+        <p v-text="$t('gameEditor.settings.statsDescription')"/>
+        <div id="statsList">
+          <span>ID</span>
+          <span>UI Name</span>
+          <span>Full Name</span>
+          <span/>
+          <!-- we should replace this with display: contents later... -->
+          <template v-for="(info, key) in $store.getters.gameDataStats">
+            <span :key="'k_'+key" v-text="key"/>
+            <input :key="'u_'+key" :data-id="key" data-field="uiName" :value="info.uiName" size="10" @input="updateGameStat"/>
+            <input :key="'f_'+key" :data-id="key" data-field="fullName" :value="info.fullName" size="20" @input="updateGameStat"/>
+            <div :key="'d_'+key" :data-id="key" class="btn" v-text="$t('gameEditor.settings.delete')" @click="deleteGameStat"/>
+          </template>
+          <input id="newStatKey" ref="newGameStatKey" size="10"/>
+          <input id="newStatUiName" ref="newGameStatUiName" size="10"/>
+          <input id="newStatFullName" ref="newGameStatFullName" size="20"/>
+          <div class="btn" v-text="$t('gameEditor.settings.add')" @click="createGameStat"/>
+        </div>
       </div>
     </div>
   </div>
@@ -33,6 +35,12 @@
 export default {
   name: 'SettingsPage',
   methods: {
+    show: function () {
+      for (const p of document.getElementsByClassName('gameEditorPage')) {
+        p.classList.add('hidden');
+      }
+      this.$el.classList.remove('hidden');
+    },
     updateGameStat (e) {
       const field = e.target.getAttribute('data-field');
       var change = {
@@ -95,6 +103,14 @@ export default {
 <style lang="scss">
 .gameEditorPage.settings {
   text-align: center;
+  overflow-y: auto;
+  padding: .5em 0 1em;
+  .contained {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
   .settingsMenu {
     background: var(--editor-bg-color);
     color: var(--editor-text-color);
@@ -122,8 +138,7 @@ export default {
     }
   }
   h1 {
-    margin-top: 3em;
-    margin-bottom: .5em;
+    margin-bottom: .2em;
     text-shadow: 0 1px var(--editor-header-shadow-color);
   }
   label {

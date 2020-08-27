@@ -1,10 +1,11 @@
 <template>
   <div id="gameEditor" class="app-page">
-    <settingsPage/>
+    <settingsPage ref="settings"/>
+    <regionsPage ref="regions"/>
     <div class="tabs">
-      <div class="tab active" v-text="$t('gameEditor.tab.gameinfo')"/>
+      <div class="tab active" v-text="$t('gameEditor.tab.gameinfo')" data-page="settings" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.characters')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.locations')"/>
+      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="regions" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.quests')"/>
       <div class="tab" v-text="$t('gameEditor.tab.perks')"/>
     </div>
@@ -13,11 +14,13 @@
 
 <script>
 import settingsPage from './settingsPage.vue'
+import regionsPage from './regionsPage.vue'
 
 export default {
   name: 'GameEditor',
   components: {
     settingsPage,
+    regionsPage,
   },
   methods: {
     show: function () {
@@ -25,6 +28,21 @@ export default {
         p.classList.add('hidden');
       }
       this.$el.classList.remove('hidden');
+    },
+    switchTab: function (e) {
+      // change tab colour
+      for (const p of e.target.parentNode.children) {
+        p.classList.remove('active');
+      }
+      e.target.classList.add('active');
+
+      // change page
+      const tab = this.$refs[e.target.dataset.page];
+      if (tab) {
+        tab.show();
+      } else {
+        console.log('tab named [', e.target.dataset.page, '] does not exist in $refs');
+      }
     },
   },
 }
@@ -47,9 +65,14 @@ export default {
 
   > .gameEditorPage {
     height: 100%;
+    flex: auto;
+    &.hidden {
+      display: none;
+    }
   }
   > .tabs {
     background: var(--editor-bar-bg-color);
+    flex: none;
     display: flex;
     > .tab {
       padding: .3em .7em;
