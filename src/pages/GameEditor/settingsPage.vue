@@ -1,7 +1,7 @@
 <template>
   <div class="gameEditorPage settings">
     <div class="contained">
-      <h1>Game Settings</h1>
+      <h1 v-text="$t('gameEditor.tab.gameinfo')"/>
       <div class="settingsMenu">
         <label for="gameName" v-text="$t('gameEditor.settings.gameName')"/>
         <input id="gameName" v-model="gameName" placeholder="Game Name" size="35"/>

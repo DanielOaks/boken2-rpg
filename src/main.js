@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
 import i18n from './i18n'
+import VueTreeList from 'vue-tree-list'
 require('@openfonts/open-sans_all')
 
 import exampleData from './store/exampleData'
@@ -15,6 +16,8 @@ store.watch(
     document.title = store.getters.gameDataGameName;
   }
 );
+
+Vue.use(VueTreeList)
 
 /* eslint-disable no-new */
 new Vue({

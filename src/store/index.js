@@ -8,6 +8,7 @@ const emptyGameData = {
   stats: {},
   attributes: {},
   xpToLevel: {},
+  regions: {},
 }
 
 const emptyGameState = {
@@ -124,6 +125,54 @@ export default new Vuex.Store({
     },
     gameDataCurrencyName: (state) => {
       return state.gameData.currencyName;
+    },
+    gameDataRegionsInTreeFormat: (state) => {
+      // this is the format consumed by vue-tree-list:new Tree()
+      let tree = [];
+
+      function solveMap(id, map) {
+        // console.log('solving', id, ': map')
+        let thisMap = {
+          id: id,
+          name: id,
+          isLeaf: true,
+        }
+        if (map.name) {
+          thisMap.name = map.name;
+        }
+        return thisMap;
+      }
+
+      function solveRegion(id, region) {
+        // console.log('solving', id, ': region')
+        let thisRegion = {
+          id: id,
+          name: id,
+          children: [],
+        };
+        if (region.name) {
+          thisRegion.name = region.name;
+        }
+
+        for (let regionId in region.regions) {
+          thisRegion.children.push(solveRegion(id+'/'+regionId, region.regions[regionId]));
+        }
+        for (let mapId in region.maps) {
+          thisRegion.children.push(solveMap(id+'/'+mapId, region.maps[mapId]));
+        }
+        return thisRegion;
+      }
+
+      for (let regionId in state.gameData.regions) {
+        // console.log('  solving root region', regionId);
+        tree.push(solveRegion(regionId, state.gameData.regions[regionId]));
+      }
+      for (let mapId in state.gameData.maps) {
+        // console.log('  solving root map', mapId);
+        tree.push(solveMap(mapId, state.gameData.maps[mapId]));
+      }
+
+      return tree;
     },
 
     // game state getters

@@ -3,7 +3,7 @@
 
 export default {
   gameData: {
-    name: 'Boken2-RPG Example Game',
+    name: 'Adventures of Troto',
     stats: {
       armour: {
         fullName: 'Armour',
@@ -51,6 +51,29 @@ export default {
       10: 10000,
     },
     currencyName: 'Coins',
+    regions: {
+      troto: {
+        name: "Troto",
+        regions: {
+          eastTroto: {
+            name: "East Troto",
+            maps: {
+              marketplace: {
+                name: "Marketplace",
+              },
+              aliceHouse: {
+                name: "Alice's House",
+              },
+            }
+          }
+        }
+      }
+    },
+    maps: {
+      startingArea: {
+        name: "Starting Area",
+      },
+    },
   },
 
   gameState: {
