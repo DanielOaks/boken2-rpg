@@ -38,7 +38,8 @@ function utilGetNewRegionMapId(id, region) {
 
 export default new Vuex.Store({
   state: {
-    mainMenuActive: true,
+    showMainMenu: true,
+    appPage: 'game',
 
     // hint that shows when you hover over buttons
     gameHoverHint: {
@@ -58,10 +59,13 @@ export default new Vuex.Store({
   mutations: {
     // misc mutations
     showMainMenu (state) {
-      state.mainMenuActive = true;
+      state.showMainMenu = true;
     },
     hideMainMenu (state) {
-      state.mainMenuActive = false;
+      state.showMainMenu = false;
+    },
+    changeAppPage (state, pl) {
+      state.appPage = pl;
     },
     showGameHoverHint (state, pl) {
       state.gameHoverHint.hidden = false;
@@ -173,8 +177,11 @@ export default new Vuex.Store({
  
   getters: {
     // misc getters
-    mainMenuActive: (state) => {
-      return state.mainMenuActive;
+    showMainMenu: (state) => {
+      return state.showMainMenu;
+    },
+    appPage: (state) => {
+      return state.appPage;
     },
     gameHoverHint: (state) => {
       return state.gameHoverHint;

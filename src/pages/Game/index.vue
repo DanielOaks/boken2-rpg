@@ -74,14 +74,6 @@ export default {
     mainButtonsPaginationButton,
   },
   methods: {
-    show() {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const p of document.getElementsByClassName('app-page')) {
-        p.classList.add('hidden');
-      }
-      this.$el.classList.remove('hidden');
-    },
-
     // utility function...
     // feels icky putting it here, but I tried splitting it out and into a
     //  separate js file and webpack seemed to foil me? to revisit later.
@@ -111,11 +103,6 @@ export default {
   top: 0;
   background: var(--main-bg-color);
   color: var(--main-text-color);
-
-  &.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
   display: flex;
 }
 #leftPane, #rightPane {

@@ -1,5 +1,5 @@
 <template>
-  <div id="homepage" class="app-page" :class="{hidden2: !$store.getters.mainMenuActive}"><div>
+  <div id="homepage" class="app-page"><div>
     <h1>Boken2-RPG</h1>
     <p class="tagline" v-text="$t('engine.tagline')"/>
     <a href="https://github.com/DanielOaks/boken2-rpg/">GitHub Repo</a>
@@ -48,10 +48,6 @@ export default {
   background: var(--main-bg-color);
   color: var(--main-text-color);
   text-align: center;
-  &.hidden2 {
-    opacity: 0;
-    pointer-events: none;
-  }
   display: flex;
   flex-direction: column;
   justify-content: center;

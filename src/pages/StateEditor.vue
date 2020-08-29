@@ -7,15 +7,6 @@
 <script>
 export default {
   name: 'StateEditor',
-  methods: {
-    show() {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const p of document.getElementsByClassName('app-page')) {
-        p.classList.add('hidden');
-      }
-      this.$el.classList.remove('hidden');
-    },
-  },
 }
 </script>
 
@@ -27,9 +18,5 @@ export default {
   left: 0;
   top: 0;
   background: #3af;
-  &.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
 }
 </style>

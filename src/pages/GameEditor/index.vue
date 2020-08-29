@@ -24,13 +24,6 @@ export default {
     regionsPage,
   },
   methods: {
-    show() {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const p of document.getElementsByClassName('app-page')) {
-        p.classList.add('hidden');
-      }
-      this.$el.classList.remove('hidden');
-    },
     switchTab(e) {
       // change tab colour
       // eslint-disable-next-line no-restricted-syntax
@@ -59,10 +52,6 @@ export default {
   left: 0;
   top: 0;
   background: var(--editor-bg-2-color);
-  &.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
   display: flex;
   flex-direction: column;
 

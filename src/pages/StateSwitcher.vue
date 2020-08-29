@@ -1,8 +1,8 @@
 <template>
   <div id="stateSwitcher">
-    <img src="/assets/buttons/game.svg" v-on:click="showGame()"/>
-    <img src="/assets/buttons/game-editor.svg" v-on:click="showGameEditor()"/>
-    <img src="/assets/buttons/state-editor.svg" v-on:click="showStateEditor()"/>
+    <img src="/assets/buttons/game.svg"  v-on:click="show('game')"/>
+    <img src="/assets/buttons/game-editor.svg"  v-on:click="show('gameEditor')"/>
+    <img src="/assets/buttons/state-editor.svg"  v-on:click="show('stateEditor')"/>
   </div>
 </template>
 
@@ -10,14 +10,8 @@
 export default {
   name: 'StateSwitcher',
   methods: {
-    showGame() {
-      this.$parent.$refs.game.show();
-    },
-    showGameEditor() {
-      this.$parent.$refs.gameEditor.show();
-    },
-    showStateEditor() {
-      this.$parent.$refs.stateEditor.show();
+    show(page) {
+      this.$store.commit('changeAppPage', page);
     },
   },
 }

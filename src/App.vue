@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <game ref="game" />
-    <game-editor ref="gameEditor" />
-    <state-editor ref="stateEditor" />
-    <state-switcher ref="stateSwitcher" />
-    <homepage ref="homepage" />
+    <game ref="game" v-show="$store.getters.appPage == 'game'"/>
+    <game-editor ref="gameEditor" v-show="$store.getters.appPage == 'gameEditor'"/>
+    <state-editor ref="stateEditor" v-show="$store.getters.appPage == 'stateEditor'"/>
+    <state-switcher ref="stateSwitcher"/>
+    <homepage ref="homepage" v-if="$store.getters.showMainMenu"/>
   </div>
 </template>
 
