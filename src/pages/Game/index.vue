@@ -74,7 +74,8 @@ export default {
     mainButtonsPaginationButton,
   },
   methods: {
-    show: function () {
+    show() {
+      // eslint-disable-next-line no-restricted-syntax
       for (const p of document.getElementsByClassName('app-page')) {
         p.classList.add('hidden');
       }
@@ -84,7 +85,7 @@ export default {
     // utility function...
     // feels icky putting it here, but I tried splitting it out and into a
     //  separate js file and webpack seemed to foil me? to revisit later.
-    formatBigNumber: function (num, min) {
+    formatBigNumber(num, min) {
       // this can happen if the dataStore returns a bad value
       if (num === undefined) {
         return 'NaN';
@@ -93,7 +94,7 @@ export default {
         return num.toString();
       }
       if (1000 < num) {
-        return (num/1000).toFixed(1) + 'K';
+        return `${(num/1000).toFixed(1)}K`;
       }
       return num.toString();
     },

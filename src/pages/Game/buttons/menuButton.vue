@@ -12,14 +12,14 @@ export default {
     big: Boolean,
   },
   methods: {
-    clicked: function () {
+    clicked() {
       console.log('TODO: menuButton clicked', this.$props.btn);
       this.$store.commit('showMainMenu');
     },
-    hover: function () {
+    hover() {
       this.$store.commit('showGameHoverHint', {name: this.$t(`menuButton.${this.$props.btn}.name`), description: this.$t(`menuButton.${this.$props.btn}.description`)});
     },
-    hoverLeave: function () {
+    hoverLeave() {
       this.$store.commit('hideGameHoverHint');
     },
   },

@@ -11,13 +11,13 @@ export default {
     dir: String,
   },
   methods: {
-    move: function () {
+    move() {
       console.log('TODO: move mainButtons in direction', this.$props.dir);
     },
-    hover: function () {
+    hover() {
       this.$store.commit('showGameHoverHint', {name: this.$t(`mainButtonsPagination.${this.$props.dir}.name`), description: this.$t(`mainButtonsPagination.${this.$props.dir}.description`)});
     },
-    hoverLeave: function () {
+    hoverLeave() {
       this.$store.commit('hideGameHoverHint');
     },
   },

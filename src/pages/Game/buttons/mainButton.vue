@@ -13,13 +13,13 @@ export default {
     wasd: Boolean,
   },
   methods: {
-    clicked: function () {
+    clicked() {
       console.log('TODO: mainButton clicked', this.$props.btn);
     },
-    hover: function () {
+    hover() {
       this.$store.commit('showGameHoverHint', {name: this.$props.btn, description: 'This does something!!'});
     },
-    hoverLeave: function () {
+    hoverLeave() {
       this.$store.commit('hideGameHoverHint');
     },
   },

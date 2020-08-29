@@ -15,19 +15,20 @@
 <script>
 export default {
   name: 'MapEditorPage',
-  data: function () {
+  data() {
     return {
       mapId: '',
     }
   },
   methods: {
-    show: function () {
+    show() {
+      // eslint-disable-next-line no-restricted-syntax
       for (const p of document.getElementsByClassName('regionEditorPage')) {
         p.classList.add('hidden');
       }
       this.$el.classList.remove('hidden');
     },
-    goBack: function () {
+    goBack() {
       this.$parent.$refs.regionTreePage.show();
     },
   }

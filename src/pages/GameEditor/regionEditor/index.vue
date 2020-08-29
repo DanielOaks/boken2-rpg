@@ -19,13 +19,14 @@ export default {
     mapEditorPage
   },
   methods: {
-    show: function () {
+    show() {
+      // eslint-disable-next-line no-restricted-syntax
       for (const p of document.getElementsByClassName('gameEditorPage')) {
         p.classList.add('hidden');
       }
       this.$el.classList.remove('hidden');
     },
-    created: function () {
+    created() {
       this.$refs.regionTreePage.show();
     }
   },

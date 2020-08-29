@@ -195,8 +195,6 @@ export default new Vuex.Store({
     },
     gameDataRegionsInTreeFormat: (state) => {
       // this is the format consumed by vue-tree-list:new Tree()
-      const tree = [];
-
       function solveRegion(id, region) {
         const thisRegion = {
           id,
@@ -206,32 +204,19 @@ export default new Vuex.Store({
 
         // eslint-disable-next-line guard-for-in,no-restricted-syntax
         for (const regionId in region.regions) {
-          thisRegion.children.push(solveRegion(`${id}/${regionId}`, region.regions[regionId]));
+          thisRegion.children.push(solveRegion(id ? `${id}/${regionId}` : regionId, region.regions[regionId]));
         }
         // eslint-disable-next-line guard-for-in,no-restricted-syntax
         for (const mapId in region.maps) {
           thisRegion.children.push({
-            id: `${id}/${mapId}`,
+            id: id ? `${id}/${mapId}` : mapId,
             name: region.maps[mapId].name || mapId,
             isLeaf: true,
           })
         }
         return thisRegion;
       }
-      // eslint-disable-next-line guard-for-in,no-restricted-syntax
-      for (const regionId in state.gameData.regions) {
-        tree.push(solveRegion(regionId, state.gameData.regions[regionId]));
-      }
-      // eslint-disable-next-line guard-for-in,no-restricted-syntax
-      for (const mapId in state.gameData.maps) {
-        tree.push({
-          id: mapId,
-          name: state.gameData.maps[mapId].name || mapId,
-          isLeaf: true,
-        })
-      }
-
-      return tree;
+      return solveRegion(undefined, state.gameData).children;
     },
 
     // game state getters

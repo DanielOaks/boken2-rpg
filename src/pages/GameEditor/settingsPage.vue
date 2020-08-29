@@ -35,7 +35,8 @@
 export default {
   name: 'SettingsPage',
   methods: {
-    show: function () {
+    show() {
+      // eslint-disable-next-line no-restricted-syntax
       for (const p of document.getElementsByClassName('gameEditorPage')) {
         p.classList.add('hidden');
       }
@@ -43,12 +44,12 @@ export default {
     },
     updateGameStat (e) {
       const field = e.target.getAttribute('data-field');
-      var change = {
+      const change = {
         id: e.target.getAttribute('data-id'),
       }
-      if (field == 'uiName') {
+      if (field === 'uiName') {
         change.uiName = e.target.value;
-      } else if (field == 'fullName') {
+      } else if (field === 'fullName') {
         change.fullName = e.target.value;
       }
 
@@ -58,7 +59,7 @@ export default {
       const id = e.target.getAttribute('data-id');
       this.$store.commit('gameDataDeleteStat', id);
     },
-    createGameStat (e) {
+    createGameStat () {
       const change = {
         id: this.$refs.newGameStatKey.value,
         uiName: this.$refs.newGameStatUiName.value,

@@ -20,7 +20,7 @@ export const formulaParser = variableParser;
 
 
 const commentMatch = A.between (A.str('{#')) (A.str('#}')) (A.everyCharUntil(A.str('#}')))
-.map(x => (''));
+.map(() => (''));
 
 const escapedMatch = A.choice([A.str('\\\\'), A.str('\\{')])
 .map(x => (x.charAt(1))); // trim escape character
@@ -64,30 +64,30 @@ function runElement(element, variables) {
     case 'print':
       return runElement(element.value, variables);
     case 'variable':
-      if (variables.hasOwnProperty(element.value.toLowerCase())) {
+      if (element.value.toLowerCase() in variables) {
         return variables[element.value.toLowerCase()];
-      } else {
-        return '[no variable named '+element.value+' found]';
-      }
+      } 
+      return `[no variable named ${element.value} found]`;
     default:
-      return '[element type '+element.type+' not supported]';
+      return `[element type ${element.type} not supported]`;
   }
 }
 
 export function run(script, variables) {
+  let vars = variables;
   if (variables === undefined) {
-    variables = {};
+    vars = {};
   }
 
-  var rootElement = script;
+  let rootElement = script;
   if (!rootElement.type && rootElement.result) {
     rootElement = rootElement.result;
   }
 
   // recursively work out elements! \o/
-  var output = [];
+  const output = [];
   rootElement.forEach(element => {
-    output.push(runElement(element, variables));
+    output.push(runElement(element, vars));
   });
 
   return output.join('');

@@ -24,14 +24,16 @@ export default {
     regionsPage,
   },
   methods: {
-    show: function () {
+    show() {
+      // eslint-disable-next-line no-restricted-syntax
       for (const p of document.getElementsByClassName('app-page')) {
         p.classList.add('hidden');
       }
       this.$el.classList.remove('hidden');
     },
-    switchTab: function (e) {
+    switchTab(e) {
       // change tab colour
+      // eslint-disable-next-line no-restricted-syntax
       for (const p of e.target.parentNode.children) {
         p.classList.remove('active');
       }

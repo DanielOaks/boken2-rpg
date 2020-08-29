@@ -31,7 +31,7 @@ export default {
   components: {
   },
   methods: {
-    loadSavegame: function () {
+    loadSavegame() {
       this.$store.commit('hideMainMenu');
     },
   },

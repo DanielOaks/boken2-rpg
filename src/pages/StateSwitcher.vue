@@ -10,13 +10,13 @@
 export default {
   name: 'StateSwitcher',
   methods: {
-    showGame: function () {
+    showGame() {
       this.$parent.$refs.game.show();
     },
-    showGameEditor: function () {
+    showGameEditor() {
       this.$parent.$refs.gameEditor.show();
     },
-    showStateEditor: function () {
+    showStateEditor() {
       this.$parent.$refs.stateEditor.show();
     },
   },

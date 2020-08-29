@@ -8,7 +8,8 @@
 export default {
   name: 'StateEditor',
   methods: {
-    show: function () {
+    show() {
+      // eslint-disable-next-line no-restricted-syntax
       for (const p of document.getElementsByClassName('app-page')) {
         p.classList.add('hidden');
       }
