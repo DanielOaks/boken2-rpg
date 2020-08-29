@@ -23,6 +23,19 @@ const emptyGameState = {
   },
 }
 
+function utilGetNewRegionMapId(id, region) {
+  let newId = id;
+  if (id === undefined || region.regions[id] || region.maps[id]) {
+    newId = 'newMap';
+    let i = 1;
+    while (newId + i in region.maps || newId + i in region.regions) {
+      i += 1;
+    }
+    newId += i;
+  }
+  return newId
+}
+
 export default new Vuex.Store({
   state: {
     mainMenuActive: true,
@@ -95,105 +108,64 @@ export default new Vuex.Store({
       if (pl.fullName) {
         state.gameData.stats[pl.id].fullName = pl.fullName;
       }
-      // will only show in iterface if it exists
+      // will only show in iterface if it exists here too
       if (!state.gameState.player.stats[pl.id]) {
         Vue.set(state.gameState.player.stats, pl.id, {});
       }
     },
     gameDataCreateRegion (state, pl) {
-      let newRegion = {
+      const newRegion = {
         name: pl.name || pl.id,
         maps: {},
         regions: {},
       }
 
-      function getNewId(id, region) {
-        if (id === undefined || region.regions[id] || region.maps[id]) {
-          id = 'newMap';
-          let i = 1;
-          while (id + i in region.maps || id + i in region.regions) {
-            i++;
-          }
-          id = id + i;
-        }
-        return id
-      }
-      // REALLY INEFFICIENT BECAUSE I'M LAZY, WE SHOULD DO THIS BETTER :<
-      function loopThroughRegions(id, region) {
-        if (id == pl.parent) {
-          Vue.set(region.regions, getNewId(pl.id, region), newRegion);
+      function setRegion(parentIds, region) {
+        if (parentIds.length === 0) {
+          Vue.set(region.regions, utilGetNewRegionMapId(pl.id, region), newRegion);
         } else {
-          for (let regionId in region.regions) {
-            loopThroughRegions(id+'/'+regionId, region.regions[regionId]);
-          }
+          setRegion(parentIds.slice(1), region.regions[parentIds[0]]);
         }
       }
       if (pl.parent) {
-        for (let regionId in state.gameData.regions) {
-          loopThroughRegions(regionId, state.gameData.regions[regionId]);
-        }
+        setRegion(pl.parent, state.gameData)
       } else {
-        Vue.set(state.gameData.regions, getNewId(pl.id, state.gameData), newRegion);
+        Vue.set(state.gameData.regions, utilGetNewRegionMapId(pl.id, state.gameData), newRegion);
       }
     },
     gameDataCreateMap (state, pl) {
-      let newMap = {
+      const newMap = {
         name: pl.name || pl.id,
         maps: {},
+        regions: {},
       }
 
-      function getNewId(id, region) {
-        if (id === undefined || region.regions[id] || region.maps[id]) {
-          id = 'newMap';
-          let i = 1;
-          while (id + i in region.maps || id + i in region.regions) {
-            i++;
-          }
-          id = id + i;
-        }
-        return id
-      }
-      // REALLY INEFFICIENT BECAUSE I'M LAZY, WE SHOULD DO THIS BETTER :<
-      function loopThroughRegions(id, region) {
-        if (id == pl.parent) {
-          Vue.set(region.maps, getNewId(pl.id, region), newMap);
+      function setMap(parentIds, region) {
+        if (parentIds.length === 0) {
+          Vue.set(region.maps, utilGetNewRegionMapId(pl.id, region), newMap);
         } else {
-          for (let regionId in region.regions) {
-            loopThroughRegions(id+'/'+regionId, region.regions[regionId]);
-          }
+          setMap(parentIds.slice(1), region.regions[parentIds[0]]);
         }
       }
       if (pl.parent) {
-        for (let regionId in state.gameData.regions) {
-          loopThroughRegions(regionId, state.gameData.regions[regionId]);
-        }
+        setMap(pl.parent, state.gameData)
       } else {
-        Vue.set(state.gameData.maps, getNewId(pl.id, state.gameData), newMap);
+        Vue.set(state.gameData.maps, utilGetNewRegionMapId(pl.id, state.gameData), newMap);
       }
     },
-    gameDataDeleteRegion (state, pl) {
-      let idToDelete = pl;
-
-      function deleteRegionOrMap(id, region) {
-        for (let regionId in region.regions) {
-          if (id+'/'+regionId == idToDelete) {
-            Vue.delete(region.regions, regionId);
+    gameDataDeleteRegionOrMap (state, pl) {
+      function deleteRegionOrMap(ids, region) {
+        if (ids.length === 1) {
+          if (region.regions[ids[0]]) {
+            Vue.delete(region.regions, ids[0]);
           } else {
-            deleteRegionOrMap(id+'/'+regionId, region.regions[regionId]);
+            Vue.delete(region.maps, ids[0]);
           }
-        }
-        for (let mapId in region.maps) {
-          if (id+'/'+mapId == idToDelete) {
-            Vue.delete(region.maps, mapId);
-          }
+        } else {
+          deleteRegionOrMap(ids.slice(1), region.regions[ids[0]]);
         }
       }
-
-      for (let regionId in state.gameData.regions) {
-        deleteRegionOrMap(regionId, state.gameData.regions[regionId]);
-      }
-      Vue.delete(state.gameData.regions, idToDelete);
-      Vue.delete(state.gameData.maps, idToDelete);
+      deleteRegionOrMap(pl, state.gameData);
     }
 
     // game state mutations
@@ -223,48 +195,40 @@ export default new Vuex.Store({
     },
     gameDataRegionsInTreeFormat: (state) => {
       // this is the format consumed by vue-tree-list:new Tree()
-      let tree = [];
-
-      function solveMap(id, map) {
-        // console.log('solving', id, ': map')
-        let thisMap = {
-          id: id,
-          name: id,
-          isLeaf: true,
-        }
-        if (map.name) {
-          thisMap.name = map.name;
-        }
-        return thisMap;
-      }
+      const tree = [];
 
       function solveRegion(id, region) {
-        // console.log('solving', id, ': region')
-        let thisRegion = {
-          id: id,
-          name: id,
+        const thisRegion = {
+          id,
+          name: region.name || id,
           children: [],
         };
-        if (region.name) {
-          thisRegion.name = region.name;
-        }
 
-        for (let regionId in region.regions) {
-          thisRegion.children.push(solveRegion(id+'/'+regionId, region.regions[regionId]));
+        // eslint-disable-next-line guard-for-in,no-restricted-syntax
+        for (const regionId in region.regions) {
+          thisRegion.children.push(solveRegion(`${id}/${regionId}`, region.regions[regionId]));
         }
-        for (let mapId in region.maps) {
-          thisRegion.children.push(solveMap(id+'/'+mapId, region.maps[mapId]));
+        // eslint-disable-next-line guard-for-in,no-restricted-syntax
+        for (const mapId in region.maps) {
+          thisRegion.children.push({
+            id: `${id}/${mapId}`,
+            name: region.maps[mapId].name || mapId,
+            isLeaf: true,
+          })
         }
         return thisRegion;
       }
-
-      for (let regionId in state.gameData.regions) {
-        // console.log('  solving root region', regionId);
+      // eslint-disable-next-line guard-for-in,no-restricted-syntax
+      for (const regionId in state.gameData.regions) {
         tree.push(solveRegion(regionId, state.gameData.regions[regionId]));
       }
-      for (let mapId in state.gameData.maps) {
-        // console.log('  solving root map', mapId);
-        tree.push(solveMap(mapId, state.gameData.maps[mapId]));
+      // eslint-disable-next-line guard-for-in,no-restricted-syntax
+      for (const mapId in state.gameData.maps) {
+        tree.push({
+          id: mapId,
+          name: state.gameData.maps[mapId].name || mapId,
+          isLeaf: true,
+        })
       }
 
       return tree;
@@ -284,9 +248,9 @@ export default new Vuex.Store({
       return state.gameState.player.currency;
     },
     gameStatePlayerLevel: (state) => {
-      const level = state.gameState.player.advancement.level;
+      const {level} = state.gameState.player.advancement;
       return {
-        level: level,
+        level,
         xp: state.gameState.player.advancement.xp,
         xpToLevel: state.gameData.xpToLevel[level],
       };

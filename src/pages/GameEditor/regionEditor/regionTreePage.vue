@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { VueTreeList, Tree, TreeNode } from 'vue-tree-list'
+import { Tree } from 'vue-tree-list'
 
 export default {
   name: 'RegionTreePage',
@@ -53,7 +53,8 @@ export default {
     }
   },
   methods: {
-    show: function () {
+    show() {
+      // eslint-disable-next-line no-restricted-syntax
       for (const p of document.getElementsByClassName('regionEditorPage')) {
         p.classList.add('hidden');
       }
@@ -65,7 +66,7 @@ export default {
     },
 
     onDel(node) {
-      this.$store.commit('gameDataDeleteRegion', node.id);
+      this.$store.commit('gameDataDeleteRegionOrMap', node.id.split('/'));
     },
 
     onChangeName(params) {
@@ -73,15 +74,15 @@ export default {
     },
 
     onAddNode(params) {
-      let parentId = params.parent.id;
+      const parentId = params.parent.id;
       if (params.isLeaf) {
         this.$store.commit('gameDataCreateMap', {
-          parent: parentId,
+          parent: parentId.split('/'),
           name: 'New Map',
         });
       } else {
         this.$store.commit('gameDataCreateRegion', {
-          parent: parentId,
+          parent: parentId.split('/'),
           name: 'New Region',
         });
       }
@@ -99,7 +100,6 @@ export default {
 
     addRootRegion() {
       this.$store.commit('gameDataCreateRegion', {
-        // ID will be autogen'd
         name: 'New Region',
       });
     },

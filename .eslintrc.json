@@ -16,5 +16,22 @@
         "vue"
     ],
     "rules": {
+        "no-shadow": [
+            "error",
+            {
+                "allow": [
+                    "state"
+                ]
+            }
+        ],
+        "no-param-reassign": [
+            "error",
+            {
+                "props": true,
+                "ignorePropertyModificationsFor": [
+                    "state"
+                ]
+            }
+        ]
     }
 }
