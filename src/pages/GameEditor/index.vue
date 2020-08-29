@@ -15,7 +15,7 @@
 
 <script>
 import settingsPage from './settingsPage.vue'
-import regionsPage from './regionsPage.vue'
+import regionsPage from './regionEditor/index.vue'
 
 export default {
   name: 'GameEditor',
@@ -64,7 +64,7 @@ export default {
   display: flex;
   flex-direction: column;
 
-  > .gameEditorPage {
+  > .gameEditorPage, .regionEditorPage {
     height: 100%;
     flex: auto;
     &.hidden {

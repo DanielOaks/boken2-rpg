@@ -1,10 +1,13 @@
 <template>
-  <div class="gameEditorPage regions hidden">
+  <div class="regionEditorPage">
     <div class="contained">
       <h1 v-text="$t('gameEditor.tab.regions')"/>
       <div class="settingsMenu">
         <div>
-          <button class="btn" @click="addNode" v-text="$t('gameEditor.regions.createRegionButton')"/>
+          <div class="btnsep">
+            <button class="btn" @click="addRootRegion" v-text="$t('gameEditor.regions.createRegionButton')"/>
+            <button class="btn" @click="toggleIdNames" v-text="showId ? $t('gameEditor.regions.showNamesButton') : $t('gameEditor.regions.showIDsButton')"/>
+          </div>
           <vue-tree-list
             @click="onClick"
             @change-name="onChangeName"
@@ -17,8 +20,7 @@
           >
             <template v-slot:leafNameDisplay="slotProps">
               <span>
-                {{ slotProps.model.name }}
-                <!-- <span class="muted">#{{ slotProps.model.id }}</span> -->
+                {{ showId ? String(slotProps.model.id).split('/').slice(-1)[0] : slotProps.model.name }}
               </span>
             </template>
             <span class="icon" slot="addTreeNodeIcon"><span class="btn" v-text="'🌲'"/></span>
@@ -28,10 +30,6 @@
             <span class="icon" slot="leafNodeIcon">🍃</span>
             <span class="icon" slot="treeNodeIcon">🌲</span>
           </vue-tree-list>
-          <!-- <button @click="getNewTree">Get tree JSON</button>
-          <pre>
-            {{newTree}}
-          </pre> -->
         </div>
       </div>
     </div>
@@ -42,7 +40,7 @@
 import { VueTreeList, Tree, TreeNode } from 'vue-tree-list'
 
 export default {
-  name: 'SettingsPage',
+  name: 'RegionTreePage',
   computed: {
     data() {
       return new Tree(this.$store.getters.gameDataRegionsInTreeFormat);
@@ -51,69 +49,66 @@ export default {
   data() {
     return {
       newTree: {},
+      showId: true,
     }
   },
   methods: {
     show: function () {
-      for (const p of document.getElementsByClassName('gameEditorPage')) {
+      for (const p of document.getElementsByClassName('regionEditorPage')) {
         p.classList.add('hidden');
       }
       this.$el.classList.remove('hidden');
-      console.log(this.$store.getters.gameDataRegionsInTreeFormat);
-      // this.data = new Tree(this.$store.getters.gameDataRegionsInTreeFormat);
+    },
+
+    toggleIdNames() {
+      this.showId = !this.showId;
     },
 
     onDel(node) {
-      console.log(node)
-      node.remove()
+      this.$store.commit('gameDataDeleteRegion', node.id);
     },
 
     onChangeName(params) {
-      console.log(params)
+      console.log('name changed:', params)
     },
 
     onAddNode(params) {
-      console.log(params)
+      let parentId = params.parent.id;
+      if (params.isLeaf) {
+        this.$store.commit('gameDataCreateMap', {
+          parent: parentId,
+          name: 'New Map',
+        });
+      } else {
+        this.$store.commit('gameDataCreateRegion', {
+          parent: parentId,
+          name: 'New Region',
+        });
+      }
     },
 
     onClick(params) {
-      console.log(params)
-    },
-
-    addNode() {
-      var node = new TreeNode({ name: '', isLeaf: false })
-      if (!this.data.children) this.data.children = []
-      this.data.addChildren(node)
-    },
-
-    getNewTree() {
-      var vm = this
-      function _dfs(oldNode) {
-        var newNode = {}
-
-        for (var k in oldNode) {
-          if (k !== 'children' && k !== 'parent') {
-            newNode[k] = oldNode[k]
-          }
-        }
-
-        if (oldNode.children && oldNode.children.length > 0) {
-          newNode.children = []
-          for (var i = 0, len = oldNode.children.length; i < len; i++) {
-            newNode.children.push(_dfs(oldNode.children[i]))
-          }
-        }
-        return newNode
+      if (params.isLeaf) {
+      this.$parent.$refs.mapEditorPage.mapId = params.id;
+      this.$parent.$refs.mapEditorPage.show();
+        return
       }
+      this.$parent.$refs.regionAttributesPage.regionId = params.id;
+      this.$parent.$refs.regionAttributesPage.show();
+    },
 
-      vm.newTree = _dfs(vm.data)
-    }
+    addRootRegion() {
+      this.$store.commit('gameDataCreateRegion', {
+        // ID will be autogen'd
+        name: 'New Region',
+      });
+    },
   }
 }
 </script>
 
 <style lang="scss">
-.gameEditorPage.regions {
+.regionEditorPage {
   text-align: center;
   overflow-y: auto;
   padding: .5em 0 1em;
@@ -137,6 +132,10 @@ export default {
   h1 {
     margin-bottom: .2em;
     text-shadow: 0 1px var(--editor-header-shadow-color);
+  }
+  .btnsep {
+    display: flex;
+    justify-content: space-between;
   }
   .btn {
     color: var(--editor-btn-text-color);

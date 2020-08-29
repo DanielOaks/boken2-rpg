@@ -54,6 +54,7 @@ export default {
     regions: {
       troto: {
         name: "Troto",
+        maps: {},
         regions: {
           eastTroto: {
             name: "East Troto",
@@ -64,7 +65,8 @@ export default {
               aliceHouse: {
                 name: "Alice's House",
               },
-            }
+            },
+            regions: {},
           }
         }
       }

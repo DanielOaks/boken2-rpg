@@ -164,6 +164,7 @@ export default {
     border-radius: .5em;
     cursor: pointer;
     text-align: center;
+    box-shadow: 0 1px var(--editor-btn-shadow-color);
   }
 }
 </style>

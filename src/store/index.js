@@ -100,10 +100,105 @@ export default new Vuex.Store({
         Vue.set(state.gameState.player.stats, pl.id, {});
       }
     },
+    gameDataCreateRegion (state, pl) {
+      let newRegion = {
+        name: pl.name || pl.id,
+        maps: {},
+        regions: {},
+      }
+
+      function getNewId(id, region) {
+        if (id === undefined || region.regions[id] || region.maps[id]) {
+          id = 'newMap';
+          let i = 1;
+          while (id + i in region.maps || id + i in region.regions) {
+            i++;
+          }
+          id = id + i;
+        }
+        return id
+      }
+      // REALLY INEFFICIENT BECAUSE I'M LAZY, WE SHOULD DO THIS BETTER :<
+      function loopThroughRegions(id, region) {
+        if (id == pl.parent) {
+          Vue.set(region.regions, getNewId(pl.id, region), newRegion);
+        } else {
+          for (let regionId in region.regions) {
+            loopThroughRegions(id+'/'+regionId, region.regions[regionId]);
+          }
+        }
+      }
+      if (pl.parent) {
+        for (let regionId in state.gameData.regions) {
+          loopThroughRegions(regionId, state.gameData.regions[regionId]);
+        }
+      } else {
+        Vue.set(state.gameData.regions, getNewId(pl.id, state.gameData), newRegion);
+      }
+    },
+    gameDataCreateMap (state, pl) {
+      let newMap = {
+        name: pl.name || pl.id,
+        maps: {},
+      }
+
+      function getNewId(id, region) {
+        if (id === undefined || region.regions[id] || region.maps[id]) {
+          id = 'newMap';
+          let i = 1;
+          while (id + i in region.maps || id + i in region.regions) {
+            i++;
+          }
+          id = id + i;
+        }
+        return id
+      }
+      // REALLY INEFFICIENT BECAUSE I'M LAZY, WE SHOULD DO THIS BETTER :<
+      function loopThroughRegions(id, region) {
+        if (id == pl.parent) {
+          Vue.set(region.maps, getNewId(pl.id, region), newMap);
+        } else {
+          for (let regionId in region.regions) {
+            loopThroughRegions(id+'/'+regionId, region.regions[regionId]);
+          }
+        }
+      }
+      if (pl.parent) {
+        for (let regionId in state.gameData.regions) {
+          loopThroughRegions(regionId, state.gameData.regions[regionId]);
+        }
+      } else {
+        Vue.set(state.gameData.maps, getNewId(pl.id, state.gameData), newMap);
+      }
+    },
+    gameDataDeleteRegion (state, pl) {
+      let idToDelete = pl;
+
+      function deleteRegionOrMap(id, region) {
+        for (let regionId in region.regions) {
+          if (id+'/'+regionId == idToDelete) {
+            Vue.delete(region.regions, regionId);
+          } else {
+            deleteRegionOrMap(id+'/'+regionId, region.regions[regionId]);
+          }
+        }
+        for (let mapId in region.maps) {
+          if (id+'/'+mapId == idToDelete) {
+            Vue.delete(region.maps, mapId);
+          }
+        }
+      }
+
+      for (let regionId in state.gameData.regions) {
+        deleteRegionOrMap(regionId, state.gameData.regions[regionId]);
+      }
+      Vue.delete(state.gameData.regions, idToDelete);
+      Vue.delete(state.gameData.maps, idToDelete);
+    }
 
     // game state mutations
   },
-
+ 
   getters: {
     // misc getters
     mainMenuActive: (state) => {
