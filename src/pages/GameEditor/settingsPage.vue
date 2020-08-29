@@ -35,13 +35,6 @@
 export default {
   name: 'SettingsPage',
   methods: {
-    show() {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const p of document.getElementsByClassName('gameEditorPage')) {
-        p.classList.add('hidden');
-      }
-      this.$el.classList.remove('hidden');
-    },
     updateGameStat (e) {
       const field = e.target.getAttribute('data-field');
       const change = {

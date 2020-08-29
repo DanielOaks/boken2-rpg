@@ -1,11 +1,11 @@
 <template>
   <div id="gameEditor" class="app-page">
-    <settingsPage ref="settings"/>
-    <regionsPage ref="regions"/>
+    <settingsPage ref="settings" v-if="$store.getters.gameEditorPage == 'settings'"/>
+    <regionsPage ref="regions" v-if="$store.getters.gameEditorPage == 'regions'"/>
     <div class="tabs">
-      <div class="tab active" v-text="$t('gameEditor.tab.gameinfo')" data-page="settings" @click="switchTab"/>
+      <div class="tab" v-text="$t('gameEditor.tab.gameinfo')" data-page="settings" v-bind:class="{active: $store.getters.gameEditorPage == 'settings'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.characters')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="regions" @click="switchTab"/>
+      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="regions" v-bind:class="{active: $store.getters.gameEditorPage == 'regions'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.quests')"/>
       <div class="tab" v-text="$t('gameEditor.tab.items')"/>
       <div class="tab" v-text="$t('gameEditor.tab.perks')"/>
@@ -25,20 +25,7 @@ export default {
   },
   methods: {
     switchTab(e) {
-      // change tab colour
-      // eslint-disable-next-line no-restricted-syntax
-      for (const p of e.target.parentNode.children) {
-        p.classList.remove('active');
-      }
-      e.target.classList.add('active');
-
-      // change page
-      const tab = this.$refs[e.target.dataset.page];
-      if (tab) {
-        tab.show();
-      } else {
-        console.log('tab named [', e.target.dataset.page, '] does not exist in $refs');
-      }
+      this.$store.commit('changeGameEditorPage', e.target.dataset.page);
     },
   },
 }
@@ -58,9 +45,6 @@ export default {
   > .gameEditorPage, .regionEditorPage {
     height: 100%;
     flex: auto;
-    &.hidden {
-      display: none;
-    }
   }
   > .tabs {
     background: var(--editor-bar-bg-color);

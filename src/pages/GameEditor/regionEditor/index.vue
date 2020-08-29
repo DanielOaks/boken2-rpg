@@ -1,5 +1,5 @@
 <template>
-  <div class="gameEditorPage regions hidden">
+  <div class="gameEditorPage regions">
     <regionTreePage ref="regionTreePage"/>
     <regionAttributesPage ref="regionAttributesPage"/>
     <mapEditorPage ref="mapEditorPage"/>
@@ -19,13 +19,6 @@ export default {
     mapEditorPage
   },
   methods: {
-    show() {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const p of document.getElementsByClassName('gameEditorPage')) {
-        p.classList.add('hidden');
-      }
-      this.$el.classList.remove('hidden');
-    },
     created() {
       this.$refs.regionTreePage.show();
     }

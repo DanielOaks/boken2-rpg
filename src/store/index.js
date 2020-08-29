@@ -40,6 +40,7 @@ export default new Vuex.Store({
   state: {
     showMainMenu: true,
     appPage: 'game',
+    gameEditorPage: 'settings',
 
     // hint that shows when you hover over buttons
     gameHoverHint: {
@@ -66,6 +67,9 @@ export default new Vuex.Store({
     },
     changeAppPage (state, pl) {
       state.appPage = pl;
+    },
+    changeGameEditorPage (state, pl) {
+      state.gameEditorPage = pl;
     },
     showGameHoverHint (state, pl) {
       state.gameHoverHint.hidden = false;
@@ -182,6 +186,9 @@ export default new Vuex.Store({
     },
     appPage: (state) => {
       return state.appPage;
+    },
+    gameEditorPage: (state) => {
+      return state.gameEditorPage;
     },
     gameHoverHint: (state) => {
       return state.gameHoverHint;
