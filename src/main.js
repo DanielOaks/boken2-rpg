@@ -1,18 +1,15 @@
 import Vue from 'vue'
+import VueTreeList from 'vue-tree-list'
+import exampleData from './store/exampleData'
 import App from './App.vue'
 import store from './store'
 import i18n from './i18n'
-import VueTreeList from 'vue-tree-list'
-require('@openfonts/open-sans_all')
 
-import exampleData from './store/exampleData'
+require('@openfonts/open-sans_all')
 
 // page name == game name
 store.watch(
-  function (state) {
-    return state.gameData.name;
-  },
-  function () {
+  function updatePageTitle() {
     document.title = store.getters.gameDataGameName;
   }
 );
@@ -24,18 +21,16 @@ new Vue({
   el: '#app',
   store,
   i18n,
-  template: '<app ref="app" />',
+  template: '<app ref="app"/>',
   components: {
     App,
   },
-  data: {
-  },
-  mounted: function() {
-    console.log('Loading example game info', exampleData);
+  mounted() {
+    // console.log('Loading example game info', exampleData);
     store.commit('loadExampleGameData', exampleData.gameData);
     store.commit('loadExampleGameState', exampleData.gameState);
 
-    const app = this.$refs.app;
+    const {app} = this.$refs;
     app.$refs.game.show()
   },
 });
