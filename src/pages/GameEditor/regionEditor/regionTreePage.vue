@@ -53,14 +53,6 @@ export default {
     }
   },
   methods: {
-    show() {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const p of document.getElementsByClassName('regionEditorPage')) {
-        p.classList.add('hidden');
-      }
-      this.$el.classList.remove('hidden');
-    },
-
     toggleIdNames() {
       this.showId = !this.showId;
     },
@@ -90,12 +82,10 @@ export default {
 
     onClick(params) {
       if (params.isLeaf) {
-      this.$parent.$refs.mapEditorPage.mapId = params.id;
-      this.$parent.$refs.mapEditorPage.show();
+        this.$store.commit('showMapEditor', params.id);
         return
       }
-      this.$parent.$refs.regionAttributesPage.regionId = params.id;
-      this.$parent.$refs.regionAttributesPage.show();
+      this.$store.commit('showRegionEditor', params.id);
     },
 
     addRootRegion() {

@@ -41,6 +41,7 @@ export default new Vuex.Store({
     showMainMenu: true,
     appPage: 'game',
     gameEditorPage: 'settings',
+    regionEditorPage: 'tree',
 
     // hint that shows when you hover over buttons
     gameHoverHint: {
@@ -70,6 +71,17 @@ export default new Vuex.Store({
     },
     changeGameEditorPage (state, pl) {
       state.gameEditorPage = pl;
+    },
+    showRegionTreeEditor (state) {
+      state.regionEditorPage = 'tree';
+    },
+    showRegionEditor (state, pl) {
+      state.regionEditorId = pl;
+      state.regionEditorPage = 'regionEditor';
+    },
+    showMapEditor (state, pl) {
+      state.regionEditorId = pl;
+      state.regionEditorPage = 'mapEditor';
     },
     showGameHoverHint (state, pl) {
       state.gameHoverHint.hidden = false;
@@ -189,6 +201,12 @@ export default new Vuex.Store({
     },
     gameEditorPage: (state) => {
       return state.gameEditorPage;
+    },
+    regionEditorState: (state) => {
+      return {
+        page: state.regionEditorPage,
+        id: state.regionEditorId,
+      }
     },
     gameHoverHint: (state) => {
       return state.gameHoverHint;

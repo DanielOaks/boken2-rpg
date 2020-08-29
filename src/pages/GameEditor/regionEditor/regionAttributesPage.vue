@@ -1,7 +1,7 @@
 <template>
   <div class="regionEditorPage">
     <div class="contained">
-      <h1 v-text="regionId"/>
+      <h1 v-text="$store.getters.regionEditorState.id"/>
       <div class="settingsMenu">
         <div>
           <button class="btn" @click="goBack" v-text="$t('gameEditor.regions.goBackButton')"/>
@@ -15,21 +15,9 @@
 <script>
 export default {
   name: 'RegionAttributesPage',
-  data() {
-    return {
-      regionId: '',
-    }
-  },
   methods: {
-    show() {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const p of document.getElementsByClassName('regionEditorPage')) {
-        p.classList.add('hidden');
-      }
-      this.$el.classList.remove('hidden');
-    },
     goBack() {
-      this.$parent.$refs.regionTreePage.show();
+      this.$store.commit('showRegionTreeEditor');
     },
   }
 }

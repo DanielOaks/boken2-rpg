@@ -1,8 +1,8 @@
 <template>
   <div class="gameEditorPage regions">
-    <regionTreePage ref="regionTreePage"/>
-    <regionAttributesPage ref="regionAttributesPage"/>
-    <mapEditorPage ref="mapEditorPage"/>
+    <regionTreePage ref="regionTreePage" v-if="$store.getters.regionEditorState.page == 'tree'"/>
+    <regionAttributesPage ref="regionAttributesPage" v-if="$store.getters.regionEditorState.page == 'regionEditor'"/>
+    <mapEditorPage ref="mapEditorPage" v-if="$store.getters.regionEditorState.page == 'mapEditor'"/>
   </div>
 </template>
 
@@ -17,11 +17,6 @@ export default {
     regionTreePage,
     regionAttributesPage,
     mapEditorPage
-  },
-  methods: {
-    created() {
-      this.$refs.regionTreePage.show();
-    }
   },
 }
 </script>
