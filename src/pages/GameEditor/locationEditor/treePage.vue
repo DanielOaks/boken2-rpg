@@ -40,7 +40,7 @@
 import { Tree } from 'vue-tree-list'
 
 export default {
-  name: 'RegionTreePage',
+  name: 'TreePage',
   computed: {
     data() {
       return new Tree(this.$store.getters.gameDataRegionsInTreeFormat);

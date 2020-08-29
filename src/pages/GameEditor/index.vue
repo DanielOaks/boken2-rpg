@@ -1,11 +1,11 @@
 <template>
   <div id="gameEditor" class="app-page">
-    <settingsPage ref="settings" v-if="$store.getters.gameEditorPage == 'settings'"/>
-    <regionsPage ref="regions" v-if="$store.getters.gameEditorPage == 'regions'"/>
+    <settingsPage v-if="$store.getters.gameEditorPage == 'settings'"/>
+    <locationPage v-if="$store.getters.gameEditorPage == 'locations'"/>
     <div class="tabs">
       <div class="tab" v-text="$t('gameEditor.tab.gameinfo')" data-page="settings" v-bind:class="{active: $store.getters.gameEditorPage == 'settings'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.characters')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="regions" v-bind:class="{active: $store.getters.gameEditorPage == 'regions'}" @click="switchTab"/>
+      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="locations" v-bind:class="{active: $store.getters.gameEditorPage == 'locations'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.quests')"/>
       <div class="tab" v-text="$t('gameEditor.tab.items')"/>
       <div class="tab" v-text="$t('gameEditor.tab.perks')"/>
@@ -15,13 +15,13 @@
 
 <script>
 import settingsPage from './settingsPage.vue'
-import regionsPage from './regionEditor/index.vue'
+import locationPage from './locationEditor/index.vue'
 
 export default {
   name: 'GameEditor',
   components: {
     settingsPage,
-    regionsPage,
+    locationPage,
   },
   methods: {
     switchTab(e) {
