@@ -6,13 +6,14 @@
         <div>
           <div class="btnsep">
             <button class="btn" @click="addRootRegion" v-text="$t('gameEditor.regions.createRegionButton')"/>
-            <button class="btn" @click="toggleIdNames" v-text="showId ? $t('gameEditor.regions.showNamesButton') : $t('gameEditor.regions.showIDsButton')"/>
+            <button class="btn" @click="toggleIdNames" v-text="$store.getters.regionEditorState.showIds ? $t('gameEditor.regions.showNamesButton') : $t('gameEditor.regions.showIDsButton')"/>
           </div>
           <vue-tree-list
             @click="onClick"
             @change-name="onChangeName"
             @delete-node="onDel"
             @add-node="onAddNode"
+            @drop="onDrop"
             :model="data"
             default-tree-node-name="New region"
             default-leaf-node-name="New map"
@@ -20,7 +21,7 @@
           >
             <template v-slot:leafNameDisplay="slotProps">
               <span>
-                {{ showId ? String(slotProps.model.id).split('/').slice(-1)[0] : slotProps.model.name }}
+                {{ slotProps.model.name }}
               </span>
             </template>
             <span class="icon" slot="addTreeNodeIcon"><span class="btn" v-text="'🌲'"/></span>
@@ -39,6 +40,8 @@
 <script>
 import { Tree } from 'vue-tree-list'
 
+const locationIdCheck = /^[a-zA-Z][0-9a-zA-Z]+$/;
+
 export default {
   name: 'TreePage',
   computed: {
@@ -49,12 +52,11 @@ export default {
   data() {
     return {
       newTree: {},
-      showId: true,
     }
   },
   methods: {
     toggleIdNames() {
-      this.showId = !this.showId;
+      this.$store.commit('changeRegionEditorShowIds', !this.$store.getters.regionEditorState.showIds)
     },
 
     onDel(node) {
@@ -62,7 +64,30 @@ export default {
     },
 
     onChangeName(params) {
-      console.log('name changed:', params)
+      if (!(params.eventType === 'blur')) {
+        return;
+      }
+      if (this.$store.getters.regionEditorState.showIds) {
+        let {newName} = params;
+        if (!newName.match(locationIdCheck)) {
+          [ newName ] = params.id.split('/').slice(-1);
+        }
+        this.$store.commit('gameDataChangeLocationId', {
+          oldId: params.id.split('/'),
+          newId: params.id.split('/').slice(0,-1).concat(newName),
+        });
+      } else {
+        this.$store.commit('gameDataChangeLocationName', {
+          id: params.id.split('/'),
+          name: params.newName,
+        });
+      }
+    },
+
+    onDrop(params) {
+      const oldId = params.node.id.split('/');
+      const newId = params.target.id.split('/').slice(0,-1).concat(params.node.id.split('/').slice(-1)[0]);
+      console.log('drop:', oldId, newId);
     },
 
     onAddNode(params) {

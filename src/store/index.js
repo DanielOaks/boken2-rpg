@@ -83,6 +83,9 @@ export default new Vuex.Store({
       state.regionEditorId = pl;
       state.regionEditorPage = 'mapEditor';
     },
+    changeRegionEditorShowIds (state, pl) {
+      Vue.set(state, 'regionEditorShowIds', pl);
+    },
     showGameHoverHint (state, pl) {
       state.gameHoverHint.hidden = false;
       state.gameHoverHint.name = pl.name;
@@ -186,7 +189,56 @@ export default new Vuex.Store({
         }
       }
       deleteRegionOrMap(pl, state.gameData);
-    }
+    },
+    gameDataChangeLocationId (state, pl) {
+      function popOldLocation (ids, region) {
+        if (ids.length === 1) {
+          if (region.regions[ids[0]]) {
+            const location = region.regions[ids[0]];
+            Vue.delete(region.regions, ids[0]);
+            return {
+              type: 'region',
+              location,
+            }
+          } 
+          const location = region.maps[ids[0]];
+          Vue.delete(region.maps, ids[0]);
+          return {
+            type: 'map',
+            location,
+          }
+        }
+        return popOldLocation(ids.slice(1), region.regions[ids[0]]);
+      }
+      const locationInfo = popOldLocation(pl.oldId, state.gameData);
+
+      function setNewLocation (ids, region, locationToSet) {
+        if (ids.length === 1) {
+          if (locationToSet.type === 'region') {
+            Vue.set(region.regions, utilGetNewRegionMapId(ids[0], region), locationToSet.location);
+            return;
+          }
+          Vue.set(region.maps, utilGetNewRegionMapId(ids[0], region), locationToSet.location);
+          return;
+        }
+        setNewLocation(ids.slice(1), region.regions[ids[0]], locationToSet);
+      }
+      setNewLocation(pl.newId, state.gameData, locationInfo);
+    },
+    gameDataChangeLocationName (state, pl) {
+      function renameLocation(ids, region) {
+        if (ids.length === 1) {
+          if (region.regions[ids[0]]) {
+            Vue.set(region.regions[ids[0]], 'name', pl.name);
+          } else {
+            Vue.set(region.maps[ids[0]], 'name', pl.name);
+          }
+        } else {
+          renameLocation(ids.slice(1), region.regions[ids[0]]);
+        }
+      }
+      renameLocation(pl.id, state.gameData);
+    },
 
     // game state mutations
   },
@@ -206,6 +258,7 @@ export default new Vuex.Store({
       return {
         page: state.regionEditorPage,
         id: state.regionEditorId,
+        showIds: state.regionEditorShowIds,
       }
     },
     gameHoverHint: (state) => {
@@ -228,9 +281,10 @@ export default new Vuex.Store({
     gameDataRegionsInTreeFormat: (state) => {
       // this is the format consumed by vue-tree-list:new Tree()
       function solveRegion(id, region) {
+        const [ finalBitOfRegionId ] = `${id}`.split('/').slice(-1);
         const thisRegion = {
           id,
-          name: region.name || id,
+          name: state.regionEditorShowIds ? finalBitOfRegionId : region.name || finalBitOfRegionId,
           children: [],
         };
 
@@ -242,7 +296,7 @@ export default new Vuex.Store({
         for (const mapId in region.maps) {
           thisRegion.children.push({
             id: id ? `${id}/${mapId}` : mapId,
-            name: region.maps[mapId].name || mapId,
+            name: state.regionEditorShowIds ? mapId : region.maps[mapId].name || mapId,
             isLeaf: true,
           })
         }
