@@ -4,6 +4,7 @@
     "gameEditor.regions.createRegionButton": "Create Region",
     "gameEditor.regions.deleteButton": "Delete",
     "gameEditor.regions.goBackButton": "Go Back",
+    "gameEditor.regions.saveButton": "Save",
     "gameEditor.regions.showIDsButton": "Show IDs",
     "gameEditor.regions.showNamesButton": "Show Names",
     "gameEditor.settings.add": "add",

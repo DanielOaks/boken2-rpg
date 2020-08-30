@@ -5,7 +5,7 @@
     <div class="tabs">
       <div class="tab" v-text="$t('gameEditor.tab.gameinfo')" data-page="settings" v-bind:class="{active: $store.getters.gameEditorPage == 'settings'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.characters')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="locations" v-bind:class="{active: $store.getters.gameEditorPage == 'locations'}" @click="switchTab"/>
+      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="locations" v-bind:class="{active: $store.getters.gameEditorPage == 'locations', map: $store.getters.regionEditorState.page == 'mapEditor'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.quests')"/>
       <div class="tab" v-text="$t('gameEditor.tab.items')"/>
       <div class="tab" v-text="$t('gameEditor.tab.perks')"/>
@@ -65,6 +65,10 @@ export default {
         background: var(--editor-bg-2-color);
         color: var(--editor-text-color);
         opacity: 1;
+        &.map {
+          color: var(--map-editor-text-color);
+          background: var(--map-bg-color);
+        }
       }
     }
   }
