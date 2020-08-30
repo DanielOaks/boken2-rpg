@@ -88,6 +88,8 @@ export default {
       const oldId = params.node.id.split('/');
       const newId = params.target.id.split('/').slice(0,-1).concat(params.node.id.split('/').slice(-1)[0]);
       console.log('drop:', oldId, newId);
+      //NOTE: when implementing this, make sure to detect+stop e.g. parent being dropped onto a child,
+      // and that sort of weirdness. lots of weird states we can get into.
     },
 
     onAddNode(params) {
