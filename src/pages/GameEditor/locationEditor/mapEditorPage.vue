@@ -24,46 +24,4 @@ export default {
 </script>
 
 <style lang="scss">
-.regionEditorPage {
-  text-align: center;
-  overflow-y: auto;
-  padding: .5em 0 1em;
-  .contained {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .settingsMenu {
-    background: var(--editor-bg-color);
-    color: var(--editor-text-color);
-    width: 50em;
-    max-width: calc(100% - 2em);
-    margin: 0 auto;
-    text-align: left;
-    border-radius: 1em;
-    padding: .8em 1.3em 1.2em;
-    box-shadow: 0 1px var(--editor-shadow-color);
-  }
-  h1 {
-    margin-bottom: .2em;
-    text-shadow: 0 1px var(--editor-header-shadow-color);
-  }
-  .btn {
-    color: var(--editor-btn-text-color);
-    background: var(--editor-btn-bg-color);
-    padding: .2em .6em;
-    border-radius: .5em;
-    cursor: pointer;
-    text-align: center;
-    box-shadow: 0 1px var(--editor-btn-shadow-color);
-    margin-bottom: .5em;
-  }
-  .vtl .btn {
-    letter-spacing: 0; // tree sets this to 1px on elements it contains
-  }
-  .vtl span + span .btn {
-    margin-left: .5em;
-  }
-}
 </style>

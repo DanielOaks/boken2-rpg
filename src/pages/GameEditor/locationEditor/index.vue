@@ -22,4 +22,7 @@ export default {
 </script>
 
 <style lang="scss">
+.gameEditorPage.locations {
+  overflow-y: hidden;
+}
 </style>
