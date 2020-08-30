@@ -33,6 +33,7 @@
                 ]
             }
         ],
-        "yoda": "off"
+        "yoda": "off",
+        "spaced-comment": "off"
     }
 }
