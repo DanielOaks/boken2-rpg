@@ -14,13 +14,77 @@
       <p>aaaaa3</p>
       <p>aaaaa4</p>
     </div></div>
-    <p>map editor</p>
+    <canvas ref="canvas" @mousemove="mousemove" @mousedown="mousedown" @mouseup="mouseup" @mouseenter="mouseenter" @mouseleave="mouseleave"/>
   </div>
 </template>
 
 <script>
+// canvas high-DPI setup function, from https://www.html5rocks.com/en/tutorials/canvas/hidpi/
+function setupCanvas(canvas) {
+  // Get the device pixel ratio, falling back to 1.
+  let dpr = window.devicePixelRatio || 1;
+  dpr *= 1 //TODO(dan): maybe scale up a bit so the edges don't look so dodgy
+  // Get the size of the canvas in CSS pixels.
+  const rect = canvas.getBoundingClientRect();
+
+  // Give the canvas pixel dimensions of their CSS
+  // size * the device pixel ratio.
+  const c = canvas;
+  c.width = rect.width * dpr;
+  c.height = rect.height * dpr;
+  c.style.width = `${rect.width}px`
+
+  const ctx = c.getContext('2d', {
+    antialias: true
+  });
+  // Scale all drawing operations by the dpr, so you
+  // don't have to worry about the difference.
+  ctx.scale(dpr, dpr);
+  return ctx;
+}
+
+// canvas utility function, from the Mozilla MDN
+function roundedRect(ctx, x, y, width, height, radius) {
+  ctx.beginPath();
+  ctx.moveTo(x, y + radius);
+  ctx.lineTo(x, y + height - radius);
+  ctx.arcTo(x, y + height, x + radius, y + height, radius);
+  ctx.lineTo(x + width - radius, y + height);
+  ctx.arcTo(x + width, y + height, x + width, y + height - radius, radius);
+  ctx.lineTo(x + width, y + radius);
+  ctx.arcTo(x + width, y, x + width - radius, y, radius);
+  ctx.lineTo(x + radius, y);
+  ctx.arcTo(x, y, x, y + radius, radius);
+  ctx.fill();
+}
+
 export default {
   name: 'MapEditorPage',
+  mounted() {
+    this.updateCanvas();
+    window.addEventListener('resize', this.updateCanvas);
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.updateCanvas);
+  },
+  data() {
+    return {
+      mouseIsDown: false,
+      mouseLastPos: {
+        x: 0,
+        y: 0,
+      },
+      canvasPosOffset: {
+        x: 0,
+        y: 0,
+      },
+      ctx: undefined,
+      canvasSize: {
+        width: 0,
+        height: 0,
+      }
+    }
+  },
   methods: {
     goBack() {
       this.$store.commit('showRegionTreeEditor');
@@ -28,6 +92,76 @@ export default {
     save() {
       console.log('TODO: save map');
     },
+
+    // canvas
+    updateCanvas() {
+      const pageSize = this.$el.getBoundingClientRect();
+      this.$refs.canvas.width = pageSize.width
+      this.$refs.canvas.height = pageSize.height
+      this.canvasSize = {
+        width: pageSize.width,
+        height: pageSize.height,
+      }
+      this.ctx = setupCanvas(this.$refs.canvas);
+      this.redrawCanvas();
+    },
+    redrawCanvas() {
+      // save non-translated state
+      this.ctx.save()
+
+      // draw this in non-translated space so it covers all the screen without weird math
+      this.ctx.fillStyle = 'var(--map-bg-color)';
+      this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
+
+      // for our purposes, 0,0 is center of the canvas
+      this.ctx.translate(this.canvasSize.width/2 + this.canvasPosOffset.x, this.canvasSize.height/2 + this.canvasPosOffset.y)
+
+      // draw our actual map here!!!
+      this.ctx.fillStyle = '#942445';
+      roundedRect(this.ctx, -25, -50, 50, 100, 10);
+
+      // restore non-translated state
+      this.ctx.restore();
+
+      // draw extra canvas UI elements that always appear in the same place here
+    },
+    mousedown(event) {
+      this.mouseLastPos = {
+        x: event.x,
+        y: event.y,
+      };
+      this.mouseIsDown = true;
+    },
+    mouseup() {
+      this.mouseIsDown = false;
+    },
+    mouseenter(event) {
+      this.mouseLastPos = {
+        x: event.x,
+        y: event.y,
+      };
+      // update whether primary mouse button is down
+      // eslint-disable-next-line no-bitwise
+      this.mouseIsDown = event.buttons & 1;
+    },
+    mouseleave() {
+      //HERE ... think more about what makes sense and is easiest to do here.
+      // we could just kill the mouseIsDown but that feels janky while using it, since
+      // accidentally hovering off the canvas and back on is really common.
+    },
+    mousemove(event) {
+      if (!this.mouseIsDown) {
+        return;
+      }
+      this.canvasPosOffset.x += event.x - this.mouseLastPos.x;
+      this.canvasPosOffset.y += event.y - this.mouseLastPos.y;
+      this.mouseLastPos = {
+        x: event.x,
+        y: event.y,
+      };
+      this.redrawCanvas();
+      // console.log(this.canvasPosOffset.x, this.canvasPosOffset.y);
+    }
   }
 }
 </script>
@@ -38,6 +172,10 @@ export default {
   height: 100%;
   color: var(--map-editor-text-color);
   background: var(--map-bg-color);
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
   .mainNavButtons {
     position: absolute;
     bottom: .5em;
