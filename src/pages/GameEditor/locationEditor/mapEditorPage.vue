@@ -8,7 +8,7 @@
       <h2>Map Properties</h2>
       <p>aaaaa1</p>
       <p>aaaaa2</p>
-      <h2>Space Properties</h2>
+      <h2>Tile Properties</h2>
       <p>aaaaa1</p>
       <p>aaaaa2</p>
       <p>aaaaa3</p>
@@ -61,6 +61,30 @@ function roundedRect(ctx, x, y, width, height, radius) {
 export default {
   name: 'MapEditorPage',
   mounted() {
+    // generate tiles
+    const tileString = 
+`
+X  X     XX XXXX
+XXXXX X XXXXX  XXXXX   XXX
+   XXXXX   XXX X   XXXXX X
+  XXX   XXXX XXX  XXXX  XX
+ XX XXXXX  XXX  XXX  XX
+  X     XXXX     XX
+  X        XXX  XXXX
+ XXX            XXXX
+ XXX
+`;
+    this.tiles = {}
+    tileString.split('\n').forEach((line, y) => {
+      this.tiles[y] = {}
+      line.split('').forEach((char, x) => {
+        if (char !== ' ') {
+          // console.log('tile at', x, y);
+          this.tiles[y][x] = {};
+        }
+      });
+    });
+
     this.updateCanvas();
     window.addEventListener('resize', this.updateCanvas);
   },
@@ -82,7 +106,11 @@ export default {
       canvasSize: {
         width: 0,
         height: 0,
-      }
+      },
+      colors: {
+        bg: '#559e94',
+        tileBg: '#41877e',
+      },
     }
   },
   methods: {
@@ -110,15 +138,27 @@ export default {
       this.ctx.save()
 
       // draw this in non-translated space so it covers all the screen without weird math
-      this.ctx.fillStyle = 'var(--map-bg-color)';
+      this.ctx.fillStyle = this.colors.bg;
       this.ctx.clearRect(0, 0, this.canvasSize.width, this.canvasSize.height);
 
       // for our purposes, 0,0 is center of the canvas
       this.ctx.translate(this.canvasSize.width/2 + this.canvasPosOffset.x, this.canvasSize.height/2 + this.canvasPosOffset.y)
 
       // draw our actual map here!!!
-      this.ctx.fillStyle = '#942445';
-      roundedRect(this.ctx, -25, -50, 50, 100, 10);
+      this.ctx.fillStyle = this.colors.tileBg;
+      Object.keys(this.tiles).forEach((y,iy) => {
+        // key: the name of the object key
+        // index: the ordinal position of the key within the object
+        Object.keys(this.tiles[y]).forEach((x,ix) => {
+          roundedRect(this.ctx, x*72, y*72, 50, 50, 13);
+          if (this.tiles[y][x-1]) {
+            roundedRect(this.ctx, (x)*72-18, y*72+22, 14, 7, 3);
+          }
+          if (this.tiles[y-1] && this.tiles[y-1][x]) {
+            roundedRect(this.ctx, x*72+22, (y)*72-18, 7, 14, 3);
+          }
+        });
+      });
 
       // restore non-translated state
       this.ctx.restore();
