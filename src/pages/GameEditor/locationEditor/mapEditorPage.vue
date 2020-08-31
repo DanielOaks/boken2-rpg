@@ -110,7 +110,32 @@ XXXXX X XXXXX  XXXXX   XXX
       colors: {
         bg: '#559e94',
         tileBg: '#41877e',
+        tileSurroundedBg: '#4b9289', // when all four sides are surrounded
       },
+      tiles: {},
+      bgs: [
+        {
+          color: '#4b9289',
+          x: 8,
+          y: 4,
+          width: 4,
+          height: 3,
+        },
+        {
+          color: '#4098a0',
+          x: 12,
+          y: 1,
+          width: 4,
+          height: 3,
+        },
+        {
+          color: '#4098a0',
+          x: 13,
+          y: 3,
+          width: 3,
+          height: 2,
+        },
+      ],
     }
   },
   methods: {
@@ -143,6 +168,21 @@ XXXXX X XXXXX  XXXXX   XXX
 
       // for our purposes, 0,0 is center of the canvas
       this.ctx.translate(this.canvasSize.width/2 + this.canvasPosOffset.x, this.canvasSize.height/2 + this.canvasPosOffset.y)
+
+      // bg elements
+      this.ctx.fillStyle = this.colors.tileSurroundedBg;
+      Object.keys(this.tiles).forEach((y,iy) => {
+        Object.keys(this.tiles[y]).forEach((x,ix) => {
+          if (this.tiles[y][x-1] && this.tiles[y-1] && this.tiles[y-1][x] && this.tiles[y-1][x-1]) {
+            this.ctx.fillRect((x-1)*72+25, (y-1)*72+25, 72, 72);
+          }
+        });
+      });
+      Object.keys(this.bgs).forEach((i) => {
+        const bg = this.bgs[i];
+        this.ctx.fillStyle = bg.color;
+        this.ctx.fillRect(bg.x*72+25, bg.y*72+25, bg.width*72-71, bg.height*72-71);
+      });
 
       // draw our actual map here!!!
       this.ctx.fillStyle = this.colors.tileBg;
