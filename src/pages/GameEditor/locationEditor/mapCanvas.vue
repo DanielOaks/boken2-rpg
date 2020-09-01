@@ -322,7 +322,7 @@ export default {
       const t = event.tilePos;
       if (this.tiles[t.y] && this.tiles[t.y][t.x]) {
         console.log('hovering over tile', t.x, t.y);
-        // this.tiles[t.y][t.x].bgColor = '#ee2244';
+        // this.tiles[t.y][t.x].bgColor = '#cc4057';
       }
     },
     onTileHoverEnd(event) {
@@ -339,7 +339,7 @@ export default {
         if (event.tile.bgColor) {
           delete this.tiles[t.y][t.x].bgColor;
         } else {
-          this.tiles[t.y][t.x].bgColor = '#ee2244';
+          this.tiles[t.y][t.x].bgColor = '#cc4057';
         }
         this.redraw();
       } else {
