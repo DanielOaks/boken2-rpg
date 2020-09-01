@@ -1,5 +1,7 @@
 {
     "engine.tagline": "tavel around, interact with NPCs, and create worlds with words",
+    "gameEditor.mapTool.moveMap": "Move Map",
+    "gameEditor.mapTool.pointer": "Pointer",
     "gameEditor.regions.changeNameButton": "Change Name",
     "gameEditor.regions.createRegionButton": "Create Region",
     "gameEditor.regions.deleteButton": "Delete",

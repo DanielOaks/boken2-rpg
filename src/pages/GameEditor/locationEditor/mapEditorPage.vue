@@ -1,8 +1,9 @@
 <template>
   <div class="mapEditor">
     <div class="mainNavButtons">
-      <div class="btn" @click="goBack" v-text="$t('gameEditor.regions.goBackButton')"/>
-      <div class="btn" @click="save" v-text="$t('gameEditor.regions.saveButton')"/>
+      <div class="btn nav" @click="goBack" v-text="$t('gameEditor.regions.goBackButton')"/>
+      <div class="btn nav" @click="save" v-text="$t('gameEditor.regions.saveButton')"/>
+      <div class="btn tool" v-for="tool in mapTools" v-bind:key="tool" @click="changeTool" :data-tool="tool" v-bind:class="{active: mapTool === tool}" v-text="$t('gameEditor.mapTool.'+tool)"/>
     </div>
     <div class="mainPropertyEditor"><div>
       <h2>Map Properties</h2>
@@ -69,6 +70,11 @@ XXCXX X XXXXX  XXXCX   XXX
   },
   data() {
     return {
+      mapTools: [
+        'moveMap',
+        'pointer',
+      ],
+      mapTool: 'moveMap',
       colors: {
         bg: '#559e94',
         tileBg: '#41877e',
@@ -108,6 +114,10 @@ XXCXX X XXXXX  XXXCX   XXX
     save() {
       console.log('TODO: save map');
     },
+    changeTool(event) {
+      this.mapTool = event.target.dataset.tool;
+      this.$refs.canvas.setTool(event.target.dataset.tool);
+    },
   }
 }
 </script>
@@ -130,6 +140,12 @@ XXCXX X XXXXX  XXXCX   XXX
       cursor: pointer;
       + .btn {
         margin-left: .5em;
+      }
+      &.nav + .btn.tool {
+        margin-left: 2em;
+      }
+      &.tool.active {
+        background: var(--map-tile-bg-active-color);
       }
     }
   }

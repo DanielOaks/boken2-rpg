@@ -57,6 +57,7 @@ export default {
   --map-bg-color: var(--main-bg-color);
   --map-tile-text-color: var(--main-btn-text-color);
   --map-tile-bg-color: var(--sidebar-btn-bg-color);
+  --map-tile-bg-active-color: #31776e;
   --map-tile-bg-color-error: #974733;
   --map-editor-text-color: #fff;
 

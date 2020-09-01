@@ -1,5 +1,5 @@
 <template>
-  <canvas ref="canvas" @mousemove="mousemove" @mousedown="mousedown" @mouseup="mouseup" @mouseenter="mouseenter" @mouseleave="mouseleave" @wheel="wheel"/>
+  <canvas ref="canvas" :class="`tool-${tool}`" @mousemove="mousemove" @mousedown="mousedown" @mouseup="mouseup" @mouseenter="mouseenter" @mouseleave="mouseleave" @wheel="wheel"/>
 </template>
 
 <script>
@@ -97,6 +97,12 @@ export default {
         height: 0,
       },
       hoveredTilePos: {},
+      tools: [
+        'moveMap',
+        'pointer',
+      ],
+      nextTool: undefined,
+      tool: 'moveMap',
 
       // optional tweaks~
       hqRender: false,
@@ -203,6 +209,15 @@ export default {
 
       // draw extra UI elements that always appear in the same place here
     },
+    setTool(tool) {
+      if (this.mouseIsDown) {
+        this.nextTool = tool;
+      } else {
+        this.tool = tool;
+      }
+    },
+
+    // incoming events
     mousedown(event) {
       this.mouseLastPos = {
         x: event.x,
@@ -217,15 +232,21 @@ export default {
     },
     mouseup() {
       this.mouseIsDown = false;
-      if (Math.abs(this.mouseLastPos.x - this.mouseStartPos.x) < this.maxClickRoam.x &&
-          Math.abs(this.mouseLastPos.y - this.mouseStartPos.y) < this.maxClickRoam.y) {
-        const event = {
-          tilePos: this.hoveredTilePos,
-        };
-        if (this.hoveredTile) {
-          event.tile = this.hoveredTile;
+      if (this.tool === 'pointer') {
+        if (Math.abs(this.mouseLastPos.x - this.mouseStartPos.x) < this.maxClickRoam.x &&
+            Math.abs(this.mouseLastPos.y - this.mouseStartPos.y) < this.maxClickRoam.y) {
+          const event = {
+            tilePos: this.hoveredTilePos,
+          };
+          if (this.hoveredTile) {
+            event.tile = this.hoveredTile;
+          }
+          this.onClick(event)
         }
-        this.onClick(event)
+      }
+      if (this.nextTool) {
+        this.tool = this.nextTool;
+        delete this.nextTool;
       }
     },
     mouseenter(event) {
@@ -246,6 +267,7 @@ export default {
       // accidentally hovering off the canvas and back on is really common.
     },
     mousemove(event) {
+      // this normally happens if we've zoomed in and we're getting called manually
       if (!this.mouseIsDown) {
         const x = ((event.x - this.canvasPosOffset.x*this.scale)/72)/this.scale;
         const y = ((event.y - this.canvasPosOffset.y*this.scale)/72)/this.scale;
@@ -284,13 +306,15 @@ export default {
         }
         return;
       }
-      this.canvasPosOffset.x += (event.x - this.mouseLastPos.x)*this.scaleDragModifier;
-      this.canvasPosOffset.y += (event.y - this.mouseLastPos.y)*this.scaleDragModifier;
-      this.mouseLastPos = {
-        x: event.x,
-        y: event.y,
-      };
-      this.redraw();
+      if (this.tool === 'moveMap') {
+        this.canvasPosOffset.x += (event.x - this.mouseLastPos.x)*this.scaleDragModifier;
+        this.canvasPosOffset.y += (event.y - this.mouseLastPos.y)*this.scaleDragModifier;
+        this.mouseLastPos = {
+          x: event.x,
+          y: event.y,
+        };
+        this.redraw();
+      }
     },
     wheel(event) {
       if (this.mouseIsDown) {
@@ -352,7 +376,10 @@ export default {
 
 <style lang="scss" scoped>
 canvas {
-width: 100% !important;
-height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  &.tool-moveMap{
+    cursor: grab;
+  }
 }
 </style>
