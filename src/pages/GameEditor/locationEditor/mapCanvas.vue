@@ -51,6 +51,24 @@ export default {
   destroyed() {
     window.removeEventListener('resize', this.update);
   },
+  computed: {
+    scaleDragModifier() {
+      // the scale here gets smaller as we get more zoomed in
+
+      // manual values that were found to be correct
+      // scale:  .5  == scaleMod: 2
+      // scale: 1    == scaleMod: 1
+      // scale: 1.1  == scaleMod:  .909
+      // scale: 1.2  == scaleMod:  .833
+      // scale: 1.3  == scaleMod:  .769
+      // scale: 1.4  == scaleMod:  .714
+      // scale: 1.5  == scaleMod:  .666
+      // scale: 2    == scaleMod:  .5
+
+      // below fn is from curve-fitting site, plugging above values in and using a power curve
+      return 0.9997795*this.scale**-1.000343
+    }
+  },
   data() {
     return {
       scale: 1,
@@ -213,9 +231,8 @@ export default {
         }
         return;
       }
-      // the scale here gets smaller as we get more zoomed in
-      this.canvasPosOffset.x += (event.x - this.mouseLastPos.x) * (1.5/this.scale**2);
-      this.canvasPosOffset.y += (event.y - this.mouseLastPos.y) * (1.5/this.scale**2);
+      this.canvasPosOffset.x += (event.x - this.mouseLastPos.x)*this.scaleDragModifier;
+      this.canvasPosOffset.y += (event.y - this.mouseLastPos.y)*this.scaleDragModifier;
       this.mouseLastPos = {
         x: event.x,
         y: event.y,
@@ -223,6 +240,9 @@ export default {
       this.redraw();
     },
     wheel(event) {
+      if (this.mouseIsDown) {
+        return;
+      }
       this.oldScale = this.scale;
       this.scale = Math.max(.5, Math.min(5, this.scale - (event.deltaY/1000)));
       this.redraw();
@@ -237,15 +257,15 @@ export default {
     // events
     onTileHoverStart(event) {
       const t = event.tile;
-      console.log('hovering over tile', t.x, t.y);
       if (this.tiles[t.y] && this.tiles[t.y][t.x]) {
+        console.log('hovering over tile', t.x, t.y);
         this.tiles[t.y][t.x].bgColor = '#ee2244';
       }
     },
     onTileHoverEnd(event) {
       const t = event.tile;
-      console.log('              left', t.x, t.y);
       if (this.tiles[t.y] && this.tiles[t.y][t.x]) {
+        console.log('              left', t.x, t.y);
         delete this.tiles[t.y][t.x].bgColor;
       }
     },
