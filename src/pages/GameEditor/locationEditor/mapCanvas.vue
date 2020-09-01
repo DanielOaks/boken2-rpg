@@ -118,17 +118,15 @@ export default {
   },
   methods: {
     focusOn(x, y) {
-      // this.canvasPosOffset = {
-      //   x: -25-72*x,
-      //   y: -25-72*y,
-      // };
-      console.log('TODO: focus on map tile', x, y)
+      const pageSize = this.$el.parentNode.getBoundingClientRect();
+      this.canvasPosOffset = {
+        x: (pageSize.width/2)*this.scaleDragModifier-(25+72*x),
+        y: (pageSize.height/2)*this.scaleDragModifier-(25+72*y),
+      };
       this.redraw();
     },
     update() {
       const pageSize = this.$el.parentNode.getBoundingClientRect();
-      this.$el.width = pageSize.width
-      this.$el.height = pageSize.height
       this.canvasSize = {
         width: pageSize.width,
         height: pageSize.height,
@@ -155,8 +153,8 @@ export default {
 
       // bg elements
       this.ctx.fillStyle = this.colors.tileSurroundedBg;
-      Object.keys(this.tiles).forEach((y,iy) => {
-        Object.keys(this.tiles[y]).forEach((x,ix) => {
+      Object.keys(this.tiles).forEach((y) => {
+        Object.keys(this.tiles[y]).forEach((x) => {
           if (this.tiles[y][x-1] && this.tiles[y-1] && this.tiles[y-1][x] && this.tiles[y-1][x-1]) {
             this.ctx.fillRect((x-1)*72+25, (y-1)*72+25, 72, 72);
           }
@@ -171,10 +169,10 @@ export default {
 
       // draw our actual map here!!!
       this.ctx.fillStyle = this.colors.tileBg;
-      Object.keys(this.tiles).forEach((y,iy) => {
+      Object.keys(this.tiles).forEach((y) => {
         // key: the name of the object key
         // index: the ordinal position of the key within the object
-        Object.keys(this.tiles[y]).forEach((x,ix) => {
+        Object.keys(this.tiles[y]).forEach((x) => {
           if (this.tiles[y][x] && this.tiles[y][x].bgColor) {
             this.ctx.fillStyle = this.tiles[y][x].bgColor;
           }
