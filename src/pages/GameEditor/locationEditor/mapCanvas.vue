@@ -4,10 +4,10 @@
 
 <script>
 // canvas high-DPI setup function, from https://www.html5rocks.com/en/tutorials/canvas/hidpi/
-function setupCanvas(canvas) {
+function setupCanvas(canvas, hqRender) {
   // Get the device pixel ratio, falling back to 1.
   let dpr = window.devicePixelRatio || 1;
-  dpr *= 1 //TODO(dan): maybe scale up a bit so the edges don't look so dodgy
+  dpr *= hqRender ? 2 : 1.5;
   // Get the size of the canvas in CSS pixels.
   const rect = canvas.getBoundingClientRect();
 
@@ -99,6 +99,7 @@ export default {
       hoveredTilePos: {},
 
       // optional tweaks~
+      hqRender: false,
       minZoom: .5,
       maxZoom: 5,
       maxClickRoam: {
@@ -112,6 +113,7 @@ export default {
       colors: {
         bg: '#222',
         tileBg: '#777',
+        tileText: '#eee',
         tileSurroundedBg: '#444', // when all four sides are surrounded
       },
     }
@@ -131,7 +133,7 @@ export default {
         width: pageSize.width,
         height: pageSize.height,
       }
-      this.ctx = setupCanvas(this.$el);
+      this.ctx = setupCanvas(this.$el, this.hqRender);
       this.redraw();
     },
     redraw() {
@@ -145,11 +147,6 @@ export default {
       // translations
       this.ctx.scale(this.scale, this.scale);
       this.ctx.translate(this.canvasPosOffset.x, this.canvasPosOffset.y);
-      // this.canvasPosOffset = {
-      //   x: 0,
-      //   y: 0,
-      // }
-      // this.ctx.translate(this.canvasSize.width/2 + this.canvasPosOffset.x, this.canvasSize.height/2 + this.canvasPosOffset.y)
 
       // bg elements
       this.ctx.fillStyle = this.colors.tileSurroundedBg;
@@ -173,10 +170,24 @@ export default {
         // key: the name of the object key
         // index: the ordinal position of the key within the object
         Object.keys(this.tiles[y]).forEach((x) => {
-          if (this.tiles[y][x] && this.tiles[y][x].bgColor) {
-            this.ctx.fillStyle = this.tiles[y][x].bgColor;
+          const tile = this.tiles[y][x];
+
+          // tile
+          if (tile && tile.bgColor) {
+            this.ctx.fillStyle = tile.bgColor;
           }
           roundedRect(this.ctx, x*72, y*72, 50, 50, 13);
+
+          // text on tile
+          if (tile && tile.text) {
+            this.ctx.fillStyle = this.colors.tileText;
+            this.ctx.font = '13px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+            this.ctx.fillText(tile.text, x*72+25, y*72+25);
+          }
+
+          // links to other tiles
           this.ctx.fillStyle = this.colors.tileBg;
           if (this.tiles[y][x-1]) {
             roundedRect(this.ctx, (x)*72-18, y*72+22, 14, 7, 3);

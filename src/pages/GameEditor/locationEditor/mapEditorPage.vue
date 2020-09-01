@@ -30,22 +30,28 @@ export default {
     // generate tiles
     const tileString = 
 `X  X     XX XXXX
-XXXXX X XXXXX  XXXXX   XXX
+XXCXX X XXXXX  XXXCX   XXX
    XXXXX   XXX X   XXXXX X
   XXX   XXXX XXX  XXXX  XX
- XX XXXXX  XXX  XXX  XX
+ XX XXXXX  XCX  XXX  XX
   X     XXXX     XX
   X        XXX  XXXX
- XXX            XXXX
+ XXX            CCXX
  XXX
 `;
     this.$refs.canvas.tiles = {}
+    let id = 1;
     tileString.split('\n').forEach((line, y) => {
       this.$refs.canvas.tiles[y] = {}
       line.split('').forEach((char, x) => {
         if (char !== ' ') {
           // console.log('tile at', x, y);
-          this.$refs.canvas.tiles[y][x] = {};
+          const tile = {id};
+          id += 1;
+          if (char === 'C') {
+            tile.text = 'char';
+          }
+          this.$refs.canvas.tiles[y][x] = tile;
         }
       });
     });
@@ -66,6 +72,7 @@ XXXXX X XXXXX  XXXXX   XXX
       colors: {
         bg: '#559e94',
         tileBg: '#41877e',
+        tileText: '#eeeeee',
         tileSurroundedBg: '#4b9289', // when all four sides are surrounded
       },
       bgs: [
