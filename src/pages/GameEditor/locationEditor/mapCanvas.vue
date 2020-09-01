@@ -285,8 +285,18 @@ export default {
       if (this.mouseIsDown) {
         return;
       }
-      this.oldScale = this.scale;
+      const oldScale = this.scale;
+      const oldScaleDragModifier = this.scaleDragModifier;
       this.scale = Math.max(this.minZoom, Math.min(this.maxZoom, this.scale - (event.deltaY/1000)));
+
+      // this centres the zooming, rather than zooming from the top-left of the lap (tile 0,0)
+      if (oldScale !== this.scale) {
+        const pageSize = this.$el.parentNode.getBoundingClientRect();
+        this.canvasPosOffset = {
+          x: this.canvasPosOffset.x - (pageSize.width/2)*oldScaleDragModifier + (pageSize.width/2)*this.scaleDragModifier,
+          y: this.canvasPosOffset.y - (pageSize.height/2)*oldScaleDragModifier + (pageSize.height/2)*this.scaleDragModifier,
+        }
+      }
       this.redraw();
       // this mousemove stops issues where (because of a wheel scroll) we accidentally hover
       //  over a different tile and we don't fire an onTileHoverEnd() for the old one.
