@@ -67,12 +67,22 @@ export default {
 
       // below fn is from curve-fitting site, plugging above values in and using a power curve
       return 0.9997795*this.scale**-1.000343
-    }
+    },
+    hoveredTile() {
+      if (this.tiles[this.hoveredTilePos.y]) {
+        return this.tiles[this.hoveredTilePos.y][this.hoveredTilePos.x]
+      }
+      return undefined
+    },
   },
   data() {
     return {
       scale: 1,
       mouseIsDown: false,
+      mouseStartPos: {
+        x: 0,
+        y: 0,
+      },
       mouseLastPos: {
         x: 0,
         y: 0,
@@ -86,14 +96,24 @@ export default {
         width: 0,
         height: 0,
       },
+      hoveredTilePos: {},
+
+      // optional tweaks~
+      minZoom: .5,
+      maxZoom: 5,
+      maxClickRoam: {
+        x: 4,
+        y: 4,
+      },
+
+      // this is data provided by the user
+      tiles: {},
+      bgs: [],
       colors: {
         bg: '#222',
         tileBg: '#777',
         tileSurroundedBg: '#444', // when all four sides are surrounded
       },
-      tiles: {},
-      bgs: [],
-      currentHoveredTile: {},
     }
   },
   methods: {
@@ -102,6 +122,7 @@ export default {
       //   x: -25-72*x,
       //   y: -25-72*y,
       // };
+      console.log('TODO: focus on map tile', x, y)
       this.redraw();
     },
     update() {
@@ -178,19 +199,37 @@ export default {
         x: event.x,
         y: event.y,
       };
+      this.mouseStartPos = this.mouseLastPos;
       this.mouseIsDown = true;
+
+      // deselect all text, since weird things can happen if text is selected
+      //  and we try to drag the map around
+      document.getSelection().removeAllRanges();
     },
     mouseup() {
       this.mouseIsDown = false;
+      if (Math.abs(this.mouseLastPos.x - this.mouseStartPos.x) < this.maxClickRoam.x &&
+          Math.abs(this.mouseLastPos.y - this.mouseStartPos.y) < this.maxClickRoam.y) {
+        const event = {
+          tilePos: this.hoveredTilePos,
+        };
+        if (this.hoveredTile) {
+          event.tile = this.hoveredTile;
+        }
+        this.onClick(event)
+      }
     },
     mouseenter(event) {
       this.mouseLastPos = {
         x: event.x,
         y: event.y,
       };
-      // update whether primary mouse button is down
+      // if mouse btn was down, the pointer exited canvas, and then came back onto the
+      //  canvas with mouse button up, fix that.
       // eslint-disable-next-line no-bitwise
-      this.mouseIsDown = event.buttons & 1;
+      if (this.mouseIsDown && !(event.buttons & 1)) {
+        this.mouseup();
+      }
     },
     mouseleave() {
       //HERE ... think more about what makes sense and is easiest to do here.
@@ -206,26 +245,31 @@ export default {
             x: Math.floor(x),
             y: Math.floor(y),
           }
-          if (this.currentHoveredTile.x !== tile.x || this.currentHoveredTile.y !== tile.y) {
-            if (this.currentHoveredTile.x !== undefined && this.currentHoveredTile.y !== undefined) {
+          if (this.hoveredTilePos.x !== tile.x || this.hoveredTilePos.y !== tile.y) {
+            if (this.hoveredTilePos.x !== undefined && this.hoveredTilePos.y !== undefined) {
               // while scrolling, we changed hover tiles.
-              const tempTile = this.currentHoveredTile;
-              this.currentHoveredTile = {};
+              const tempTilePos = this.hoveredTilePos;
+              const tempTile = this.hoveredTile;
+              this.hoveredTilePos = {};
               this.onTileHoverEnd({
                 tile: tempTile,
+                tilePos: tempTilePos,
               });
             }
-            this.currentHoveredTile = tile;
+            this.hoveredTilePos = tile;
             this.onTileHoverStart({
-              tile,
+              tile: this.hoveredTile,
+              tilePos: tile,
             });
             this.redraw();
           }
-        } else if (this.currentHoveredTile.x !== undefined || this.currentHoveredTile.y !== undefined) {
-          const oldTile = this.currentHoveredTile;
-          this.currentHoveredTile = {};
+        } else if (this.hoveredTilePos.x !== undefined || this.hoveredTilePos.y !== undefined) {
+          const oldTile = this.hoveredTile;
+          const oldTilePos = this.hoveredTilePos;
+          this.hoveredTilePos = {};
           this.onTileHoverEnd({
             tile: oldTile,
+            tilePos: oldTilePos,
           });
           this.redraw();
         }
@@ -244,7 +288,7 @@ export default {
         return;
       }
       this.oldScale = this.scale;
-      this.scale = Math.max(.5, Math.min(5, this.scale - (event.deltaY/1000)));
+      this.scale = Math.max(this.minZoom, Math.min(this.maxZoom, this.scale - (event.deltaY/1000)));
       this.redraw();
       // this mousemove stops issues where (because of a wheel scroll) we accidentally hover
       //  over a different tile and we don't fire an onTileHoverEnd() for the old one.
@@ -256,17 +300,31 @@ export default {
 
     // events
     onTileHoverStart(event) {
-      const t = event.tile;
+      const t = event.tilePos;
       if (this.tiles[t.y] && this.tiles[t.y][t.x]) {
         console.log('hovering over tile', t.x, t.y);
-        this.tiles[t.y][t.x].bgColor = '#ee2244';
+        // this.tiles[t.y][t.x].bgColor = '#ee2244';
       }
     },
     onTileHoverEnd(event) {
-      const t = event.tile;
+      const t = event.tilePos;
       if (this.tiles[t.y] && this.tiles[t.y][t.x]) {
         console.log('              left', t.x, t.y);
-        delete this.tiles[t.y][t.x].bgColor;
+        // delete this.tiles[t.y][t.x].bgColor;
+      }
+    },
+    onClick(event) {
+      if (event.tile) {
+        console.log('clicked on', event.tilePos.x, event.tilePos.y, event.tile);
+        const t = event.tilePos;
+        if (event.tile.bgColor) {
+          delete this.tiles[t.y][t.x].bgColor;
+        } else {
+          this.tiles[t.y][t.x].bgColor = '#ee2244';
+        }
+        this.redraw();
+      } else {
+        console.log('no tile at', event.tilePos.x, event.tilePos.y);
       }
     },
   }
