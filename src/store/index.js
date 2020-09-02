@@ -53,7 +53,6 @@ export default new Vuex.Store({
         }
       },
       gameEditor: {
-        page: 'infoEditor',
         locationEditorPage: 'tree',
         locationEditorId: undefined,
         locationEditorShowIds: true,
@@ -94,9 +93,6 @@ export default new Vuex.Store({
       state.app.page = pl;
     },
 
-    changeGameEditorPage (state, pl) {
-      state.app.gameEditor.page = pl;
-    },
     showTreeEditor (state) {
       state.app.gameEditor.locationEditorPage = 'tree';
     },
@@ -270,9 +266,6 @@ export default new Vuex.Store({
     },
     appPage: (state) => {
       return state.app.page;
-    },
-    gameEditorPage: (state) => {
-      return state.app.gameEditor.page;
     },
     regionEditorState: (state) => {
       return {

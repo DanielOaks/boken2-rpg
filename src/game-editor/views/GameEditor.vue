@@ -1,11 +1,11 @@
 <template>
   <div id="gameEditor" class="app-page">
-    <InfoEditor v-if="$store.getters.gameEditorPage == 'infoEditor'"/>
-    <LocationEditor v-if="$store.getters.gameEditorPage == 'locationEditor'"/>
+    <InfoEditor v-if="page == 'infoEditor'"/>
+    <LocationEditor v-if="page == 'locationEditor'"/>
     <div class="tabs">
-      <div class="tab" v-text="$t('gameEditor.tab.gameinfo')" data-page="infoEditor" v-bind:class="{active: $store.getters.gameEditorPage == 'infoEditor'}" @click="switchTab"/>
+      <div class="tab" v-text="$t('gameEditor.tab.gameinfo')" data-page="infoEditor" v-bind:class="{active: page == 'infoEditor'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.characters')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="locationEditor" v-bind:class="{active: $store.getters.gameEditorPage == 'locationEditor', map: $store.getters.regionEditorState.page == 'mapEditor'}" @click="switchTab"/>
+      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="locationEditor" v-bind:class="{active: page == 'locationEditor', map: $store.getters.regionEditorState.page == 'mapEditor'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.quests')"/>
       <div class="tab" v-text="$t('gameEditor.tab.items')"/>
       <div class="tab" v-text="$t('gameEditor.tab.perks')"/>
@@ -23,9 +23,14 @@ export default {
     InfoEditor,
     LocationEditor,
   },
+  data() {
+    return {
+      page: 'infoEditor',
+    }
+  },
   methods: {
     switchTab(e) {
-      this.$store.commit('changeGameEditorPage', e.target.dataset.page);
+      this.page = e.target.dataset.page;
     },
   },
 }
