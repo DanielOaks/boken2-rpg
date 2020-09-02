@@ -14,7 +14,7 @@ export default {
   methods: {
     clicked() {
       console.log('TODO: menuButton clicked', this.$props.btn);
-      this.$store.commit('showMainMenu');
+      this.$store.commit('appShowMainMenu');
     },
     hover() {
       this.$store.commit('showGameHoverHint', {name: this.$t(`menuButton.${this.$props.btn}.name`), description: this.$t(`menuButton.${this.$props.btn}.description`)});

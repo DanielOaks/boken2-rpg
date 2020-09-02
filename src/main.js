@@ -29,5 +29,6 @@ new Vue({
     // console.log('Loading example game info', exampleData);
     store.commit('loadExampleGameData', exampleData.gameData);
     store.commit('loadExampleGameState', exampleData.gameState);
+    store.commit('appStartGame');
   },
 });

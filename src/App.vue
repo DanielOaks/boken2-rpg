@@ -4,25 +4,25 @@
     <game-editor ref="gameEditor" v-show="$store.getters.appPage == 'gameEditor'"/>
     <state-editor ref="stateEditor" v-show="$store.getters.appPage == 'stateEditor'"/>
     <state-switcher ref="stateSwitcher"/>
-    <homepage ref="homepage" v-if="$store.getters.showMainMenu"/>
+    <main-menu ref="mainmenu" v-if="$store.getters.showMainMenu"/>
   </div>
 </template>
 
 <script>
-import Game from './pages/Game/index.vue'
-import Homepage from './pages/Homepage.vue'
-import GameEditor from './pages/GameEditor/index.vue'
-import StateEditor from './pages/StateEditor.vue'
-import StateSwitcher from './pages/StateSwitcher.vue'
+import StateSwitcher from './components/TheStateSwitcher.vue'
+import MainMenu from './game/views/MainMenu.vue'
+import Game from './game/views/Game.vue'
+import GameEditor from './game-editor/views/GameEditor.vue'
+import StateEditor from './state-editor/views/StateEditor.vue'
 
 export default {
   name: 'App',
   components: {
+    StateSwitcher,
+    MainMenu,
     Game,
-    Homepage,
     GameEditor,
     StateEditor,
-    StateSwitcher,
   },
 }
 </script>
@@ -33,8 +33,8 @@ export default {
 
 // default theme
 :root {
-  --homepage-gameselect-bg-color: #96c3bd;
-  --homepage-gameselect-text-color: #444;
+  --mainmenu-gameselect-bg-color: #96c3bd;
+  --mainmenu-gameselect-text-color: #444;
 
   --main-text-color: #fff;
   --main-bg-color: #559e94;

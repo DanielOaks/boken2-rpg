@@ -14,10 +14,10 @@
 
 <script>
 export default {
-  name: 'RegionAttributesPage',
+  name: 'RegionEditor',
   methods: {
     goBack() {
-      this.$store.commit('showRegionTreeEditor');
+      this.$store.commit('showTreeEditor');
     },
   }
 }

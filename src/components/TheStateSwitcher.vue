@@ -11,7 +11,7 @@ export default {
   name: 'StateSwitcher',
   methods: {
     show(page) {
-      this.$store.commit('changeAppPage', page);
+      this.$store.commit('appChangePage', page);
     },
   },
 }

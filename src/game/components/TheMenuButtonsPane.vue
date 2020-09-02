@@ -1,22 +1,22 @@
 <template>
   <div class="menuButtonsPane">
-    <menuButton btn="menu"/>
-    <menuButton btn="saveload"/>
-    <menuButton btn="quicksave"/>
-    <menuButton btn="profile" big/>
-    <menuButton btn="messages"/>
-    <menuButton btn="perks"/>
-    <menuButton btn="levelup"/>
+    <MenuButton btn="menu"/>
+    <MenuButton btn="saveload"/>
+    <MenuButton btn="quicksave"/>
+    <MenuButton btn="profile" big/>
+    <MenuButton btn="messages"/>
+    <MenuButton btn="perks"/>
+    <MenuButton btn="levelup"/>
   </div>
 </template>
 
 <script>
-import menuButton from './buttons/menuButton.vue'
+import MenuButton from './MenuButton.vue'
 
 export default {
   name: 'MenuButtonsPane',
   components: {
-    menuButton,
+    MenuButton,
   },
 }
 </script>

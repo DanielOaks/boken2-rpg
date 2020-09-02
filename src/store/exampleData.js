@@ -10,7 +10,7 @@ export default {
       },
       health: {
         fullName: 'Health',
-        // uiName: 'HP',
+        uiName: 'HP',
       },
       energy: {
         fullName: 'Energy',

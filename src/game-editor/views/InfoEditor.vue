@@ -1,14 +1,14 @@
 <template>
-  <div class="gameEditorPage settings">
+  <div class="gameEditorPage info">
     <div class="contained">
       <h1 v-text="$t('gameEditor.tab.gameinfo')"/>
-      <div class="settingsMenu">
-        <label for="gameName" v-text="$t('gameEditor.settings.gameName')"/>
+      <div class="infoMenu">
+        <label for="gameName" v-text="$t('gameEditor.info.gameName')"/>
         <input id="gameName" v-model="gameName" placeholder="Game Name" size="35"/>
-        <label for="currencyName" v-text="$t('gameEditor.settings.currencyName')"/>
+        <label for="currencyName" v-text="$t('gameEditor.info.currencyName')"/>
         <input id="currencyName" v-model="currencyName" placeholder="Currency Name" size="15"/>
         <label for="statsList" v-text="$t('terms.stats')"/>
-        <p v-text="$t('gameEditor.settings.statsDescription')"/>
+        <p v-text="$t('gameEditor.info.statsDescription')"/>
         <div id="statsList">
           <span>ID</span>
           <span>UI Name</span>
@@ -19,12 +19,12 @@
             <span :key="'k_'+key" v-text="key"/>
             <input :key="'u_'+key" :data-id="key" data-field="uiName" :value="info.uiName" size="10" @input="updateGameStat"/>
             <input :key="'f_'+key" :data-id="key" data-field="fullName" :value="info.fullName" size="20" @input="updateGameStat"/>
-            <div :key="'d_'+key" :data-id="key" class="btn" v-text="$t('gameEditor.settings.delete')" @click="deleteGameStat"/>
+            <div :key="'d_'+key" :data-id="key" class="btn" v-text="$t('gameEditor.info.delete')" @click="deleteGameStat"/>
           </template>
           <input id="newStatKey" ref="newGameStatKey" size="10"/>
           <input id="newStatUiName" ref="newGameStatUiName" size="10"/>
           <input id="newStatFullName" ref="newGameStatFullName" size="20"/>
-          <div class="btn" v-text="$t('gameEditor.settings.add')" @click="createGameStat"/>
+          <div class="btn" v-text="$t('gameEditor.info.add')" @click="createGameStat"/>
         </div>
       </div>
     </div>
@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: 'SettingsPage',
+  name: 'InfoEditor',
   methods: {
     updateGameStat (e) {
       const field = e.target.getAttribute('data-field');
@@ -95,7 +95,7 @@ export default {
 </script>
 
 <style lang="scss">
-.gameEditorPage.settings {
+.gameEditorPage.info {
   text-align: center;
   overflow-y: auto;
   padding: .5em 0 1em;
@@ -105,7 +105,7 @@ export default {
     flex-direction: column;
     justify-content: center;
   }
-  .settingsMenu {
+  .infoMenu {
     background: var(--editor-bg-color);
     color: var(--editor-text-color);
     width: 50em;

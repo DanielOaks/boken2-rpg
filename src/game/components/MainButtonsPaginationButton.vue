@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'mainButtonsPaginationButton',
+  name: 'MainButtonsPaginationButton',
   props: {
     dir: String,
   },

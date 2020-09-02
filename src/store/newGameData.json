@@ -1,0 +1,50 @@
+{
+    "name": "New Game",
+    "stats": {
+        "armour": {
+            "fullName": "Armour"
+        },
+        "health": {
+            "fullName": "Health",
+            "uiName": "HP"
+        },
+        "energy": {
+            "fullName": "Energy"
+        }
+    },
+    "attributes": {
+        "str": {
+            "fullName": "Strength",
+            "uiName": "STR"
+        },
+        "dex": {
+            "fullName": "Dexterity",
+            "uiName": "DEX"
+        },
+        "int": {
+            "fullName": "Intelligence",
+            "uiName": "INT"
+        },
+        "cha": {
+            "fullName": "Charisma",
+            "uiName": "CHA"
+        },
+        "luck": {
+            "fullName": "Luck",
+            "uiName": "LUCK"
+        }
+    },
+    "xpToLevel": {
+        "1": 500,
+        "2": 1000,
+        "3": 1500,
+        "4": 2000,
+        "5": 2000,
+        "6": 3000,
+        "7": 4000,
+        "8": 5000,
+        "9": 7500,
+        "10": 10000
+    },
+    "regions": {}
+}

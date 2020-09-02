@@ -43,7 +43,7 @@ import { Tree } from 'vue-tree-list'
 const locationIdCheck = /^[a-zA-Z][0-9a-zA-Z]+$/;
 
 export default {
-  name: 'TreePage',
+  name: 'TreeEditor',
   computed: {
     data() {
       return new Tree(this.$store.getters.gameDataRegionsInTreeFormat);

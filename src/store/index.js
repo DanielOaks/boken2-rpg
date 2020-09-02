@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as newGameDataJson from './newGameData.json'
 
 Vue.use(Vuex)
 
-const emptyGameData = {
-  name: '',
-  stats: {},
-  attributes: {},
-  xpToLevel: {},
-  regions: {},
-}
+// this is just a starting pack of data that new games can use.
+// xp->level lists are a bit all over the place so we include a basic one,
+//  along with example attributes and stats that (hopefully) illustrate the
+//  basics to new creators and inspires them to experiment!.
+const newGameData = newGameDataJson.default
 
+// totally empty game state. this is what's used when starting a new game
 const emptyGameState = {
   player: {
     name: {},
@@ -38,20 +38,31 @@ function utilGetNewRegionMapId(id, region) {
 
 export default new Vuex.Store({
   state: {
-    showMainMenu: true,
-    appPage: 'game',
-    gameEditorPage: 'settings',
-    regionEditorPage: 'tree',
-
-    // hint that shows when you hover over buttons
-    gameHoverHint: {
-      hidden: true,
-      name: '',
-      description: '',
+    // the *app's* running state. not where the player is in the game,
+    //  this is the info the Vue app uses to decide whether to show the main
+    //  menu or not, the game / game editor / state editor, etc.
+    app: {
+      showMainMenu: true,
+      gameStarted: false,
+      page: 'game',
+      game: {
+        hoverHint: {
+          hidden: true,
+          name: '',
+          description: '',
+        }
+      },
+      gameEditor: {
+        page: 'infoEditor',
+        locationEditorPage: 'tree',
+        locationEditorId: undefined,
+        locationEditorShowIds: true,
+      },
+      stateEditor: {},
     },
 
     // static game data
-    gameData: emptyGameData,
+    gameData: newGameData,
 
     // transitive game state (player name, quest info, etc)
     // this is what the save-game contains
@@ -59,48 +70,54 @@ export default new Vuex.Store({
   },
 
   mutations: {
-    // misc mutations
-    showMainMenu (state) {
-      state.showMainMenu = true;
-    },
-    hideMainMenu (state) {
-      state.showMainMenu = false;
-    },
-    changeAppPage (state, pl) {
-      state.appPage = pl;
-    },
-    changeGameEditorPage (state, pl) {
-      state.gameEditorPage = pl;
-    },
-    showRegionTreeEditor (state) {
-      state.regionEditorPage = 'tree';
-    },
-    showRegionEditor (state, pl) {
-      state.regionEditorId = pl;
-      state.regionEditorPage = 'regionEditor';
-    },
-    showMapEditor (state, pl) {
-      state.regionEditorId = pl;
-      state.regionEditorPage = 'mapEditor';
-    },
-    changeRegionEditorShowIds (state, pl) {
-      Vue.set(state, 'regionEditorShowIds', pl);
-    },
-    showGameHoverHint (state, pl) {
-      state.gameHoverHint.hidden = false;
-      state.gameHoverHint.name = pl.name;
-      state.gameHoverHint.description = pl.description;
-    },
-    hideGameHoverHint (state) {
-      state.gameHoverHint.hidden = true;
-    },
-  
-    // example mutations
+    // example mutations... these don't really fit anywhere for now, and will likely be
+    //  replaced with real gameData/gameState functions once we're further along, so for
+    //  now they live here.
     loadExampleGameData (state, pl) {
       state.gameData = pl;
     },
     loadExampleGameState (state, pl) {
       state.gameState = pl;
+    },
+    appStartGame (state) {
+      state.app.gameStarted = true;
+    },
+
+    // app mutations
+    appShowMainMenu (state) {
+      state.app.showMainMenu = true;
+    },
+    appHideMainMenu (state) {
+      state.app.showMainMenu = false;
+    },
+    appChangePage (state, pl) {
+      state.app.page = pl;
+    },
+
+    changeGameEditorPage (state, pl) {
+      state.app.gameEditor.page = pl;
+    },
+    showTreeEditor (state) {
+      state.app.gameEditor.locationEditorPage = 'tree';
+    },
+    showRegionEditor (state, pl) {
+      state.app.gameEditor.locationEditorId = pl;
+      state.app.gameEditor.locationEditorPage = 'regionEditor';
+    },
+    showMapEditor (state, pl) {
+      state.app.gameEditor.locationEditorId = pl;
+      state.app.gameEditor.locationEditorPage = 'mapEditor';
+    },
+    changeRegionEditorShowIds (state, pl) {
+      Vue.set(state.app.gameEditor, 'locationEditorShowIds', pl);
+    },
+    showGameHoverHint (state, pl) {
+      state.app.game.hoverHint.hidden = false;
+      state.app.game.hoverHint.name = pl.name;
+      state.app.game.hoverHint.description = pl.description;
+    },
+    hideGameHoverHint (state) {
+      state.app.game.hoverHint.hidden = true;
     },
 
     // game data mutations
@@ -242,27 +259,30 @@ export default new Vuex.Store({
 
     // game state mutations
   },
- 
+
   getters: {
-    // misc getters
+    // app getters
+    appGameStarted: (state) => {
+      return state.app.gameStarted;
+    },
     showMainMenu: (state) => {
-      return state.showMainMenu;
+      return state.app.showMainMenu;
     },
     appPage: (state) => {
-      return state.appPage;
+      return state.app.page;
     },
     gameEditorPage: (state) => {
-      return state.gameEditorPage;
+      return state.app.gameEditor.page;
     },
     regionEditorState: (state) => {
       return {
-        page: state.regionEditorPage,
-        id: state.regionEditorId,
-        showIds: state.regionEditorShowIds,
+        page: state.app.gameEditor.locationEditorPage,
+        id: state.app.gameEditor.locationEditorId,
+        showIds: state.app.gameEditor.locationEditorShowIds,
       }
     },
     gameHoverHint: (state) => {
-      return state.gameHoverHint;
+      return state.app.game.hoverHint;
     },
 
     // game data getters
@@ -284,7 +304,7 @@ export default new Vuex.Store({
         const [ finalBitOfRegionId ] = `${id}`.split('/').slice(-1);
         const thisRegion = {
           id,
-          name: state.regionEditorShowIds ? finalBitOfRegionId : region.name || finalBitOfRegionId,
+          name: state.app.gameEditor.locationEditorShowIds ? finalBitOfRegionId : region.name || finalBitOfRegionId,
           children: [],
         };
 
@@ -296,7 +316,7 @@ export default new Vuex.Store({
         for (const mapId in region.maps) {
           thisRegion.children.push({
             id: id ? `${id}/${mapId}` : mapId,
-            name: state.regionEditorShowIds ? mapId : region.maps[mapId].name || mapId,
+            name: state.app.gameEditor.locationEditorShowIds ? mapId : region.maps[mapId].name || mapId,
             isLeaf: true,
           })
         }

@@ -1,11 +1,11 @@
 <template>
   <div id="gameEditor" class="app-page">
-    <settingsPage v-if="$store.getters.gameEditorPage == 'settings'"/>
-    <locationPage v-if="$store.getters.gameEditorPage == 'locations'"/>
+    <InfoEditor v-if="$store.getters.gameEditorPage == 'infoEditor'"/>
+    <LocationEditor v-if="$store.getters.gameEditorPage == 'locationEditor'"/>
     <div class="tabs">
-      <div class="tab" v-text="$t('gameEditor.tab.gameinfo')" data-page="settings" v-bind:class="{active: $store.getters.gameEditorPage == 'settings'}" @click="switchTab"/>
+      <div class="tab" v-text="$t('gameEditor.tab.gameinfo')" data-page="infoEditor" v-bind:class="{active: $store.getters.gameEditorPage == 'infoEditor'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.characters')"/>
-      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="locations" v-bind:class="{active: $store.getters.gameEditorPage == 'locations', map: $store.getters.regionEditorState.page == 'mapEditor'}" @click="switchTab"/>
+      <div class="tab" v-text="$t('gameEditor.tab.regions')" data-page="locationEditor" v-bind:class="{active: $store.getters.gameEditorPage == 'locationEditor', map: $store.getters.regionEditorState.page == 'mapEditor'}" @click="switchTab"/>
       <div class="tab" v-text="$t('gameEditor.tab.quests')"/>
       <div class="tab" v-text="$t('gameEditor.tab.items')"/>
       <div class="tab" v-text="$t('gameEditor.tab.perks')"/>
@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import settingsPage from './settingsPage.vue'
-import locationPage from './locationEditor/index.vue'
+import InfoEditor from './InfoEditor.vue'
+import LocationEditor from './LocationEditor.vue'
 
 export default {
   name: 'GameEditor',
   components: {
-    settingsPage,
-    locationPage,
+    InfoEditor,
+    LocationEditor,
   },
   methods: {
     switchTab(e) {

@@ -15,17 +15,17 @@
       <p>aaaaa3</p>
       <p>aaaaa4</p>
     </div></div>
-    <mapCanvas ref="canvas"/>
+    <MapCanvas ref="canvas"/>
   </div>
 </template>
 
 <script>
-import mapCanvas from './mapCanvas.vue'
+import MapCanvas from '../../../components/MapCanvas.vue'
 
 export default {
-  name: 'MapEditorPage',
+  name: 'MapEditor',
   components: {
-    mapCanvas
+    MapCanvas
   },
   mounted() {
     // generate tiles
@@ -109,7 +109,7 @@ XXCXX X XXXXX  XXXCX   XXX
   },
   methods: {
     goBack() {
-      this.$store.commit('showRegionTreeEditor');
+      this.$store.commit('showTreeEditor');
     },
     save() {
       console.log('TODO: save map');

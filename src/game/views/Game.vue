@@ -1,77 +1,77 @@
 <template>
-  <div id="game" class="app-page">
+  <div id="game" class="app-page" v-if="$store.getters.appGameStarted">
     <div id="leftPane">
       <div class="topPane">
-        <locationInfo placeName="Market" regionName="Troto"/>
-        <gameMap/>
-        <displayBar :name="$t('terms.time')" value="08:02"/>
-        <displayBar :name="$t('terms.day')" value="5"/>
-        <menuButtonsPane/>
+        <LocationInfo placeName="Market" regionName="Troto"/>
+        <GameMap/>
+        <DisplayBar :name="$t('terms.time')" value="08:02"/>
+        <DisplayBar :name="$t('terms.day')" value="5"/>
+        <MenuButtonsPane/>
       </div>
       <div class="sideButtonsPane">
-        <mainContentPaginationButton dir="prev"/>
-        <mainContentPaginationButton dir="next"/>
+        <MainContentPaginationButton dir="prev"/>
+        <MainContentPaginationButton dir="next"/>
       </div>
     </div>
     <div id="middlePane">
-      <mainContent/>
-      <hoverHint/>
-      <mainButtonsPane/>
+      <MainContent/>
+      <HoverHint/>
+      <MainButtonsPane/>
     </div>
     <div id="rightPane">
       <div class="topPane">
         <h2 class="characterName" v-text="$store.getters.gameStatePlayerName.mainName"/>
-        <sidebarHeader :name="$t('terms.stats')"/>
-        <progressionBar v-for="(info, key) in $store.getters.gameDataStats" :key="key"
+        <SidebarHeader :name="$t('terms.stats')"/>
+        <ProgressionBar v-for="(info, key) in $store.getters.gameDataStats" :key="key"
           :name="info.uiName || info.fullName"
           :max="$store.getters.gameStatePlayerStats[key].default"
           :value="$store.getters.gameStatePlayerStats[key].current"/>
-        <sidebarHeader :name="$t('terms.attributes')" extraMargin/>
-        <progressionBar v-for="(info, key) in $store.getters.gameDataAttributes" :key="key+'-'+info.uiName+'-'+info.fullName"
+        <SidebarHeader :name="$t('terms.attributes')" extraMargin/>
+        <ProgressionBar v-for="(info, key) in $store.getters.gameDataAttributes" :key="key+'-'+info.uiName+'-'+info.fullName"
           :name="info.uiName || info.fullName"
           :max="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"
           :value="$store.getters.gameStatePlayerAttributes[key].base + $store.getters.gameStatePlayerAttributes[key].mod"/>
-        <sidebarHeader :name="$t('terms.advancement')" extraMargin/>
-        <displayBar margin :name="$t('terms.level')" :value="$store.getters.gameStatePlayerLevel.level.toString()"/>
-        <progressionBar :name="$t('terms.xp')" :value="$store.getters.gameStatePlayerLevel.xp" :max="$store.getters.gameStatePlayerLevel.xpToLevel"/>
-        <displayBar margin :name="$store.getters.gameDataCurrencyName" :value="formatBigNumber($store.getters.gameStatePlayerCurrency)"/>
-        <sidebarHeader :name="$t('terms.statusEffects')" extraMargin/>
+        <SidebarHeader :name="$t('terms.advancement')" extraMargin/>
+        <DisplayBar margin :name="$t('terms.level')" :value="$store.getters.gameStatePlayerLevel.level.toString()"/>
+        <ProgressionBar :name="$t('terms.xp')" :value="$store.getters.gameStatePlayerLevel.xp" :max="$store.getters.gameStatePlayerLevel.xpToLevel"/>
+        <DisplayBar margin :name="$store.getters.gameDataCurrencyName" :value="formatBigNumber($store.getters.gameStatePlayerCurrency)"/>
+        <SidebarHeader :name="$t('terms.statusEffects')" extraMargin/>
       </div>
       <div class="sideButtonsPane">
-        <mainButtonsPaginationButton dir="prev"/>
-        <mainButtonsPaginationButton dir="next"/>
+        <MainButtonsPaginationButton dir="prev"/>
+        <MainButtonsPaginationButton dir="next"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import locationInfo from './locationInfo.vue'
-import gameMap from './gameMap.vue'
-import menuButtonsPane from './menuButtonsPane.vue'
-import displayBar from './displayBar.vue'
-import progressionBar from './progressionBar.vue'
-import sidebarHeader from './sidebarHeader.vue'
-import mainContent from './mainContent.vue'
-import hoverHint from './hoverHint.vue'
-import mainButtonsPane from './mainButtonsPane.vue'
-import mainContentPaginationButton from './buttons/mainContentPagination.vue'
-import mainButtonsPaginationButton from './buttons/mainButtonsPagination.vue'
+import LocationInfo from '../components/TheLocationInfo.vue'
+import GameMap from '../components/TheGameMap.vue'
+import MenuButtonsPane from '../components/TheMenuButtonsPane.vue'
+import DisplayBar from '../components/DisplayBar.vue'
+import ProgressionBar from '../components/ProgressionBar.vue'
+import SidebarHeader from '../components/SidebarHeader.vue'
+import MainContent from '../components/TheMainContent.vue'
+import HoverHint from '../components/TheHoverHint.vue'
+import MainButtonsPane from '../components/TheMainButtonsPane.vue'
+import MainContentPaginationButton from '../components/MainContentPaginationButton.vue'
+import MainButtonsPaginationButton from '../components/MainButtonsPaginationButton.vue'
 
 export default {
   name: 'Game',
   components: {
-    locationInfo,
-    gameMap,
-    menuButtonsPane,
-    displayBar,
-    progressionBar,
-    sidebarHeader,
-    mainContent,
-    hoverHint,
-    mainButtonsPane,
-    mainContentPaginationButton,
-    mainButtonsPaginationButton,
+    LocationInfo,
+    GameMap,
+    MenuButtonsPane,
+    DisplayBar,
+    ProgressionBar,
+    SidebarHeader,
+    MainContent,
+    HoverHint,
+    MainButtonsPane,
+    MainContentPaginationButton,
+    MainButtonsPaginationButton,
   },
   methods: {
     // utility function...

@@ -1,5 +1,5 @@
 <template>
-  <div id="homepage" class="app-page"><div>
+  <div id="mainmenu" class="app-page"><div>
     <h1>Boken2-RPG</h1>
     <p class="tagline" v-text="$t('engine.tagline')"/>
     <a href="https://github.com/DanielOaks/boken2-rpg/">GitHub Repo</a>
@@ -18,28 +18,28 @@
     </div>
 
     <div class="startButtons">
-      <div class="btn" @click="loadSavegame()" v-text="$t('homepage.newgame')"/>
-      <div class="btn" @click="loadSavegame()" v-text="$t('homepage.loadgame')"/>
-      <div class="btn" @click="loadSavegame()" v-text="$t('homepage.resume')"/>
+      <div class="btn" @click="loadSavegame()" v-text="$t('mainmenu.newgame')"/>
+      <div class="btn" @click="loadSavegame()" v-text="$t('mainmenu.loadgame')"/>
+      <div class="btn" @click="loadSavegame()" v-text="$t('mainmenu.resume')"/>
     </div>
   </div></div>
 </template>
 
 <script>
 export default {
-  name: 'Homepage',
+  name: 'MainMenu',
   components: {
   },
   methods: {
     loadSavegame() {
-      this.$store.commit('hideMainMenu');
+      this.$store.commit('appHideMainMenu');
     },
   },
 }
 </script>
 
 <style lang="scss">
-#homepage {
+#mainmenu {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -79,8 +79,8 @@ export default {
   .newGameCreation {
     margin-top: 2em;
     select {
-      background: var(--homepage-gameselect-bg-color);
-      color: var(--homepage-gameselect-text-color);
+      background: var(--mainmenu-gameselect-bg-color);
+      color: var(--mainmenu-gameselect-text-color);
       padding: 0 1.75em 0 .5em;
       border-radius: .5em 0 0 .5em;
     }
@@ -89,7 +89,7 @@ export default {
       height: 0;
       border-left: .4em solid transparent;
       border-right: .4em solid transparent;
-      border-top: 0.5em solid var(--homepage-gameselect-text-color);
+      border-top: 0.5em solid var(--mainmenu-gameselect-text-color);
       position: absolute;
       left: -1.25em;
       top: .78em;
@@ -98,8 +98,8 @@ export default {
       padding: .2em .4em;
       margin-left: 1px;
       border-radius: 0;
-      background: var(--homepage-gameselect-bg-color);
-      color: var(--homepage-gameselect-text-color);
+      background: var(--mainmenu-gameselect-bg-color);
+      color: var(--mainmenu-gameselect-text-color);
       &:last-of-type {
         border-radius: 0 .5em .5em 0;
       }
