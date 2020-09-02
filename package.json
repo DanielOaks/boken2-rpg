@@ -4,8 +4,8 @@
   "description": "An RPG engine where you can travel around, interact with NPCs, and create worlds with words.",
   "main": "src/main.js",
   "scripts": {
-    "build": "npm run-script clean && npm run-script populate-dist && webpack --progress --profile --colors --mode=production && echo app built, look in the ./dist folder",
-    "serve": "npm run-script clean && npm run-script populate-dist && webpack --progress --profile --colors --mode=development && http-server -c-1 -p 8082 ./dist",
+    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve",
     "populate-dist": "copyfiles -E index.html dist/ && copyfiles -Eu 0 assets/**/* dist/",
     "clean": "rimraf ./dist",
     "test": "mocha -r esm"
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
+    "@vue/cli-service": "^4.5.4",
     "babel-loader": "^8.1.0",
     "copyfiles": "^2.3.0",
     "css-loader": "^4.2.2",
@@ -46,12 +47,14 @@
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
+  "vue": {
+    "runtimeCompiler": true
+  },
   "nodemonConfig": {
     "watch": [
       "src",
       "index.html",
-      "webpack.config.babel.js",
-      "assets"
+      "public"
     ],
     "ext": "js,vue,html,json",
     "exec": "npm run serve"
