@@ -44,7 +44,6 @@ export default new Vuex.Store({
     app: {
       showMainMenu: true,
       gameStarted: false,
-      page: 'game',
       game: {
         hoverHint: {
           hidden: true,
@@ -88,9 +87,6 @@ export default new Vuex.Store({
     },
     appHideMainMenu (state) {
       state.app.showMainMenu = false;
-    },
-    appChangePage (state, pl) {
-      state.app.page = pl;
     },
 
     showTreeEditor (state) {
@@ -263,9 +259,6 @@ export default new Vuex.Store({
     },
     showMainMenu: (state) => {
       return state.app.showMainMenu;
-    },
-    appPage: (state) => {
-      return state.app.page;
     },
     regionEditorState: (state) => {
       return {

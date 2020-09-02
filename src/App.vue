@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <game ref="game" v-show="$store.getters.appPage == 'game'"/>
-    <game-editor ref="gameEditor" v-show="$store.getters.appPage == 'gameEditor'"/>
-    <state-editor ref="stateEditor" v-show="$store.getters.appPage == 'stateEditor'"/>
-    <state-switcher ref="stateSwitcher"/>
+    <game ref="game" v-show="page == 'game'"/>
+    <game-editor ref="gameEditor" v-show="page == 'gameEditor'"/>
+    <state-editor ref="stateEditor" v-show="page == 'stateEditor'"/>
+    <div id="stateSwitcher">
+      <img src="/assets/buttons/game.svg"  v-on:click="show('game')"/>
+      <img src="/assets/buttons/game-editor.svg"  v-on:click="show('gameEditor')"/>
+      <img src="/assets/buttons/state-editor.svg"  v-on:click="show('stateEditor')"/>
+    </div>
     <main-menu ref="mainmenu" v-if="$store.getters.showMainMenu"/>
   </div>
 </template>
 
 <script>
-import StateSwitcher from './components/TheStateSwitcher.vue'
 import MainMenu from './game/views/MainMenu.vue'
 import Game from './game/views/Game.vue'
 import GameEditor from './game-editor/views/GameEditor.vue'
@@ -18,11 +21,20 @@ import StateEditor from './state-editor/views/StateEditor.vue'
 export default {
   name: 'App',
   components: {
-    StateSwitcher,
     MainMenu,
     Game,
     GameEditor,
     StateEditor,
+  },
+  data() {
+    return {
+      page: 'game',
+    }
+  },
+  methods: {
+    show(page) {
+      this.page = page;
+    },
   },
 }
 </script>
@@ -80,5 +92,24 @@ export default {
 #app {
   font-family: 'Open Sans', Arial, Helvetica, sans-serif;
   line-height: 1.5;
+}
+
+#stateSwitcher {
+  position: fixed;
+  width: auto;
+  height: auto;
+  left: 0;
+  top: 0;
+  padding: 0 4em 3em 0;
+  transition: opacity .3s;
+  opacity: 0;
+  &:hover {
+    opacity: 1;
+  }
+  img {
+    display: inline-block;
+    height: 3em;
+    cursor: pointer;
+  }
 }
 </style>
