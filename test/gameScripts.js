@@ -1,7 +1,7 @@
 import { describe, it } from 'mocha';
 
 const assert = require('assert');
-const S = require('../src/script/index.js');
+const S = require('../src/gameScripts/index.js');
 
 describe('Script Parsing', () => {
   describe('plainText', () => {
