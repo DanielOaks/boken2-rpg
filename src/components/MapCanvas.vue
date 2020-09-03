@@ -75,6 +75,51 @@ export default {
       return undefined
     },
   },
+  props: {
+    // tweaks
+    hqRender: {
+      type: Boolean,
+      default: false,
+    },
+    minZoom: {
+      type: Number,
+      default: .5,
+    },
+    maxZoom: {
+      type: Number,
+      default: 5,
+    },
+    maxClickRoam: {
+      type: Object,
+      default () {
+        return {
+          x: 4,
+          y: 4,
+        };
+      },
+    },
+
+    // map data
+    tiles: {
+      type: Object,
+      required: true,
+    },
+    bgs: {
+      type: Array,
+      required: true,
+    },
+    colors: {
+      type: Object,
+      default () {
+        return {
+          bg: '#222',
+          tileBg: '#777',
+          tileText: '#eee',
+          tileSurroundedBg: '#444', // when all four sides are surrounded
+        };
+      },
+    },
+  },
   data() {
     return {
       scale: 1,
@@ -103,25 +148,6 @@ export default {
       ],
       nextTool: undefined,
       tool: 'moveMap',
-
-      // optional tweaks~
-      hqRender: false,
-      minZoom: .5,
-      maxZoom: 5,
-      maxClickRoam: {
-        x: 4,
-        y: 4,
-      },
-
-      // this is data provided by the user
-      tiles: {},
-      bgs: [],
-      colors: {
-        bg: '#222',
-        tileBg: '#777',
-        tileText: '#eee',
-        tileSurroundedBg: '#444', // when all four sides are surrounded
-      },
     }
   },
   methods: {

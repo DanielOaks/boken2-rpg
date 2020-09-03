@@ -1,7 +1,7 @@
 <template>
   <div class="regionEditorPage">
     <div class="contained">
-      <h1 v-text="$store.getters.regionEditorState.id"/>
+      <h1 v-text="$store.getters.locationEditorState.id"/>
       <div class="settingsMenu">
         <div>
           <button class="btn" @click="goBack" v-text="$t('gameEditor.regions.goBackButton')"/>

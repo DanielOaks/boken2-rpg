@@ -6,7 +6,7 @@
         <div>
           <div class="btnsep">
             <button class="btn" @click="addRootRegion" v-text="$t('gameEditor.regions.createRegionButton')"/>
-            <button class="btn" @click="toggleIdNames" v-text="$store.getters.regionEditorState.showIds ? $t('gameEditor.regions.showNamesButton') : $t('gameEditor.regions.showIDsButton')"/>
+            <button class="btn" @click="toggleIdNames" v-text="$store.getters.locationEditorState.showIds ? $t('gameEditor.regions.showNamesButton') : $t('gameEditor.regions.showIDsButton')"/>
           </div>
           <vue-tree-list
             @click="onClick"
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     toggleIdNames() {
-      this.$store.commit('changeRegionEditorShowIds', !this.$store.getters.regionEditorState.showIds)
+      this.$store.commit('changeRegionEditorShowIds', !this.$store.getters.locationEditorState.showIds)
     },
 
     onDel(node) {
@@ -67,7 +67,7 @@ export default {
       if (!(params.eventType === 'blur')) {
         return;
       }
-      if (this.$store.getters.regionEditorState.showIds) {
+      if (this.$store.getters.locationEditorState.showIds) {
         let {newName} = params;
         if (!newName.match(locationIdCheck)) {
           [ newName ] = params.id.split('/').slice(-1);
@@ -109,10 +109,10 @@ export default {
 
     onClick(params) {
       if (params.isLeaf) {
-        this.$store.commit('showMapEditor', params.id);
+        this.$store.commit('showMapEditor', params.id.split('/'));
         return
       }
-      this.$store.commit('showRegionEditor', params.id);
+      this.$store.commit('showRegionEditor', params.id.split('/'));
     },
 
     addRootRegion() {

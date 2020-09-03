@@ -6,16 +6,16 @@
       <div class="btn tool" v-for="tool in mapTools" v-bind:key="tool" @click="changeTool" :data-tool="tool" v-bind:class="{active: mapTool === tool}" v-text="$t('gameEditor.mapTool.'+tool)"/>
     </div>
     <div class="mainPropertyEditor"><div>
-      <h2>Map Properties</h2>
-      <p>aaaaa1</p>
-      <p>aaaaa2</p>
-      <h2>Tile Properties</h2>
+      <h1>Map Properties</h1>
+      <h2>Name</h2>
+      <input v-model="mapName"/>
+      <h1>Tile Properties</h1>
       <p>aaaaa1</p>
       <p>aaaaa2</p>
       <p>aaaaa3</p>
       <p>aaaaa4</p>
     </div></div>
-    <MapCanvas ref="canvas"/>
+    <MapCanvas ref="canvas" :tiles="tiles" :bgs="bgs" :colors="colors"/>
   </div>
 </template>
 
@@ -29,33 +29,6 @@ export default {
   },
   mounted() {
     // generate tiles
-    const tileString = 
-`X  X     XX XXXX
-XXCXX X XXXXX  XXXCX   XXX
-   XXXXX   XXX X   XXXXX X
-  XXX   XXXX XXX  XXXX  XX
- XX XXXXX  XCX  XXX  XX
-  X     XXXX     XX
-  X        XXX  XXXX
- XXX            CCXX
- XXX
-`;
-    this.$refs.canvas.tiles = {}
-    let id = 1;
-    tileString.split('\n').forEach((line, y) => {
-      this.$refs.canvas.tiles[y] = {}
-      line.split('').forEach((char, x) => {
-        if (char !== ' ') {
-          // console.log('tile at', x, y);
-          const tile = {id};
-          id += 1;
-          if (char === 'C') {
-            tile.text = 'char';
-          }
-          this.$refs.canvas.tiles[y][x] = tile;
-        }
-      });
-    });
 
     // set bg
     this.$refs.canvas.bgs = this.bgs;
@@ -65,23 +38,10 @@ XXCXX X XXXXX  XXXCX   XXX
 
     // focus on specific square
     this.$refs.canvas.focusOn(10,5);
-
-    this.$refs.canvas.update();
   },
-  data() {
-    return {
-      mapTools: [
-        'moveMap',
-        'pointer',
-      ],
-      mapTool: 'moveMap',
-      colors: {
-        bg: '#559e94',
-        tileBg: '#41877e',
-        tileText: '#eeeeee',
-        tileSurroundedBg: '#4b9289', // when all four sides are surrounded
-      },
-      bgs: [
+  computed: {
+    bgs () {
+      return [
         {
           color: '#4b9289',
           x: 8,
@@ -104,8 +64,64 @@ XXCXX X XXXXX  XXXCX   XXX
           width: 3,
           height: 2,
         },
+      ];
+    },
+    tiles () {
+      const tileString = 
+`X  X     XX XXXX
+XXCXX X XXXXX  XXXCX   XXX
+   XXXXX   XXX X   XXXXX X
+  XXX   XXXX XXX  XXXX  XX
+ XX XXXXX  XCX  XXX  XX
+  X     XXXX     XX
+  X        XXX  XXXX
+ XXX            CCXX
+ XXX
+`;
+      const tiles = {}
+      let id = 1;
+      tileString.split('\n').forEach((line, y) => {
+        tiles[y] = {}
+        line.split('').forEach((char, x) => {
+          if (char !== ' ') {
+            // console.log('tile at', x, y);
+            const tile = {id};
+            id += 1;
+            if (char === 'C') {
+              tile.text = 'char';
+            }
+            tiles[y][x] = tile;
+          }
+        });
+      });
+      return tiles;
+    },
+    mapName: {
+      get () {
+        return this.$store.getters.locationEditorCurrentMap.name;
+      },
+      set (value) {
+        this.$store.commit('gameDataChangeLocationName', {
+          id: this.$store.getters.locationEditorState.id,
+          name: value,
+        });
+      },
+    },
+  },
+  data() {
+    return {
+      mapTools: [
+        'moveMap',
+        'pointer',
       ],
-    }
+      mapTool: 'moveMap',
+      colors: {
+        bg: '#559e94',
+        tileBg: '#41877e',
+        tileText: '#eeeeee',
+        tileSurroundedBg: '#4b9289', // when all four sides are surrounded
+      },
+    };
   },
   methods: {
     goBack() {
@@ -162,6 +178,23 @@ XXCXX X XXXXX  XXXCX   XXX
     border-bottom-left-radius: .5em;
     > div {
       direction: ltr;
+    }
+    h1 {
+      font-size: 1.6em;
+      &:not(:first-child) {
+        margin-top: .3em;
+      }
+    }
+    h2 {
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+    input {
+      background: #fff;
+      color: #222;
+      padding: .2em .5em;
+      width: 100%;
+      border-radius: .4em;
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="gameEditorPage locations">
-    <TreeEditor v-if="$store.getters.regionEditorState.page == 'tree'"/>
-    <RegionEditor v-if="$store.getters.regionEditorState.page == 'regionEditor'"/>
-    <MapEditor v-if="$store.getters.regionEditorState.page == 'mapEditor'"/>
+    <TreeEditor v-if="$store.getters.locationEditorState.page == 'tree'"/>
+    <RegionEditor v-if="$store.getters.locationEditorState.page == 'regionEditor'"/>
+    <MapEditor v-if="$store.getters.locationEditorState.page == 'mapEditor'"/>
   </div>
 </template>
 

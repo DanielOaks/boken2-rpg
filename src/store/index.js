@@ -337,12 +337,21 @@ export default new Vuex.Store({
     showMainMenu: (state) => {
       return state.app.showMainMenu;
     },
-    regionEditorState: (state) => {
+    locationEditorState: (state) => {
       return {
         page: state.app.gameEditor.locationEditorPage,
         id: state.app.gameEditor.locationEditorId,
         showIds: state.app.gameEditor.locationEditorShowIds,
       }
+    },
+    locationEditorCurrentMap: (state) => {
+      function getMap (ids, region) {
+        if (ids.length === 1) {
+          return region.maps[ids[0]];
+        }
+        return getMap(ids.slice(1), region.regions[ids[0]]);
+      }
+      return getMap(state.app.gameEditor.locationEditorId, state.gameData);
     },
     gameHoverHint: (state) => {
       return state.app.game.hoverHint;
