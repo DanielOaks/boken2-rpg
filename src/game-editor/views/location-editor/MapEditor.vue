@@ -145,7 +145,7 @@ XXCXX X XXXXX  XXXCX   XXX
         margin-left: 2em;
       }
       &.tool.active {
-        background: var(--map-tile-bg-active-color);
+        background: var(--map-tile-bg-alt-color);
       }
     }
   }

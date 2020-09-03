@@ -48,10 +48,10 @@ export default {
     opacity: 1;
   }
   &.wasd {
-    background: var(--main-btn-wasd-bg-color);
+    background: var(--main-btn-bg-wasd-color);
     .key > div {
-      color: var(--main-btn-wasd-bg-color);
-      border-color: var(--main-btn-wasd-bg-color);
+      color: var(--main-btn-bg-wasd-color);
+      border-color: var(--main-btn-bg-wasd-color);
     }
   }
 

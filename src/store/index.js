@@ -23,6 +23,75 @@ const emptyGameState = {
   },
 }
 
+// this is the default colour scheme. games can override these.
+const defaultColors = {
+  mainMenu: {
+    bg: '#559e94',
+    text: '#fff',
+    buttons: {
+      bg: '#24645c',
+      text: '#fff',
+    },
+    gameSelect: {
+      bg: '#96c3bd',
+      text: '#444',
+    },
+  },
+  game: {
+    bg: '#559e94',
+    text: '#fff',
+    buttons: {
+      bg: '#24645c',
+      bgWasd: '#85240b',
+      text: '#fff',
+    },
+    sidebar: {
+      bg: '#24645c',
+      text: '#fff',
+      hr: '#41877e',
+      bars: {
+        bg: '#1c544d',
+        bgFilled: '#1b8064',
+        text: '#fff',
+      },
+      buttons: {
+        bg: '#41877e',
+        text: '#acc9c5',
+      },
+      location: {
+        bg: '#1c544d',
+        text: '#fff',
+      },
+    },
+    map: {
+      bg: '#559e94',
+      tile: {
+        bg: '#41877e',
+        bgAlt: '#31776e',
+        bgError: '#974733',
+        text: '#fff',
+      },
+    },
+  },
+  editor: {
+    bg: '#fbfaf8',
+    bgPage: '#f9f4e7',
+    text: '#151515',
+    shadow: '#e2d7d4',
+    headerShadow: '#e2d7d4',
+    buttons: {
+      bg: '#e8e7e5',
+      text: '#333',
+      shadow: '#46454354',
+    },
+    tabBar: {
+      bgBar: '#1b1914',
+      bgTab: '#423f38',
+      text: '#fff',
+    },
+  },
+}
+
 function utilGetNewRegionMapId(id, region) {
   let newId = id;
   if (id === undefined || region.regions[id] || region.maps[id]) {
@@ -253,6 +322,14 @@ export default new Vuex.Store({
   },
 
   getters: {
+    // the colour getter is special, it'll use our defaults, or the game's colours if the
+    //  game overwrites them.
+    color: () => {
+      //TODO: use Lodash merge to deep-merge this with the game's colours:
+      // https://lodash.com/docs/4.17.15#merge
+      return defaultColors;
+    },
+
     // app getters
     appGameStarted: (state) => {
       return state.app.gameStarted;
