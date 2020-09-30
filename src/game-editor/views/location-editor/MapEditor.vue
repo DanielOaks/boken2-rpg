@@ -2,7 +2,7 @@
   <div class="mapEditor">
     <div class="mainNavButtons">
       <div class="btn nav" @click="goBack" v-text="$t('gameEditor.regions.goBackButton')"/>
-      <div class="btn nav" @click="save" v-text="$t('gameEditor.regions.saveButton')"/>
+      <div class="btn nav" v-if="false" @click="save" v-text="$t('gameEditor.regions.saveButton')"/>
       <div class="btn tool" v-for="tool in mapTools" v-bind:key="tool" @click="changeTool" :data-tool="tool" v-bind:class="{active: mapTool === tool}" v-text="$t('gameEditor.mapTool.'+tool)"/>
     </div>
     <div class="mainPropertyEditor"><div>
@@ -111,8 +111,8 @@ XXCXX X XXXXX  XXXCX   XXX
   data() {
     return {
       mapTools: [
-        'moveMap',
         'pointer',
+        'moveMap',
       ],
       mapTool: 'moveMap',
       colors: {
